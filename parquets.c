@@ -79,9 +79,9 @@ int32_t main()
 	// We will now calculate the area we need to cover
 	float m_area = m_llargada * m_amplada;
 
-	printf("Per cobrir %f metres cuadrats d'habitacio, necesitarem %f unitats de parquet\n", m_area, round(m_area / m_parquet));
+	printf("Per cobrir %f metres cuadrats d'habitacio, necesitarem %f unitats de parquet\n", m_area, ceil(m_area / m_parquet));
 
-	printf("Per cobrir amb sócols, necesitarem %f peçes de sócols\n", round(((m_amplada * 2) + (m_amplada * 2) / m_socol)));
+	printf("Per cobrir amb sócols, necesitarem %f peçes de sócols\n", ceil(((m_amplada * 2) + (m_amplada * 2) / m_socol)));
 
 	return OK;
 }
