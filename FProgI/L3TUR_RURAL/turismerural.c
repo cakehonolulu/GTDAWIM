@@ -13,6 +13,11 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#define OK 1
+#define FAIL 1
+
+#define PREU_NITS 150
+
 int main()
 {
 	unsigned int m_persones = 0;
@@ -34,18 +39,20 @@ int main()
 
 			if (m_nits > 0)
 			{
-				printf("Calculant pressupost per a %u persones amb una estància de %u nits...\n", m_persones, m_nits);	
+				printf("Calculant pressupost per a %u persones amb una estància de %u nits...\n", m_persones, m_nits);
+				printf("Preu sense IVA: %u €, IVA (21%%): %f €, Preu Total (IVA Inclòs): %f €\n", (m_nits * PREU_NITS), ((float)(m_nits * PREU_NITS) * 0.21), (((float)(m_nits * PREU_NITS) * 0.21) + (m_nits * PREU_NITS)));
+				return OK;
 			} else {
 				printf("El nombre de nits es incorrecte!\n");
-				return 1;
-			}		
+				return FAIL;
+			}
 		} else {
 			printf("Ha introduit %u persones, el mínim es 1 i el máxim 12!\n", m_persones);
-			return 1;
+			return FAIL;
 		}
 		
 	} else {
 		printf("Ha introduit %u persones, el mínim es 1 i el máxim 12!\n", m_persones);
-		return 1;
+		return FAIL;
 	}
 }
