@@ -31,27 +31,23 @@ int32_t main()
 
 	printf("A continuació, introdueixi el nombre de nois: ");
 
-	float m_nois = 0;
+	unsigned int  m_nois = 0;
 
-	scanf("%f", &m_nois);
+	scanf("%u", &m_nois);
 
 	printf("Ara, el nombre de noies: ");
 
-	float m_noies = 0;
+	unsigned int m_noies = 0;
 
-	scanf("%f", &m_noies);
+	scanf("%u", &m_noies);
 
-	float m_total = 0;
+	unsigned int m_total = 0;
 
 	m_total = m_nois + m_noies;
 
-	printf("m_total: %f, m_nois: %f, m_noies: %f\n", m_total, m_nois, m_noies);
+	float m_percent_nois = (((float) m_nois * 100) / (float)m_total);
 
-	float m_percent_nois = ((m_nois * 100) / m_total);
+	float m_percent_noies = (((float)m_noies * 100) / (float)m_total);
 
-	printf("m_nois / 100 = %f, '' * m_total = %f\n", (m_nois * 100), ((m_nois * 100) / m_total));
-
-	float m_percent_noies = ((m_noies * 100) / m_total);
-
-	printf("Nombre total de nois: %f, (%f %%); Nombre total de noies: %f (%f %%); Total d'alumnes: %f\n", m_nois, m_percent_nois, m_noies, m_percent_noies, m_total);
+	printf("Nombre total de nois: %u, (%f%%); Nombre total de noies: %u (%f%%); Total d'alumnes: %u\n", m_nois, m_percent_nois, m_noies, m_percent_noies, m_total);
 }
