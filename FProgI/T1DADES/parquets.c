@@ -81,7 +81,7 @@ int32_t main()
 
 	printf("Per cobrir %f metres cuadrats d'habitacio, necesitarem %f unitats de parquet\n", m_area, ceil(m_area / m_parquet));
 
-	printf("Per cobrir amb sócols, necesitarem %f peçes de sócols\n", ceil(((m_amplada * 2) + (m_amplada * 2) / m_socol)));
+	printf("Per cobrir amb sócols, necesitarem %f peçes de sócols\n", ceil((ceil((m_llargada * 2) + (m_amplada * 2))) / m_socol)); 
 
 	return OK;
 }
