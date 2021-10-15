@@ -1,3 +1,26 @@
+/*
+	Compile using: gcc prac0.c -Wall -Wextra (Use -DDEBUG switch if you want to enable debugging)
+	GCC Version (LLVM's Clang untested):
+	
+	$ gcc --version
+	gcc (Ubuntu 11.2.0-7ubuntu2) 11.2.0
+	Ubuntu Version:
+	
+	$ lsb_release -a
+	No LSB modules are available.
+	Distributor ID: Ubuntu
+	Description:    Ubuntu 21.10
+	Release:        21.10
+	Codename:       impish
+	
+	$ uname -a
+	Linux Desktop 5.10.60.1-microsoft-standard-WSL2 #1 SMP Wed Aug 25 23:20:18 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+
+	# NOTE!
+	# I build the binary using WSL2, Microsoft's in-house Linux emulation layer that uses Hyper-V technology to work
+	# Results should be the same as on a real Ubuntu install, but bare in mind that there could be some differences.
+*/
+
 // stdint for standard integer types
 #include <stdint.h>
 // stdio for printf and scanf decl.
