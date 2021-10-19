@@ -37,3 +37,13 @@ I'd like to switch from scanf() to something else, scanf() is a real pain to get
 to change (But depends on the previous statement).~~
 
 -- Fixed in commit [41fc5e2](https://github.com/cakehonolulu/GTDAWIM/commit/41fc5e2da91319899a9dc78328833a5bb32b73fb)
+
+I've done my best to mitigate integer overflows while using scanf(), but my solution has some tradeoffs (Which are the best outcome I've found).
+
+I first tried limitating the user input using %x (Where x is a number from 1-inf), but if I 'overfilled' the scanf() buffer with a large number, the next variables waiting for their own scanf() would all get filled automatically (I suspect scanf() reads the input from a buffer that grows as much as the user input, and the next scanf() reads where the other one ended reading).
+
+The "solution" (Not really a solution, but more of an approach) is to limit the variable assignation in a way that I can only use n-1 digits of it (If unsigned char = 255, then limit it to 99, from 3 to 2 digits and so on with the other types).
+
+With my approach you can *still* overflow the variable (But it's much, much more harder) and it'll only affect the variable I'm filling, next ones won't be affected. So I'm "effectively" reducing the potential bad outcome to only a 1 variable "poisioning".
+
+This is *far* from perfect but it's optimal considering how much of a mess scanf() (And it's family of functions) is and the scope of the program
