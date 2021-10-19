@@ -21,67 +21,18 @@
 	# Results should be the same as on a real Ubuntu install, but bare in mind that there could be some differences.
 */
 
-// stdint for standard integer types
-#include <stdint.h>
-// stdio for printf and scanf decl.
-#include <stdio.h>
-// stdbool for booleans
-#include <stdbool.h>
-
-// OK = 0
-#define OK 0
-// FAIL = 1
-#define FAIL 1
-
-typedef struct m_budget
-{
-	// Using uint8_t to ensure less memory footprint
-	// It gets limited to hold only 2 digit long number (Max 99) because the practise paper
-	// values checking the project length, so anything over 99 is overkill because the comparison
-	// is 6 < months > 48
-	uint8_t months;
-
-	// Using uint16_t to ensure less memory footprint
-	// It gets limited to hold only 4 digit long number (Max 9999) which I think is reasonable
-	// considering the project size.
-	uint16_t nbworkers;
-
-	// Using uint16_t to ensure less memory footprint
-	// It gets limited to hold only 4 digit long number (Max 9999) which I think is reasonable
-	// considering the project size.
-	uint16_t bworkers;
-
-	// Using uint32_t to ensure less memory footprint
-	// It gets limited to hold only 6 digit long number (Max 999999) which I think is reasonable
-	// considering the project size.
-	uint32_t materials;
-
-	// Using uint32_t to ensure less memory footprint
-	// It gets limited to hold only 6 digit long number (Max 999999) which I think is reasonable
-	// considering the project size.
-	uint32_t travels;
-
-	// Using uint32_t to ensure less memory footprint
-	// It gets limited to hold only 6 digit long number (Max 999999) which I think is reasonable
-	// considering the project size.
-	uint32_t rentalandservices;
-
-	// Using uint32_t to ensure less memory footprint
-	// It gets limited to hold only 6 digit long number (Max 999999) which I think is reasonable
-	// considering the project size.
-	uint32_t fungiblematerials;
-} budget;
-
-// Allocate a new budget structure to keep things simpler instead of minting new variables everytime.
-// I also opted for using structs because editing it is very straightforward and I can prompt the user
-// to edit it at the end if he wants to.
-budget newbudget;
+#include "prac0.h"
 
 /*
 	main() function [NOTE: I personally use (u)int[8,16,32,64]_t types to ensure cross-platform compatibility]
 */
 int32_t main()
 {
+	// Allocate a new budget structure to keep things simpler instead of minting new variables everytime.
+	// I also opted for using structs because editing it is very straightforward and I can prompt the user
+	// to edit it at the end if he wants to.
+	m_budget newbudget;
+
 	printf("Calculador de Pressupost\n");
 
 	printf("Per començar, introdueixi la duració total del projecte (en mesos): ");
