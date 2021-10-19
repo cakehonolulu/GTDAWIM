@@ -33,5 +33,7 @@ gcc prac0.c -Wall -Wextra
 
 I'd like to switch from scanf() to something else, scanf() is a real pain to get it working correctly (And even then, things can go south pretty easily).
 
-As of right now, the program doesn't check for integer-only input. If you feed it any other data, it'll result in UB (Undefined-Behaviour) so that's a thing
-to change (But depends on the previous statement).
+~~As of right now, the program doesn't check for integer-only input. If you feed it any other data, it'll result in UB (Undefined-Behaviour) so that's a thing
+to change (But depends on the previous statement).~~
+
+-- Fixed in commit [41fc5e2](https://github.com/cakehonolulu/GTDAWIM/commit/41fc5e2da91319899a9dc78328833a5bb32b73fb)
