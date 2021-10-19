@@ -30,7 +30,7 @@ int32_t main()
 {
 	// Allocate a new budget structure to keep things simpler instead of minting new variables everytime.
 	// I also opted for using structs because editing it is very straightforward and I can prompt the user
-	// to edit it at the end if he wants to.
+	// to edit it at the end if he wants to as a future (To-be-implemented) feature
 	m_budget newbudget;
 
 	printf("Calculador de Pressupost\n");
