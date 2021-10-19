@@ -121,7 +121,17 @@ int32_t main()
 
 		%hu ensures that scanf reads the integer the user inputs as an unsigned short 
 	*/
-	scanf("%hu", &newbudget.nbworkers);
+	uint32_t m_verify = scanf("%hu", &newbudget.nbworkers);
+
+	// scanf() returns 1 if it succeeds, if it returns 0, the user input wasn't numerical
+	if (m_verify == 0)
+	{
+		printf("El text introduït conté caràcters no-numérics!\nSortint...\n");
+		return FAIL;
+	}
+
+	// Set m_verify back to 0 in case scanf() worked just fine
+	m_verify = 0;
 
 #ifdef DEBUG
 	printf("newbudget.nbworkers: %u\n", (uint32_t)(newbudget.nbworkers));
@@ -133,7 +143,7 @@ int32_t main()
 	// If it overflows, it'll go back counting from 0 or the inverse
 	if (newbudget.nbworkers > 9999)
 	{
-		printf("El nombre de treballadors no becats ha de ser inferior 10000, torni a executar el programa!\n");
+		printf("El nombre de treballadors no becats ha de ser inferior a 10000, torni a executar el programa!\n");
 		return FAIL;
 	}
 
@@ -144,7 +154,17 @@ int32_t main()
 
 		%hu ensures that scanf reads the integer the user inputs as an unsigned short 
 	*/
-	scanf("%hu", &newbudget.bworkers);
+	m_verify = scanf("%hu", &newbudget.bworkers);
+
+	// scanf() returns 1 if it succeeds, if it returns 0, the user input wasn't numerical
+	if (m_verify == 0)
+	{
+		printf("El text introduït conté caràcters no-numérics!\nSortint...\n");
+		return FAIL;
+	}
+
+	// Set m_verify back to 0 in case scanf() worked just fine
+	m_verify = 0;
 
 #ifdef DEBUG
 	printf("newbudget.bworkers: %u\n", (uint32_t)(newbudget.bworkers));
@@ -156,7 +176,7 @@ int32_t main()
 	// If it overflows, it'll go back counting from 0 or the inverse
 	if (newbudget.bworkers > 9999)
 	{
-		printf("El nombre de treballadors becats ha de ser inferior 10000, torni a executar el programa!\n");
+		printf("El nombre de treballadors becats ha de ser inferior a 10000, torni a executar el programa!\n");
 		return FAIL;
 	}
 
@@ -167,7 +187,17 @@ int32_t main()
 
 		%u ensures that scanf reads the integer the user inputs as an unsigned int 
 	*/
-	scanf("%u", &newbudget.materials);
+	m_verify = scanf("%u", &newbudget.materials);
+
+	// scanf() returns 1 if it succeeds, if it returns 0, the user input wasn't numerical
+	if (m_verify == 0)
+	{
+		printf("El text introduït conté caràcters no-numérics!\nSortint...\n");
+		return FAIL;
+	}
+
+	// Set m_verify back to 0 in case scanf() worked just fine
+	m_verify = 0;
 
 #ifdef DEBUG
 	printf("newbudget.materials: %u\n", newbudget.materials);
@@ -190,7 +220,17 @@ int32_t main()
 
 		%u ensures that scanf reads the integer the user inputs as an unsigned int 
 	*/
-	scanf("%u", &newbudget.travels);
+	m_verify = scanf("%u", &newbudget.travels);
+
+	// scanf() returns 1 if it succeeds, if it returns 0, the user input wasn't numerical
+	if (m_verify == 0)
+	{
+		printf("El text introduït conté caràcters no-numérics!\nSortint...\n");
+		return FAIL;
+	}
+
+	// Set m_verify back to 0 in case scanf() worked just fine
+	m_verify = 0;
 
 #ifdef DEBUG
 	printf("newbudget.travels: %u\n", newbudget.travels);
@@ -213,7 +253,17 @@ int32_t main()
 
 		%u ensures that scanf reads the integer the user inputs as an unsigned int 
 	*/
-	scanf("%u", &newbudget.rentalandservices);
+	m_verify = scanf("%u", &newbudget.rentalandservices);
+
+	// scanf() returns 1 if it succeeds, if it returns 0, the user input wasn't numerical
+	if (m_verify == 0)
+	{
+		printf("El text introduït conté caràcters no-numérics!\nSortint...\n");
+		return FAIL;
+	}
+
+	// Set m_verify back to 0 in case scanf() worked just fine
+	m_verify = 0;
 
 #ifdef DEBUG
 	printf("newbudget.rentalandservices: %u\n", newbudget.rentalandservices);
@@ -236,7 +286,17 @@ int32_t main()
 
 		%u ensures that scanf reads the integer the user inputs as an unsigned int 
 	*/
-	scanf("%u", &newbudget.fungiblematerials);
+	m_verify = scanf("%u", &newbudget.fungiblematerials);
+
+	// scanf() returns 1 if it succeeds, if it returns 0, the user input wasn't numerical
+	if (m_verify == 0)
+	{
+		printf("El text introduït conté caràcters no-numérics!\nSortint...\n");
+		return FAIL;
+	}
+
+	// Set m_verify back to 0 in case scanf() worked just fine
+	m_verify = 0;
 
 #ifdef DEBUG
 	printf("newbudget.fungiblematerials: %u\n", newbudget.fungiblematerials);
