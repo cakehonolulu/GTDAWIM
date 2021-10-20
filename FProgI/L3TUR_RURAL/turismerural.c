@@ -20,53 +20,42 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#define OK 1
+#define OK 0
 #define FAIL 1
 
 #define PREU_NITS 150
 
 int main()
 {
-	unsigned int m_persones = 0;
+	unsigned int m_persones;
+	unsigned int m_nits;
 
 	printf("Càlcul de pressupost - Casa Rural Can Marball\n");
 	printf("A continuació introdueixi un nombre de persones a allotjar (Màxim 12): ");
 
 	scanf("%u", &m_persones);
 
+	// First check if we're not exceeding the place's maximum capacity
 	if (m_persones <= 12)
 	{
-		if (m_persones >= 1)
+		printf("Ara introdueixi el nombre de nits a allotjar-se: ");
+
+		scanf("%u", &m_nits);
+
+		// REPTE Part
+		// If there's more than 12 nights, don't proceed
+		if (m_nits > 12)
 		{
-			printf("Ara introdueixi el nombre de nits a allotjar-se: ");
-
-			unsigned int m_nits = 0;
-
-			scanf("%u", &m_nits);
-
-			if (m_nits > 0)
-			{
-#ifdef REPTE
-				if (m_nits > 12)
-				{
-					printf("El nombre de nits excedeix les 12 permeses!\n");
-					return FAIL;
-				}
-#endif
-				printf("Calculant pressupost per a %u persones amb una estància de %u nits...\n", m_persones, m_nits);
-				printf("Preu sense IVA: %u €, IVA (21%%): %f €, Preu Total (IVA Inclòs): %f €\n", (m_nits * PREU_NITS), ((float)(m_nits * PREU_NITS) * 0.21), (((float)(m_nits * PREU_NITS) * 0.21) + (m_nits * PREU_NITS)));
-				return OK;
-			} else {
-				printf("El nombre de nits es incorrecte!\n");
-				return FAIL;
-			}
+			printf("El nombre de nits excedeix les 12 máximes permeses!\n");
 		} else {
-			printf("Ha introduit %u persones, el mínim es 1 i el máxim 12!\n", m_persones);
-			return FAIL;
+			printf("Calculant pressupost per a %u persones amb una estància de %u nits...\n", m_persones, m_nits);
+			printf("Preu sense IVA: %u €, IVA (21%%): %.2f €, Preu Total (IVA Inclòs): %.2f €\n", (m_nits * PREU_NITS), ((float)(m_nits * PREU_NITS) * 0.21), (((float)(m_nits * PREU_NITS) * 0.21) + (m_nits * PREU_NITS)));	
 		}
 		
 	} else {
-		printf("Ha introduit %u persones, el mínim es 1 i el máxim 12!\n", m_persones);
-		return FAIL;
+		printf("Ha introduit %u persones, el máxim són 12!\n", m_persones);
 	}
+	
+
+	return OK;
 }
