@@ -54,27 +54,20 @@ int main()
 				if (m_nits > 12)
 				{
 					printf("El nombre de nits excedeix les 12 permeses!\n");
-				}
-				else
-				{
+				} else {
 					printf("Calculant pressupost per a %u persones amb una estància de %u nits...\n", m_persones, m_nits);
 					printf("Preu sense IVA: %u €, IVA (21%%): %.2f €, Preu Total (IVA Inclòs): %.2f €\n", (m_nits * PREU_NITS), ((float)(m_nits * PREU_NITS) * 0.21), (((float)(m_nits * PREU_NITS) * 0.21) + (m_nits * PREU_NITS)));	
 				}
 
-			}
-			else
-			{
+			} else {
 				printf("Ha introduit %u nits, el mínim es 1 nit!\n", m_nits);
 			}
 
-		}else
-		{
+		} else {
 			printf("Ha introduit %u persones, el mínim es 1 i el máxim 12!\n", m_persones);
 		}
 		
-	}
-	else
-	{
+	} else {
 		printf("Ha introduit %u persones, el mínim es 1 i el máxim 12!\n", m_persones);
 	}
 
