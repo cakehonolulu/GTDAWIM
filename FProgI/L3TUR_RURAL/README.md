@@ -3,7 +3,7 @@
 ## Compiling
 
 ```bash
-# Check if we're in the source code dir, should return [path]./GTDAWIM/FProgI/l3TUR_RURAL
+# Check if we're in the source code dir, should return [path]./GTDAWIM/FProgI/L3TUR_RURAL
 # else just cd onto the path
 pwd
 
