@@ -26,24 +26,18 @@ int main()
 
 		// We'll now calculate the square root of b^2 - 4ax
 
-		discriminant = ((b * b) - 4 * a * c);
-
-		printf("Discriminant: %d\n", discriminant);
-
-		discriminant = sqrt(discriminant);
-
-		printf("Discriminant: %d\n", discriminant);
+		discriminant = ((b * b) - (4 * a * c));
 
 		if (discriminant < 0)
 		{
 			printf("No existeixen sol·lucions!\n");
 		}
 
-		printf("El discriminant es: %d\n", discriminant);
+		printf("Discriminant: %d\n", discriminant);
 
-		x1 = (((-b) * +discriminant) / (2 * a));
+		x1 = (((-b) + (sqrt(discriminant))) / (2 * a));
 
-		x2 = (((-b) * -discriminant) / (2 * a));
+		x2 = (((-b) - (sqrt(discriminant))) / (2 * a));
 
 		if (x1 == x2)
 		{
