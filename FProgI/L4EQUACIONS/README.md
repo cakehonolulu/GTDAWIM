@@ -49,7 +49,7 @@ Les sol·lucions son 1.464102 i -5.464102
 | 2     | No té solució (Moodle)              | a = 0, b = 1, c = 1    | L'equació no té solucions                                          | L'equació no es de segon grau! (Which is 100% correct, Moodle's wrong beacuse it specifies an if-else that prohibits program execution if a = 0 ‼️ | ✓   |
 | 3     | No té solució (Mine)                | a = 1, b = 2, c = 5    | L'equació no té solucions                                          | No existeixen sol·lucions!                                                                                                                         | ✓   |
 | 4     | Equació de solució única            | a = 1, b = 8, c = 16   | Les solucions son -4 i -4                                          | La sol·lució és -4.000000                                                                                                                          | ✓   |
-| 4     | Dos solucions                       | a = 1, b = 0, c = -4   | Les solucions son 2 i -2                                           | Les sol·lucions son 2.000000 i -2.000000                                                                                                           | ✓   |
+| 5     | Dos solucions                       | a = 1, b = 0, c = -4   | Les solucions son 2 i -2                                           | Les sol·lucions son 2.000000 i -2.000000                                                                                                           | ✓   |
 
 ## Additional notes
 
