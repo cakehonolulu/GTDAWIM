@@ -21,7 +21,7 @@
 int main()
 {
 	printf("Programa per convertir entre majúscules i minúscules\n");
-	printf("A continuació introdueixi la lletra uqe vulgui (Autodetecta majúscules): ");
+	printf("A continuació introdueixi la lletra que vulgui (Autodetecta majúscules): ");
 
 	char m_letter;
 
