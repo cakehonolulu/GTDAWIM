@@ -1,0 +1,47 @@
+PSEUDO:
+
+algorisme
+
+var
+	a, b, c, discriminants: enters
+	x1, x2: reals
+fvar
+
+inici
+	escriure ("Utilitat per calcular les arrels d'una equació de segon grau (ax^2+bx+c=0)")
+
+	escriure ("Per començar, escrigui el valor de a: ")
+	llegir (a)
+
+	si (a == 0) llavors
+
+		escriure ("Ara escrigui el valor de b: ")
+		llegir (b)
+
+		escriure ("Finalment, el valor de c: ")
+		llegir (c)
+
+		discriminant <- ((b * b) - (4 * a * c))
+
+		si (discriminant < 0) llavors
+			escriure ("No existeixen sol·lucions!")
+		fsi
+
+		escriure ("Discriminant: ", discriminant)
+
+		x1 <- (((-b) + (arrel_quadrada(discriminant))) / (2 * a))
+
+		x2 <- (((-b) - (arrel_quadrada(discriminant))) / (2 * a))
+
+		si (x1 == x2) llavors
+			escriure ("La sol·lució és ", x1)
+		sino
+			escriure ("Les sol·lucions son  i ", x1, x2)
+		fsi
+
+	sino
+		escriure ("L'equació no es de segon grau!")
+	fsi
+finici
+
+falgorisme
