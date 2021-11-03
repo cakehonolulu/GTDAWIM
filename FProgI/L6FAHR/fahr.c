@@ -1,7 +1,22 @@
-#include <stdio.h>
+#include "fahr.h"
 
-int main()
+int main(int argc, char **argv)
 {
+	if (argc < 2)
+	{
+		printf("Fº->Cº\n");
+		printf("Ús: ./ftoc [nom_del_arxiu]\n");
+		return 1;
+	}
+
+	char *m_filename;
+
+	m_filename = argv[1];
+
+	printf("Nom del arxiu: %s\n", m_filename);
+
+	m_file_load(m_filename);
+
 	float m_fahrenheit;
 	float m_celsius;
 
