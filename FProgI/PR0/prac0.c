@@ -46,6 +46,9 @@ int main()
 	// Using unsigned int to ensure less memory footprint
 	unsigned int fungiblematerials;
 
+	// Use a float to display up-to-cents accuracy on the price
+	float total;
+
 	printf("Calculador de Pressupost\n");
 
 	printf("Per començar, introdueixi la duració total del projecte (en mesos): ");
@@ -61,78 +64,75 @@ int main()
 	if (months < 6 || months > 48)
 	{
 		printf("Durada del projecte invàlida, torni a executar el programa!\n");
-		return 1;
-	}
-
-	printf("Ara introdueixi el nombre de persones no becades (2500€ al mes) contractades: ");
-
-	/*
-		I specify scanf the %hu modifier
-
-		%hu ensures that scanf reads the integer the user inputs as an unsigned short 
-	*/
-	scanf("%hu", &nbworkers);
-
-	printf("Ara introdueixi el nombre de persones becades (1200€ al mes) contractades: ");
-
-	/*
-		I specify scanf the %hu modifier
-
-		%hu ensures that scanf reads the integer the user inputs as an unsigned short 
-	*/
-	scanf("%hu", &bworkers);
-
-	printf("Introdueixi la despesa total en material inventariable (€): ");
-
-	/*
-		I specify scanf the %u modifier
-
-		%u ensures that scanf reads the integer the user inputs as an unsigned int 
-	*/
-	scanf("%u", &materials);
-
-	printf("Introdueixi la despesa total en viatges (€): ");
-
-	/*
-		I specify scanf the %u modifier
-
-		%u ensures that scanf reads the integer the user inputs as an unsigned int 
-	*/
-	scanf("%u", &travels);
-
-	printf("Introdueixi la despesa total en alquilers i serveis (€): ");
-
-	/*
-		I specify scanf the %u modifier
-
-		%u ensures that scanf reads the integer the user inputs as an unsigned int 
-	*/
-	scanf("%u", &rentalandservices);
-
-	printf("Introdueixi la despesa total en materials fungibles (€): ");
-
-	/*
-		I specify scanf the %u modifier
-
-		%u ensures that scanf reads the integer the user inputs as an unsigned int 
-	*/
-	scanf("%u", &fungiblematerials);
-
-	unsigned int total = (((nbworkers) * 2500) + ((bworkers) * 1200) + (materials)
-		+ (travels) + (rentalandservices) + (fungiblematerials));
-
-	if (months >= 6 && months <= 12)
-	{
-		printf("S'aplica un overhead del 10%% al pressupost!\n");
-		float pct10 = (float) total * 0.1;
-		total = total + pct10;
 	} else {
-		printf("S'aplica un overhead del 20%% al pressupost!\n");
-		float pct20 = (float) total * 0.2;
-		total = total + pct20;
-	}
+		printf("Ara introdueixi el nombre de persones no becades (2500€ al mes) contractades: ");
 
-	printf("El pressupost total per al projecte (Amb una durada de %u mesos) es: %0.2f (€)\n", (unsigned int) months, (float) total);
+		/*
+			I specify scanf the %hu modifier
+
+			%hu ensures that scanf reads the integer the user inputs as an unsigned short 
+		*/
+		scanf("%hu", &nbworkers);
+
+		printf("Ara introdueixi el nombre de persones becades (1200€ al mes) contractades: ");
+
+		/*
+			I specify scanf the %hu modifier
+
+			%hu ensures that scanf reads the integer the user inputs as an unsigned short 
+		*/
+		scanf("%hu", &bworkers);
+
+		printf("Introdueixi la despesa total en material inventariable (€): ");
+
+		/*
+			I specify scanf the %u modifier
+
+			%u ensures that scanf reads the integer the user inputs as an unsigned int 
+		*/
+		scanf("%u", &materials);
+
+		printf("Introdueixi la despesa total en viatges (€): ");
+
+		/*
+			I specify scanf the %u modifier
+
+			%u ensures that scanf reads the integer the user inputs as an unsigned int 
+		*/
+		scanf("%u", &travels);
+
+		printf("Introdueixi la despesa total en alquilers i serveis (€): ");
+
+		/*
+			I specify scanf the %u modifier
+
+			%u ensures that scanf reads the integer the user inputs as an unsigned int 
+		*/
+		scanf("%u", &rentalandservices);
+
+		printf("Introdueixi la despesa total en materials fungibles (€): ");
+
+		/*
+			I specify scanf the %u modifier
+
+			%u ensures that scanf reads the integer the user inputs as an unsigned int 
+		*/
+		scanf("%u", &fungiblematerials);
+
+		total = (((nbworkers) * 2500) + ((bworkers) * 1200) + (materials)
+			+ (travels) + (rentalandservices) + (fungiblematerials));
+
+		if (months >= 6 && months <= 12)
+		{
+			printf("S'aplica un overhead del 10%% al pressupost!\n");
+			total += (total * 0.1);
+		} else {
+			printf("S'aplica un overhead del 20%% al pressupost!\n");
+			total += (total * 0.2);
+		}
+
+		printf("El pressupost total per al projecte (Amb una durada de %u mesos) es: %0.2f (€)\n", (unsigned int) months, total);
+	}
 
 	return 0;
 }
