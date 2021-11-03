@@ -9,8 +9,8 @@ int main()
 {
 	// Define variables at the start of the program
 	int m_edat, m_bid, m_tries;
-	bool m_end;
-
+	bool m_failedguess;
+	bool m_guessedright;
 	/*
 		Use: "man srand" to gather more info on srand() usage
 		srand() requires a seed to start it's RNG function.
@@ -31,37 +31,63 @@ int main()
 
 	// Initialize all variables before entering the while() loop
 	m_tries = 1;
-	m_end = false;
+	m_failedguess = false;
+	m_guessedright = false;
 
-	while (!m_end)
+	// Only enter the while loop if (And only if) both bools are false
+	while ((!m_guessedright) && (!m_failedguess))
 	{
+		// Print a brief program explanation and get user input
 		printf("Quina edat creus que tinc? ");
 		scanf("%d", &m_bid);
 
+		// Check if user input is higher or lower than the one generated
 		if ((m_bid > m_edat) || (m_bid < m_edat))
 		{
+			// Tell the user's guess is far from the number
 			printf("Fred fred!\n");
+			// Check if guess is higher than generated number
 			if (m_bid > m_edat)
 			{
+				// Tell the user to input a lower number
 				printf("Prova un nombre més baix!\n");
+			// Check if the guess is lower than generated number
 			} else if (m_bid < m_edat) {
+				// Tel the user to input a higher number
 				printf("Prova un nombre més gran!\n");
 			}
 		}
 
+		// Check if the user guessed correctly the number
 		if (m_bid == m_edat)
 		{
-			printf("Ha encertat la meva edat! Ha guanyat!\n");
-			m_end = true;
+			// Set the condition to true
+			m_guessedright = true;
 		}
 
+		// Check if we're exceeding the max number of tries
 		if (m_tries == M_MAX_TRIES)
 		{
-			printf("Oh... No ha aconseguit esdevinar la meva edat... Ha perdut!\n");
-			m_end = true;
+			// Set the condition to true
+			m_failedguess = true;
 		}
 
+		// Increment the current number of tries by 1
 		m_tries++;
+	}
+
+	// Out of the while() loop
+
+	// If the user guessed the bid correctly, prompt it to him
+	if (m_bid == m_edat)
+	{
+		printf("Ha encertat la meva edat! Ha guanyat!\n");
+	}
+
+	// If the user has exceeded the max number of tries, prompt him
+	if (m_tries > M_MAX_TRIES && m_bid != m_edat)
+	{
+		printf("Oh... No ha aconseguit esdevinar la meva edat... Ha perdut!\n");
 	}
 
 	return 0;
