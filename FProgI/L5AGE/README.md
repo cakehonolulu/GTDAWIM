@@ -21,11 +21,20 @@ uname -a
 # Command for Ubuntu (And Ubuntu-based distros):
 lsb_release -a
 
-# Compile the file
+# Compile the file using command-line
 # By default, we add the Wall and Wextra switches to check for potential warnings at compile time.
 # We'll also add -pedantic to further ensure source-code compliance and -g to include debug symbols to use with GDB
 # I also compile the code using -std=c2x, which gives me the ability to use C++11-type attributes to ignore a warning that really isn't in code
 gcc jocedat.c -Wall -Wextra -pedantic -g -std=c2x
+# To debug it, use
+gdb a.out
+
+# Compile using make (Easier)
+# Add DEBUG=1 if you want to include debug symbols
+make
+
+# Debug using make (Easier)
+make gdb
 ```
 ## Running
 
