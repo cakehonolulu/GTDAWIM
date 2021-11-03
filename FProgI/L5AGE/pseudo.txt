@@ -1,0 +1,59 @@
+PSEUDO:
+
+algorisme
+
+constant
+	M_MAX_TRIES <- 5
+fconstant
+
+var
+	m_edat, m_bid, m_tries: enters
+	m_failedguess, m_guessedright: boolea
+fvar
+
+inici
+	preparaGeneradorAleatori(hora_actual)
+
+	m_edat <- (nombreAleatori() modul(41)) + 10 
+
+	m_tries <- 1
+	m_failedguess <- fals
+	m_guessedright <- fals
+
+	mentre (m_guessedright no es vertader) o (m_failedguess no es vertader)
+		escriure ("Quina edat creus que tinc? ")
+		llegir (m_bid)
+
+		si ((m_bid > m_edat) o (m_bid < m_edat))
+			escriure ("Fred fred!")
+
+			si (m_bid > m_edat)
+				escriure ("Prova un nombre més baix")
+			sino (m_bid < m_edat)
+				escriure ("Prova un nombre més alt")
+			fsi
+
+			si (m_bid == m_edat)
+				m_guessedright <- cert
+			fsi
+
+			si (m_tries == M_MAX_TRIES)
+				m_failedguess <- cert
+			fsi
+		fsi
+
+		incrementa (m_tries) en 1
+	fmentre
+
+	si (m_bid == m_edat)
+		escriure ("Ha encertat la meva edat! Ha guanyat!")
+	fsi
+	
+	si (m_tries > M_MAX_TRIES) i (m_bid no equival a m_edat)
+		escriure ("Oh... No ha aconseguit esdevinar la meva edat... Ha perdut!");
+	fsi
+
+	retorna 0
+finici
+
+falgorisme
