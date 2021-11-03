@@ -7,8 +7,12 @@ CFLAGS := -Wall -Wextra -pedantic -std=c2x
 
 BINARY := a.out
 
-ifdef DEBUG
+ifdef SYM
 CFLAGS += -g
+endif
+
+ifdef DEBUG
+CFLAGS += -DDEBUG
 endif
 
 all: clean $(BINARY)
