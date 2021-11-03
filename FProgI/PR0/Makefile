@@ -15,7 +15,12 @@ all: clean $(BINARY)
 
 $(BINARY): *.c
 	@echo "🚧 Building..."
-	$(CC) $(CFLAGS) $^ -o $@
+
+ifdef EXTENDED
+	$(CC) $(CFLAGS) prac0_extended.c -o $@
+else
+	$(CC) $(CFLAGS) prac0.c -o $@
+endif
 
 gdb:
 	gdb a.out
