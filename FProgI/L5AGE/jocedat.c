@@ -54,7 +54,7 @@ int main()
 		}
 
 		// Check if we're exceeding the max number of tries
-		if (m_tries == M_MAX_TRIES)
+		if (m_tries > M_MAX_TRIES)
 		{
 			// Set the condition to true
 			m_failedguess = true;
