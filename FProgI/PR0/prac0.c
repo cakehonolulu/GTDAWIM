@@ -1,6 +1,6 @@
 /*
 	Compile using: gcc prac0.c -Wall -Wextra (Use -DDEBUG switch if you want to enable debugging if compiling w/o make,
-	else specify DEBUG=1 alongside make).
+	else specify DEBUG=1 alongside make (If building from the Github repo project locally)).
 
 	GCC Version (LLVM's Clang untested):
 	
