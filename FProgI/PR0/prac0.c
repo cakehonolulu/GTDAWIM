@@ -34,17 +34,29 @@ int main()
 	// Using unsigned short to ensure less memory footprint
 	unsigned short bworkers;
 
-	// Using unsigned int to ensure less memory footprint
-	unsigned int materials;
+	/*
+		I initially used unsigned ints for less memory footprint,
+		but it looks like the guidelines are a bit vague and
+		they make you feed floating-point decimal numbers
+		into the program, breaking the entire flow of it
+		as it's expecting integers, not naturals.
 
-	// Using unsigned int to ensure less memory footprint
-	unsigned int travels;
+		Use floats to accept decimal-containing numbers
+		(Which make sense but no guidelines were provided regarding
+		that, as always)
 
-	// Using unsigned int to ensure less memory footprint
-	unsigned int rentalandservices;
+		NOTE: Code::Blocks's compiler is trash, so it's better to avoid
+		using scanf() modifiers whilst compiling there.
+		If you're using a decent & up-to-date compiler there should be
+		no problems.
+	*/
+	float materials;
 
-	// Using unsigned int to ensure less memory footprint
-	unsigned int fungiblematerials;
+	float travels;
+
+	float rentalandservices;
+
+	float fungiblematerials;
 
 	// Use a float to display up-to-cents accuracy on the price
 	float total;
@@ -90,7 +102,7 @@ int main()
 
 			%u ensures that scanf reads the integer the user inputs as an unsigned int 
 		*/
-		scanf("%u", &materials);
+		scanf("%f", &materials);
 
 		printf("Introdueixi la despesa total en viatges (€): ");
 
@@ -99,7 +111,7 @@ int main()
 
 			%u ensures that scanf reads the integer the user inputs as an unsigned int 
 		*/
-		scanf("%u", &travels);
+		scanf("%f", &travels);
 
 		printf("Introdueixi la despesa total en alquilers i serveis (€): ");
 
@@ -108,7 +120,7 @@ int main()
 
 			%u ensures that scanf reads the integer the user inputs as an unsigned int 
 		*/
-		scanf("%u", &rentalandservices);
+		scanf("%f", &rentalandservices);
 
 		printf("Introdueixi la despesa total en materials fungibles (€): ");
 
@@ -117,7 +129,7 @@ int main()
 
 			%u ensures that scanf reads the integer the user inputs as an unsigned int 
 		*/
-		scanf("%u", &fungiblematerials);
+		scanf("%f", &fungiblematerials);
 
 		total = (((nbworkers) * 2500) + ((bworkers) * 1200) + (materials)
 			+ (travels) + (rentalandservices) + (fungiblematerials));
