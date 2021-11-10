@@ -97,7 +97,7 @@ int main()
 		/*
 			I specify scanf the %f modifier
 
-			%f ensures that scanf reads the integer the user inputs as a floar
+			%f ensures that scanf reads the integer the user inputs as a float
 		*/
 		scanf("%f", &materials);
 
@@ -106,7 +106,7 @@ int main()
 		/*
 			I specify scanf the %f modifier
 
-			%f ensures that scanf reads the integer the user inputs as a floar
+			%f ensures that scanf reads the integer the user inputs as a float
 		*/
 		scanf("%f", &travels);
 
@@ -115,7 +115,7 @@ int main()
 		/*
 			I specify scanf the %f modifier
 
-			%f ensures that scanf reads the integer the user inputs as a floar 
+			%f ensures that scanf reads the integer the user inputs as a float
 		*/
 		scanf("%f", &rentalandservices);
 
@@ -124,7 +124,7 @@ int main()
 		/*
 			I specify scanf the % modifier
 
-			%f ensures that scanf reads the integer the user inputs as a floar 
+			%f ensures that scanf reads the integer the user inputs as a float
 		*/
 		scanf("%f", &fungiblematerials);
 
