@@ -35,20 +35,17 @@ int main()
 	unsigned short bworkers;
 
 	/*
-		I initially used unsigned ints for less memory footprint,
-		but it looks like the guidelines are a bit vague and
-		they make you feed floating-point decimal numbers
-		into the program, breaking the entire flow of it
-		as it's expecting integers, not naturals.
-
-		Use floats to accept decimal-containing numbers
-		(Which make sense but no guidelines were provided regarding
-		that, as always)
-
-		NOTE: Code::Blocks's compiler is trash, so it's better to avoid
-		using scanf() modifiers whilst compiling there.
+		NOTE: Code::Blocks's compiler is not good-enough,
+		so it's better to avoid	using scanf() modifiers whilst compiling there.
 		If you're using a decent & up-to-date compiler there should be
-		no problems.
+		no problems, else, remove "h" scanf() modifiers.
+
+		Also, accent marks get displayed inproperly there.
+		I suspect it's due to an UTF-8 incompatibility issue that maybe
+		a compiler flag fixes (But I can't assume there's a solution because
+		the compiler version that ships with Code::Blocks is arcaic), on
+		Linux, if using the compiler listed at the top of this source code, there's
+		no need for specifying anything as it works OOTB (Out-of-the-box).
 	*/
 	float materials;
 
@@ -98,40 +95,40 @@ int main()
 		printf("Introdueixi la despesa total en material inventariable (€): ");
 
 		/*
-			I specify scanf the %u modifier
+			I specify scanf the %f modifier
 
-			%u ensures that scanf reads the integer the user inputs as an unsigned int 
+			%f ensures that scanf reads the integer the user inputs as a floar
 		*/
 		scanf("%f", &materials);
 
 		printf("Introdueixi la despesa total en viatges (€): ");
 
 		/*
-			I specify scanf the %u modifier
+			I specify scanf the %f modifier
 
-			%u ensures that scanf reads the integer the user inputs as an unsigned int 
+			%f ensures that scanf reads the integer the user inputs as a floar
 		*/
 		scanf("%f", &travels);
 
 		printf("Introdueixi la despesa total en alquilers i serveis (€): ");
 
 		/*
-			I specify scanf the %u modifier
+			I specify scanf the %f modifier
 
-			%u ensures that scanf reads the integer the user inputs as an unsigned int 
+			%f ensures that scanf reads the integer the user inputs as a floar 
 		*/
 		scanf("%f", &rentalandservices);
 
 		printf("Introdueixi la despesa total en materials fungibles (€): ");
 
 		/*
-			I specify scanf the %u modifier
+			I specify scanf the % modifier
 
-			%u ensures that scanf reads the integer the user inputs as an unsigned int 
+			%f ensures that scanf reads the integer the user inputs as a floar 
 		*/
 		scanf("%f", &fungiblematerials);
 
-		total = (((nbworkers) * 2500) + ((bworkers) * 1200) + (materials)
+		total = ((((float) nbworkers) * 2500) + (((float) bworkers) * 1200) + (materials)
 			+ (travels) + (rentalandservices) + (fungiblematerials));
 
 		if (months >= 6 && months <= 12)
@@ -143,6 +140,7 @@ int main()
 			total += (total * 0.2);
 		}
 
+		// Cast the unsigned char
 		printf("El pressupost total per al projecte (Amb una durada de %u mesos) es: %0.2f (€)\n", (unsigned int) months, total);
 	}
 
