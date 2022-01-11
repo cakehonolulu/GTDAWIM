@@ -100,10 +100,8 @@ int yodify(FILE *m_file, int m_speed, int m_yodification)
 
 	char m_sentences[m_lines][15 * 15];
 
-	char m_sentence[15 * 15];
-
 	int i;
-	for (i = 0; i <= m_lines; i++)
+	for (i = 0; i < m_lines; i++)
 	{
 		fgets(m_sentences[i], (15 * 15), m_file);
 
@@ -117,14 +115,25 @@ int yodify(FILE *m_file, int m_speed, int m_yodification)
 		printf("%s\n", m_sentences[i]);
 	}
 	
-	char * pch;
-	printf ("Dividint \"%s\" en parts:\n", m_sentences[0]);
-	pch = strtok (m_sentences[0]," ,.-");
-	
-	while (pch != NULL)
+	// Rewind up until the start of the file after dealing with fgetc()
+	rewind(m_file);
+
+	char m_sentence[15 * 15];
+
+	char *m_index;
+
+	for (i = 0; i < m_lines; i++)
 	{
-		printf ("%s\n",pch);
-		pch = strtok (NULL, " ,.-");
+		printf("\n\x1B[34mFrase Número %d\x1B[0m\n", i + 1);
+
+		m_index = strtok(m_sentences[i]," ,.-");
+
+		while (m_index != NULL)
+		{
+			printf("%s\n", m_index);
+			m_index = strtok(NULL," ,.-");
+		}
+
 	}
 
 	return 0;
