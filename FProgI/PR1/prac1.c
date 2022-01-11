@@ -61,7 +61,7 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 		a determined line has and the current character index for fgetc()
 	*/
 	char m_char, *m_index;
-	int i, j, k, m_len, m_letter_index = 0, m_word_index = 0, m_lines = 0, m_line_chars = 0;
+	int m_lines = 0, m_line_chars = 0, i, j, k, m_len;
 
 	// While loop that runs until fgetc() gets to End-Of-File (stdlib.h)
 	while ((m_char = fgetc(m_file)) != EOF)
@@ -94,11 +94,13 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 	    m_lines++;
 	}
 
-	printf("Linees totals al arxiu: %d\n\n", m_lines);
-
 	// Rewind up until the start of the file after dealing with fgetc()
 	rewind(m_file);
 
+	// Max of 16 strings of maximum 16 characters
+	char *m_matrix[][16][16] = {0};
+
+	// Split into sentences
 	char m_sentences[m_lines][15 * 15];
 
 	for (i = 0; i < m_lines; i++)
@@ -111,8 +113,6 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 		{
 			m_sentences[i][--m_length] = '\0';
 		}
-
-		printf("%s\n", m_sentences[i]);
 	}
 
 	/*				    Letters
@@ -126,13 +126,12 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 					5   y o u
 					...
 	*/
-	char m_matrix[m_lines][15][15];
 
-	memset( m_matrix, '0', sizeof(m_matrix));
-
+	int m_count = 0;
 
 	for (i = 0; i < m_lines; i++)
 	{
+
 		printf("\n\x1B[34mFrase Número %d\x1B[0m\n", (i + 1));
 
 		m_index = strtok(m_sentences[i], " .,");
@@ -141,69 +140,22 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 		{
 			m_len = strlen(m_index);
 
-			// This writes **INTO** the matrix
-			for (j = 0; j < m_len; j++)
-			{
-				m_matrix[i][m_word_index][m_letter_index] = m_index[j];
-				m_letter_index++;
-			}
-
-
-			// This reads **OFF** the matrix
-			for (j = 0; j < m_len; j++)
-			{
-#ifdef DEBUG
-				printf("[%c] -> %d %d %d ", m_matrix[i][m_word_index][j], i, m_word_index, j);
-#endif
-				printf("%c", m_matrix[i][m_word_index][j]);
-			}
-			
-			printf("\n");
+			printf("%s\n", m_index);
+			strcpy(m_matrix[i][m_count], m_index);
+			printf("%s\n", m_matrix[i][m_count]);
+			m_count++;
+			printf("\n\ncount: %d\n\n", m_count);
 			m_index = strtok(NULL, " .,");
 
-			m_word_index++;
-			m_letter_index = 0;
+
 		}
 
-		m_word_index = 0;
+			m_count = 0;
+
+
+
+		//m_word_index = 0;
 	
-	}
-
-	printf("\n");
-	
-	k = 0;
-
-	// Now it gets interesting, apply speed and yodification coef.
-	for (i = 0; i < m_lines; i++)
-	{
-		switch (m_yodification)
-		{
-			case 0:
-				break;
-			case 1:
-				// Low yodification
-				// Check each word
-				for (j = 0; j < 15; j++)
-				{
-
-					if (m_matrix[i][j][0] == '0')
-					{
-						break;
-					}
-
-					k++;
-				}
-				printf("line %d has %d words\n", (i + 1), k);
-				k = 0;
-				break;
-			case 2:
-				// High yodification
-				break;
-			default:
-				break;
-		}
-		
-		//dibuixa_yoda();
 	}
 
 	return 0;
@@ -227,5 +179,3 @@ void dibuixa_yoda()
  printf("\n");
  }
 }
-
-//strncpy(string, array, 20);
