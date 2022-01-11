@@ -101,6 +101,8 @@ int yodify(FILE *m_file, int m_speed, int m_yodification)
 	char m_sentences[m_lines][15 * 15];
 
 	int i;
+	int j;
+
 	for (i = 0; i < m_lines; i++)
 	{
 		fgets(m_sentences[i], (15 * 15), m_file);
@@ -114,13 +116,24 @@ int yodify(FILE *m_file, int m_speed, int m_yodification)
 
 		printf("%s\n", m_sentences[i]);
 	}
-	
-	// Rewind up until the start of the file after dealing with fgetc()
-	rewind(m_file);
-
-	char m_word[15];
 
 	char *m_index;
+
+	/*				    Letters
+					    0 1 2 3 4 5 6 ...
+
+			Words	0   M a y
+					1   t h e
+					2   f o r c e
+					3   b e
+					4   w i t h
+					5   y o u
+					...
+	*/
+	char m_matrix[m_lines][15][15];
+	int m_letter_index = 0;
+	int m_word_index = 0;
+	int m_len;
 
 	for (i = 0; i < m_lines; i++)
 	{
@@ -130,10 +143,28 @@ int yodify(FILE *m_file, int m_speed, int m_yodification)
 
 		while (m_index != NULL)
 		{
-			printf("%s\n", m_index);
-			m_index = strtok(NULL, " .,");
-		}
+			m_len = strlen(m_index);
 
+			// This writes **INTO** the matrix
+			for (j = 0; j < m_len; j++)
+			{
+				m_matrix[i][m_word_index][m_letter_index] = m_index[j];
+				m_letter_index++;
+			}
+
+			// This reads **OFF** the matrix
+			for (j = 0; j < m_len; j++)
+			{
+				printf("%c", m_matrix[i][m_word_index][j]);
+			}
+			
+			printf("\n");
+			m_index = strtok(NULL, " .,");
+
+			m_word_index = 0;
+			m_letter_index = 0;
+		}
+	
 	}
 
 	return 0;
