@@ -46,21 +46,22 @@ int main()
 		return 1;
 	}
 
-	yodify(m_file, m_speed, m_yodification);
+	m_read_and_convert(m_file, m_speed, m_yodification);
 
+	printf("De processar... ha acabat, el fitxer\n");
 	fclose(m_file);
 
 	return 0;
 }
 
-int yodify(FILE *m_file, int m_speed, int m_yodification)
+int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 {
 	/*
 		Total line count (Excluding empty newlines); how many characters
 		a determined line has and the current character index for fgetc()
 	*/
-	int m_lines = 0, m_line_chars = 0;
-	char m_char;
+	char m_char, *m_index;
+	int i, j, k, m_len, m_letter_index = 0, m_word_index = 0, m_lines = 0, m_line_chars = 0;
 
 	// While loop that runs until fgetc() gets to End-Of-File (stdlib.h)
 	while ((m_char = fgetc(m_file)) != EOF)
@@ -100,9 +101,6 @@ int yodify(FILE *m_file, int m_speed, int m_yodification)
 
 	char m_sentences[m_lines][15 * 15];
 
-	int i;
-	int j;
-
 	for (i = 0; i < m_lines; i++)
 	{
 		fgets(m_sentences[i], (15 * 15), m_file);
@@ -117,8 +115,6 @@ int yodify(FILE *m_file, int m_speed, int m_yodification)
 		printf("%s\n", m_sentences[i]);
 	}
 
-	char *m_index;
-
 	/*				    Letters
 					    0 1 2 3 4 5 6 ...
 
@@ -131,9 +127,9 @@ int yodify(FILE *m_file, int m_speed, int m_yodification)
 					...
 	*/
 	char m_matrix[m_lines][15][15];
-	int m_letter_index = 0;
-	int m_word_index = 0;
-	int m_len;
+
+	memset( m_matrix, '0', sizeof(m_matrix));
+
 
 	for (i = 0; i < m_lines; i++)
 	{
@@ -152,20 +148,84 @@ int yodify(FILE *m_file, int m_speed, int m_yodification)
 				m_letter_index++;
 			}
 
+
 			// This reads **OFF** the matrix
 			for (j = 0; j < m_len; j++)
 			{
+#ifdef DEBUG
+				printf("[%c] -> %d %d %d ", m_matrix[i][m_word_index][j], i, m_word_index, j);
+#endif
 				printf("%c", m_matrix[i][m_word_index][j]);
 			}
 			
 			printf("\n");
 			m_index = strtok(NULL, " .,");
 
-			m_word_index = 0;
+			m_word_index++;
 			m_letter_index = 0;
 		}
+
+		m_word_index = 0;
 	
+	}
+
+	printf("\n");
+	
+	k = 0;
+
+	// Now it gets interesting, apply speed and yodification coef.
+	for (i = 0; i < m_lines; i++)
+	{
+		switch (m_yodification)
+		{
+			case 0:
+				break;
+			case 1:
+				// Low yodification
+				// Check each word
+				for (j = 0; j < 15; j++)
+				{
+
+					if (m_matrix[i][j][0] == '0')
+					{
+						break;
+					}
+
+					k++;
+				}
+				printf("line %d has %d words\n", (i + 1), k);
+				k = 0;
+				break;
+			case 2:
+				// High yodification
+				break;
+			default:
+				break;
+		}
+		
+		//dibuixa_yoda();
 	}
 
 	return 0;
 }
+
+void dibuixa_yoda()
+{
+ char yoda[4][19] = {{92, 96, 45, 45, 46, 95, 39, 46, 58, 58, 46, 96, 46, 95, 46, 45, 45, 39, 47},
+ {32, 92, 32, 32, 32, 96, 32, 95, 95, 58, 58, 95, 95, 32, 39, 32, 32, 32, 47},
+{32, 32, 32, 45, 45, 58, 46, 96, 39, 46, 46, 96, 39, 46, 58, 45, 45, 32, 32},
+{32, 32, 32, 32, 32, 32, 92, 32, 96, 45, 45, 39, 32, 47, 32, 32, 32, 32, 32}};
+ int i, j;
+
+ printf("\n\n\n");
+ for (i = 0; i < 4; i++)
+ {
+ for (j = 0; j < 19; j++)
+ {
+ printf ("\x1B[32m%c\x1B[0m", yoda[i][j]);
+ }
+ printf("\n");
+ }
+}
+
+//strncpy(string, array, 20);

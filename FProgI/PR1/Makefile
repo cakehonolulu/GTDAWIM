@@ -36,4 +36,3 @@ gdb:
 clean:
 	@echo "🧹 Cleaning..."
 	-@rm $(BINARY)
-	-@rm log.txt
