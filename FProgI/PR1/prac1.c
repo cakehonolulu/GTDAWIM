@@ -124,14 +124,14 @@ int yodify(FILE *m_file, int m_speed, int m_yodification)
 
 	for (i = 0; i < m_lines; i++)
 	{
-		printf("\n\x1B[34mFrase Número %d\x1B[0m\n", i + 1);
+		printf("\n\x1B[34mFrase Número %d\x1B[0m\n", (i + 1));
 
-		m_index = strtok(m_sentences[i]," ,.-");
+		m_index = strtok(m_sentences[i], " ");
 
 		while (m_index != NULL)
 		{
 			printf("%s\n", m_index);
-			m_index = strtok(NULL," ,.-");
+			m_index = strtok(NULL, " ");
 		}
 
 	}
