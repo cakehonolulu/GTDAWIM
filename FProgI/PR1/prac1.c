@@ -163,6 +163,53 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 		}		
 	}
 
+	srand(time(NULL));
+
+	for (int i = 0; i < m_lines; i++)
+	{
+		if (m_sentence_words[i] >= 4)
+		{
+			int m_coeff =  (m_yodification == 1) ? 2 : 3;
+
+			int m_yod = ((m_sentence_words[i] / (m_yodification * m_coeff)));
+
+			for (int j = 0; j < m_sentence_words[i]; j++)
+			{
+				if (m_yod + j >= m_sentence_words[i])
+					m_yod = 0;
+
+				printf("%s ", (char*) m_matrix[i][j + m_yod]);
+			}
+			// Yodify
+			printf("yod: %d\n", m_yod);
+			//printf("%s ", (char*) m_matrix[i][m_yod]);
+		}
+		else
+		{
+			// Untouched
+			for (int j = 0; j < m_sentence_words[i]; j++)
+			{
+				printf("%s ", (char*) m_matrix[i][j]);
+			}
+		}
+
+		printf("\n");
+	}
+	
+/*
+	for (int i = 0; i < m_lines; i++)
+	{
+		for (int j = 0; j < m_sentence_words[i]; j++)
+		{
+
+			int m_length = strlen((char*) m_matrix[i][j]);
+			printf("Word: %s; Word length: %d\n", (char*) m_matrix[i][j], m_length);
+		}
+	}*/
+
+
+
+
 	return 0;
 }
 
