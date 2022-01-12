@@ -99,6 +99,7 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 
 	// Max of 16 strings of maximum 16 characters
 	char *m_matrix[m_lines][16][16];
+	char m_sentece_words[m_lines];
 	
 	memset(m_matrix, '0', m_lines*16*16*sizeof(char*) );
 
@@ -118,23 +119,16 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 		}
 	}
 
-	/*				    Letters
-					    0 1 2 3 4 5 6 ...
+	/*
+		matrix[sentence][word]
 
-			Words	0   M a y
-					1   t h e
-					2   f o r c e
-					3   b e
-					4   w i t h
-					5   y o u
-					...
+		Sentence	0   may the force be with you    Word	0 may
+					1   may the force be with you...		1 the
+					2   ...									2 force
+					...										3 ...
 	*/
 
-
-	// TODO:
-	// Replace m_matrix[i][m_count][m_count] by m_matrix[m_line][m_currentword][m_string]
-	int m_count = 0;
-
+	int m_word_index = 0;
 	for (i = 0; i < m_lines; i++)
 	{
 
@@ -145,26 +139,17 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 		while (m_index != NULL)
 		{
 			m_len = strlen(m_index);
-
-			printf("%s\n", m_index);
-			strcpy(m_matrix[i][m_count][m_count], m_index);
-			printf("%s\n", m_matrix[i][m_count][m_count]);
-			m_count++;
-			printf("\n\ncount: %d\n\n", m_count);
+			strcpy(m_matrix[i][m_word_index], m_index);
+			printf("%s\n", m_matrix[i][m_word_index]);
+			m_word_index++;
+			printf("\x1B[32mParaula: %d\x1B[0m\n\n", m_word_index);
 			m_index = strtok(NULL, " .,");
+		}	
 
-
-		}
-
-			m_count = 0;
-
-
-
-		//m_word_index = 0;
-	
+		m_sentece_words[i] = m_word_index;
+		m_word_index = 0;
 	}
-
-
+	
 	return 0;
 }
 
