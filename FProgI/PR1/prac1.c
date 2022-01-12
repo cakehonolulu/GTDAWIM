@@ -61,7 +61,7 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 		a determined line has and the current character index for fgetc()
 	*/
 	char m_char, *m_index;
-	int m_lines = 0, m_line_chars = 0, i, j, k, m_len;
+	int m_lines = 0, m_line_chars = 0;
 
 	// While loop that runs until fgetc() gets to End-Of-File (stdlib.h)
 	while ((m_char = fgetc(m_file)) != EOF)
@@ -98,16 +98,10 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 	rewind(m_file);
 
 	// Max of 16 strings of maximum 16 characters
-	char *m_matrix[m_lines][16][16];
-	char m_sentece_words[m_lines];
-	
-	memset(m_matrix, '0', m_lines*16*16*sizeof(char*) );
-
-
 	// Split into sentences
 	char m_sentences[m_lines][15 * 15];
 
-	for (i = 0; i < m_lines; i++)
+	for (int i = 0; i < m_lines; i++)
 	{
 		fgets(m_sentences[i], (15 * 15), m_file);
 
@@ -127,29 +121,48 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 					2   ...									2 force
 					...										3 ...
 	*/
+	char *m_matrix[m_lines][15][15];
+	char m_sentence_words[m_lines];
+	
+	memset(m_matrix, '0', m_lines * 15 * 15 * sizeof(char*));
 
 	int m_word_index = 0;
-	for (i = 0; i < m_lines; i++)
+	int m_len = 0;
+	for (int i = 0; i < m_lines; i++)
 	{
-
-		printf("\n\x1B[34mFrase Número %d\x1B[0m\n", (i + 1));
-
 		m_index = strtok(m_sentences[i], " .,");
 
 		while (m_index != NULL)
 		{
 			m_len = strlen(m_index);
-			strcpy(m_matrix[i][m_word_index], m_index);
-			printf("%s\n", m_matrix[i][m_word_index]);
+			strcpy((char*) m_matrix[i][m_word_index], m_index);
 			m_word_index++;
-			printf("\x1B[32mParaula: %d\x1B[0m\n\n", m_word_index);
 			m_index = strtok(NULL, " .,");
 		}	
 
-		m_sentece_words[i] = m_word_index;
+		m_sentence_words[i] = m_word_index;
 		m_word_index = 0;
 	}
-	
+
+	int m_checked_sentences = 0;
+
+	for (int i = 0; i < m_lines; i++)
+	{
+		if (m_sentence_words[i] >= 4)
+		{
+			m_checked_sentences++;
+
+			printf("Frase %d: ", m_checked_sentences);
+
+			for (int x = 0; x < m_sentence_words[i]; x++)
+			{
+				printf("%s ", (char*) m_matrix[i][x]);
+			}
+
+			printf("\n");
+		}		
+	}
+
 	return 0;
 }
 
