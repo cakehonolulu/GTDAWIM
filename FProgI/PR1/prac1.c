@@ -98,7 +98,10 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 	rewind(m_file);
 
 	// Max of 16 strings of maximum 16 characters
-	char *m_matrix[][16][16] = {0};
+	char *m_matrix[m_lines][16][16];
+	
+	memset(m_matrix, '0', m_lines*16*16*sizeof(char*) );
+
 
 	// Split into sentences
 	char m_sentences[m_lines][15 * 15];
@@ -127,6 +130,9 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 					...
 	*/
 
+
+	// TODO:
+	// Replace m_matrix[i][m_count][m_count] by m_matrix[m_line][m_currentword][m_string]
 	int m_count = 0;
 
 	for (i = 0; i < m_lines; i++)
@@ -141,8 +147,8 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 			m_len = strlen(m_index);
 
 			printf("%s\n", m_index);
-			strcpy(m_matrix[i][m_count], m_index);
-			printf("%s\n", m_matrix[i][m_count]);
+			strcpy(m_matrix[i][m_count][m_count], m_index);
+			printf("%s\n", m_matrix[i][m_count][m_count]);
 			m_count++;
 			printf("\n\ncount: %d\n\n", m_count);
 			m_index = strtok(NULL, " .,");
@@ -157,6 +163,7 @@ int m_read_and_convert(FILE *m_file, int m_speed, int m_yodification)
 		//m_word_index = 0;
 	
 	}
+
 
 	return 0;
 }
