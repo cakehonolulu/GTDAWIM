@@ -297,24 +297,6 @@ int m_yodify(FILE *m_file, int m_speed, int m_yodification)
 		// Check if the sentence has 4 or more words
 		if (m_sentence_words[i] >= 4)
 		{
-			/*
-				If they do, create an array sized the total word-length of a sentence.
-				So if the sentence has 6 words, array will contain 6 numbers.
-			*/
-			int m_array[m_sentence_words[i]];
-
-			// Same reasoning for this can be found up in the source code.
-			memset(m_array, '0', m_sentence_words[i] * sizeof(int));
-
-			// Populate the newly created array with numbers starting from 0
-			for (int l = 0; l < m_sentence_words[i]; l++)
-			{
-				m_array[l] = l;
-			}
-
-			// Shuffle the array (Change the order of the numerical serie)
-			m_array_shuffle(m_array, m_sentence_words[i], m_yodification);
-
 			// Draw yoda
 			dibuixa_yoda();
 
@@ -324,8 +306,33 @@ int m_yodify(FILE *m_file, int m_speed, int m_yodification)
 			*/
 			for (int j = 0; j < m_sentence_words[i]; j++)
 			{
-				// Print the word by accessing the matrix
-				printf("%s", (char *) m_matrix[i][m_array[j]]);
+				if (m_yodification)
+				{
+					/*
+						If they do, create an array sized the total word-length of a sentence.
+						So if the sentence has 6 words, array will contain 6 numbers.
+					*/
+					int m_array[m_sentence_words[i]];
+		
+					// Same reasoning for this can be found up in the source code.
+					memset(m_array, '0', m_sentence_words[i] * sizeof(int));
+		
+					// Populate the newly created array with numbers starting from 0
+					for (int l = 0; l < m_sentence_words[i]; l++)
+					{
+						m_array[l] = l;
+					}
+	
+					// Shuffle the array (Change the order of the numerical serie)
+					m_array_shuffle(m_array, m_sentence_words[i], m_yodification);
+
+					printf("%s", (char *) m_matrix[i][m_array[j]]);
+				}
+				else
+				{
+					// Print the word by accessing the matrix
+					printf("%s", (char *) m_matrix[i][j]);
+				}
 
 				// Check if speed = 1 and if we've already printed 2 words
 				// If we have not, print a whitespace
@@ -428,6 +435,7 @@ void m_array_shuffle(int m_array[], int m_array_size, int m_yodification)
     // Do this for the entire array size
     for (i = m_array_size - 1; i > 0; i--)
     {
+    	// Based on the yodification coeff, apply more or less randomness
     	if (m_yodification == 1)
     	{
 			j = rand() % (i);
@@ -437,6 +445,7 @@ void m_array_shuffle(int m_array[], int m_array_size, int m_yodification)
 			j = rand() % (i + 1);
 		}
 
+		// Call the exchange func.
         m_exchange(&m_array[i], &m_array[j]);
     }
 }
