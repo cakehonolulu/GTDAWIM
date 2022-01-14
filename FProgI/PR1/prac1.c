@@ -385,26 +385,48 @@ void dibuixa_yoda()
 	}
 }
 
+/*
+	This function exchanges two integers by creating a temporal
+	variable holding one of them; then, by using pointer addressing
+	we can modify the value of the first one to be the value of the
+	second; and then, setting the second to the first one (Which was
+	saved previously on the temporal variable).
+*/
 void m_exchange(int *m_first, int *m_second)
 {
+	// Setup a temporal variable that holds the first value at *position
+	// This is all done thanks to pointer dereferencing mechanics
     int m_temp = *m_first;
+
+    // Set the *first value to the *second
     *m_first = *m_second;
+
+    // Set the *second value to the temporal variable (Which holds the old *first val.)
     *m_second = m_temp;
 }
 
+/*
+	This function is all possible thanks to PRNG.
+	It gets a seed for PRNG workings by feeding srand() with a null TIME struct.
+
+	It iterates through each index of the array and exchanges it with another value
+	from the same array by calling m_exchange
+*/
 void m_array_shuffle(int m_array[], int m_array_size, int m_yodification)
 {
+	// Seed obtaination for rand()
     srand(time(NULL));
 
     int i, j;
 
+    // Do this for the entire array size
     for (i = m_array_size - 1; i > 0; i--)
     {
     	if (m_yodification == 1)
     	{
 			j = rand() % (i);
     	}
-		else
+		else if (m_yodification == 2)
 		{
 			j = rand() % (i + 1);
 		}
