@@ -4,15 +4,21 @@
 int main()
 {
 	// Filename array that can read file names up to 20 characters
-	char m_filename[21] = {0};
+	char m_filename[21] = {0}, m_sentences[MAX_LINES][15 * 15], *m_word_matrix[MAX_LINES][15][15], m_sentence_words[MAX_LINES];;
 
 	// Speed of text and yodification modifier
-	int m_speed, m_yodification;
+	int m_speed, m_yodification, m_length;
 
 	// FILE object type variable that will hold the text file handle 
 	FILE *m_file = NULL;
 
 	printf("Yodizer - Del català al dialecte yoda!\n");
+
+#ifdef DEBUG
+	strcpy(m_filename, "yodatest.txt");
+#endif
+
+#ifndef DEBUG
 	printf("Introdueixi el nom del fitxer a llegir: ");
 
 	/*
@@ -20,6 +26,7 @@ int main()
 		Use the %19 modifier to allow only up to 19 characters
 	*/
 	scanf("%20s", m_filename);
+#endif
 
 	// Use fopen() with the scanf()-modified filename and the "read" modifier
 	m_file = fopen(m_filename, "r");
@@ -36,6 +43,11 @@ int main()
 		return 1;
 	}
 
+#ifdef DEBUG
+	m_speed = 1;
+#endif
+
+#ifndef DEBUG
 	printf("A continuació, introdueixi la velocitat del mestre Yoda: ");
 
 	/*
@@ -50,7 +62,13 @@ int main()
 		printf("Paràmetre de velocitat no acceptat (0-3)!\nSortint...\n");
 		return 1;
 	}
+#endif
 
+#ifdef DEBUG
+	m_yodification = 1;
+#endif
+
+#ifndef DEBUG
 	printf("Ara, el coficient de yodificació: ");
 
 	/*
@@ -65,6 +83,7 @@ int main()
 		printf("Paràmetre de velocitat no acceptat (0-3)!\nSortint...\n");
 		return 1;
 	}
+#endif
 
 	/*
 		m_yodify()
@@ -125,23 +144,20 @@ int main()
 
 		6.-	When it finishes, it closes the file handle and leaves a last message.
 	*/
-	m_yodify(m_file, m_speed, m_yodification);
+	
+	m_length = m_read_sentences(m_file, m_sentences, m_word_matrix, m_sentence_words);
 
-	printf("\n\nDe processar... ha acabat, el fitxer\n");
-	fclose(m_file);
+	m_yodify(m_length, m_word_matrix, m_sentence_words, m_yodification, m_speed);
+
+	printf("De processar... ha acabat, el fitxer\n");
 
 	return 0;
 }
 
-int m_yodify(FILE *m_file, int m_speed, int m_yodification)
+int m_read_sentences(FILE *m_file, char m_s[MAX_LINES][15 * 15], char *m_w_m[MAX_LINES][15][15], char *m_sentence_words)
 {
-	/*
-		Total line count (Excluding empty newlines); how many characters
-		a determined line has, the current character index for fgetc()
-		and the current already-read characters (To aid in line detection)
-	*/
-	char m_char, *m_index;
-	int m_lines = 0, m_line_chars = 0;
+	char m_char;
+	int i, m_lines = 0, m_line_chars = 0;
 
 	// While loop that runs until fgetc() gets to End-Of-File (stdlib.h)
 	while ((m_char = fgetc(m_file)) != EOF)
@@ -177,122 +193,79 @@ int m_yodify(FILE *m_file, int m_speed, int m_yodification)
 	// Rewind up until the start of the file after dealing with fgetc()
 	rewind(m_file);
 
-	// Max of 15 strings of maximum 15 characters
-	// Split into sentences
-	char m_sentences[m_lines][15 * 15];
-
-	// Do this for all lines
-	for (int i = 0; i < m_lines; i++)
+	for (i = 0; i < m_lines; i++)
 	{
-		// Read the entire sentence off the file
-		fgets(m_sentences[i], (15 * 15), m_file);
+		fgets(m_s[i], (15 * 15), m_file);
 
 		// Get it's length
-		int m_length = strlen(m_sentences[i]);
+		int m_length = strlen(m_s[i]);
 
 		// If the sentence exists, check if the last byte on the sentece is a LF (\n)
-		if (m_length > 0 && m_sentences[i][m_length - 1] == '\n')
+		if (m_length > 0 && m_s[i][m_length - 1] == '\n')
 		{
 			// If that's the case, access it using m_length - 1 and set it to \0
-			m_sentences[i][m_length - 1] = '\0';
+			m_s[i][m_length - 1] = '\0';
 		}
+
+		m_sentence_words[i] = frase_a_taula(m_s[i], m_w_m[i]);
 	}
 
+	fclose(m_file);
+
+	return m_lines;
+}
+
+int frase_a_taula(char *frase, char *paraules[15][15])
+{
+	int m_word_index = 0, i;
+	char *m_index;
+
 	/*
-		matrix[sentence][word][char_list]
-
-		Sentence	0   may the force be with you    Word	0 may		Letters		0 m
-					1   may the force be with you...		1 the					1 a
-					2   ...									2 force					2 y
-					...										3 ...
+		Point the index to the result of strtok.
+		It searches for delimitation tokens (Whitespaces, dots or commas)
+		in the sentence arrays and returns a pointer to them, else, a NULL one
+		if there's no tokens found.
 	*/
-	char *m_matrix[m_lines][15][15];
+	m_index = strtok(frase, " .,");
 
-	// Craft an array of words per line (Ex: m_sentence_words[line1] = 6)
-	char m_sentence_words[m_lines];
-	
-	/*
-		Because C expects m_lines to be defined at compile-time, we need to
-		populate the array afterwards so that it can be used without segfaulting.
-
-		Not doing so leaves the compiler no size information and it can't allocate
-		the space for it correctly.
-
-		It's done this way because malloc()'s aren't permitted as of right now
-	*/
-	memset(m_matrix, '0', m_lines * 15 * 15 * sizeof(char *));
-
-	// Current word index
-	int m_word_index = 0;
-
-	// Do this for every line
-	for (int i = 0; i < m_lines; i++)
+	// While there's still tokens on the sentence
+	while (m_index != NULL)
 	{
 		/*
-			Point the index to the result of strtok.
-			It searches for delimitation tokens (Whitespaces, dots or commas)
-			in the sentence arrays and returns a pointer to them, else, a NULL one
-			if there's no tokens found.
-
+			We can't assign values to this matrix by going the traditional way,
+			so we need to use strcpy() which expects a pointer to the destination
+			and a pointer to the char array
 		*/
-		m_index = strtok(m_sentences[i], " .,");
+		strcpy((char *) paraules[m_word_index], m_index);
 
-		// While there's still tokens on the sentence
-		while (m_index != NULL)
-		{
-			/*
-				We can't assign values to this matrix by going the traditional way,
-				so we need to use strcpy() which expects a pointer to the destination
-				and a pointer to the char array
-			*/
-			strcpy((char *) m_matrix[i][m_word_index], m_index);
+		// Increment the current word index
+		m_word_index++;
 
-			// Increment the current word index
-			m_word_index++;
-
-			/*
-				We specify NULL to strtok() to get it to keep tokenizing the previously
-				pointed sentence.
-			*/
-			m_index = strtok(NULL, " .,");
-		}	
-
-		// After each loop ending, add the sentence word count to the array of line word numbers
-		m_sentence_words[i] = m_word_index;
-
-		// And set the index back to 0
-		m_word_index = 0;
+		/*
+			We specify NULL to strtok() to get it to keep tokenizing the previously
+			pointed sentence.
+		*/
+		m_index = strtok(NULL, " .,");
 	}
 
 #ifdef DEBUG
-	/*
-		This doesn't get compiled in "release" builds, but it iterates through all sentences
-		and prints them if-and-only-if their word-count is 4 or higher.
-
-		I left this algo here because it shows how I planned to do the words >= 4 check afterwards.
-	*/
-	int m_checked_sentences = 0;
-
-	for (int i = 0; i < m_lines; i++)
+	for (i = 0; i < m_word_index; i++)
 	{
-		if (m_sentence_words[i] >= 4)
-		{
-			m_checked_sentences++;
-
-			printf("Frase %d (Paraules %d): ", m_checked_sentences, m_sentence_words[i]);
-
-			for (int x = 0; x < m_sentence_words[i]; x++)
-			{
-				printf("%s ", (char *) m_matrix[i][x]);
-			}
-
-			printf("\n");
-		}		
+		printf("%s ", (char *) paraules[i]);
 	}
+	
+	printf("\n");
 #endif
 
+	return m_word_index;
+}
+
+void m_yodify(int m_total_lines, char *m_word_matrix[MAX_LINES][15][15], char *m_sentence_words, int m_yodification, int m_speed)
+{
+	FILE *m_result = fopen("result.txt", "w");
+
 	// Do this for every line
-	for (int i = 0; i < m_lines; i++)
+	for (int i = 0; i < m_total_lines; i++)
 	{
 		// Check if the sentence has 4 or more words
 		if (m_sentence_words[i] >= 4)
@@ -304,6 +277,7 @@ int m_yodify(FILE *m_file, int m_speed, int m_yodification)
 				Start printing the sentences
 				Do this for all the words in the sentence
 			*/
+
 			for (int j = 0; j < m_sentence_words[i]; j++)
 			{
 				if (m_yodification)
@@ -312,6 +286,7 @@ int m_yodify(FILE *m_file, int m_speed, int m_yodification)
 						If they do, create an array sized the total word-length of a sentence.
 						So if the sentence has 6 words, array will contain 6 numbers.
 					*/
+
 					int m_array[m_sentence_words[i]];
 		
 					// Same reasoning for this can be found up in the source code.
@@ -326,12 +301,18 @@ int m_yodify(FILE *m_file, int m_speed, int m_yodification)
 					// Shuffle the array (Change the order of the numerical serie)
 					m_array_shuffle(m_array, m_sentence_words[i], m_yodification);
 
-					printf("%s", (char *) m_matrix[i][m_array[j]]);
+					printf("%s", (char *) m_word_matrix[i][m_array[j]]);
+
+					fputs((char *) m_word_matrix[i][m_array[j]], m_result);
+					fputs(" ", m_result);
 				}
 				else
 				{
 					// Print the word by accessing the matrix
-					printf("%s", (char *) m_matrix[i][j]);
+					printf("%s", (char *) m_word_matrix[i][j]);
+
+					fputs((char *) m_word_matrix[i][j], m_result);
+					fputs(" ", m_result);
 				}
 
 				// Check if speed = 1 and if we've already printed 2 words
@@ -367,14 +348,15 @@ int m_yodify(FILE *m_file, int m_speed, int m_yodification)
 			for (int j = 0; j < m_sentence_words[i]; j++)
 			{
 				// Print it
-				printf("%s ", (char *) m_matrix[i][j]);
+				printf("%s ", (char *) m_word_matrix[i][j]);
+				fputs((char *) m_word_matrix[i][j], m_result);
+				fputs(" ", m_result);
 			}
 		}
 
 		printf("\n");
+		fputs("\n", m_result);
 	}
-
-	return 0;
 }
 
 // Prof. provided
