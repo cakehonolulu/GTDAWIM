@@ -154,6 +154,11 @@ int main()
 	return 0;
 }
 
+void alenteix_frase(char *m_sentence, char *m_slowed_sentence, int m_speed)
+{
+	printf("... ");
+}
+
 int m_read_sentences(FILE *m_file, char m_s[MAX_LINES][15 * 15], char *m_w_m[MAX_LINES][15][15], char *m_sentence_words)
 {
 	char m_char;
@@ -217,7 +222,7 @@ int m_read_sentences(FILE *m_file, char m_s[MAX_LINES][15 * 15], char *m_w_m[MAX
 
 int frase_a_taula(char *frase, char *paraules[15][15])
 {
-	int m_word_index = 0, i;
+	int m_word_index = 0;
 	char *m_index;
 
 	/*
@@ -263,6 +268,7 @@ int frase_a_taula(char *frase, char *paraules[15][15])
 void m_yodify(int m_total_lines, char *m_word_matrix[MAX_LINES][15][15], char *m_sentence_words, int m_yodification, int m_speed)
 {
 	FILE *m_result = fopen("result.txt", "w");
+	char m_slowed_sentence[300] = {0};
 
 	// Do this for every line
 	for (int i = 0; i < m_total_lines; i++)
@@ -289,9 +295,6 @@ void m_yodify(int m_total_lines, char *m_word_matrix[MAX_LINES][15][15], char *m
 
 					int m_array[m_sentence_words[i]];
 		
-					// Same reasoning for this can be found up in the source code.
-					memset(m_array, '0', m_sentence_words[i] * sizeof(int));
-		
 					// Populate the newly created array with numbers starting from 0
 					for (int l = 0; l < m_sentence_words[i]; l++)
 					{
@@ -301,43 +304,46 @@ void m_yodify(int m_total_lines, char *m_word_matrix[MAX_LINES][15][15], char *m
 					// Shuffle the array (Change the order of the numerical serie)
 					m_array_shuffle(m_array, m_sentence_words[i], m_yodification);
 
+					strcat(m_slowed_sentence, (char *) m_word_matrix[i][m_array[j]]);
 					printf("%s", (char *) m_word_matrix[i][m_array[j]]);
-
-					fputs((char *) m_word_matrix[i][m_array[j]], m_result);
-					fputs(" ", m_result);
 				}
 				else
 				{
-					// Print the word by accessing the matrix
+					strcat(m_slowed_sentence, (char *) m_word_matrix[i][j]);
 					printf("%s", (char *) m_word_matrix[i][j]);
-
-					fputs((char *) m_word_matrix[i][j], m_result);
-					fputs(" ", m_result);
 				}
 
-				// Check if speed = 1 and if we've already printed 2 words
-				// If we have not, print a whitespace
-				if (m_speed == 1 && j % 2 == 1)
+				if (m_speed == 1)
 				{
-					printf(" ");
-				}
-				// If we have and speed = 1, print 3 dots and a space
-				else if (m_speed == 1 && j % 2 == 0)
-				{
-					printf("... ");
+					if ((j) && (j % 2 == 1))
+					{
+						alenteix_frase((char *) m_word_matrix[i][j], m_slowed_sentence, m_speed);
+						strcat(m_slowed_sentence,  "... ");
+					}
+					else
+					{
+						printf(" ");
+						strcat(m_slowed_sentence,  " ");
+					}
 				}
 				// Or, if speed = 2, print 3 dots and space after each word
 				else if (m_speed == 2)
 				{
-					printf("... ");
+					alenteix_frase((char *) m_word_matrix[i][j], m_slowed_sentence, m_speed);
+					strcat(m_slowed_sentence,  "... ");
 				}
 				else
 				{
-
 					// If speed = 0
+					strcat(m_slowed_sentence,  " ");
 					printf(" ");
 				}
+
+				strcat(m_slowed_sentence, "\0");
 			}
+
+			fputs((char *) m_slowed_sentence, m_result);
+			memset(m_slowed_sentence, 0, sizeof(m_slowed_sentence));
 		}
 		else
 		{
@@ -349,9 +355,11 @@ void m_yodify(int m_total_lines, char *m_word_matrix[MAX_LINES][15][15], char *m
 			{
 				// Print it
 				printf("%s ", (char *) m_word_matrix[i][j]);
-				fputs((char *) m_word_matrix[i][j], m_result);
-				fputs(" ", m_result);
+				strcat(m_slowed_sentence, (char *) m_word_matrix[i][j]);
 			}
+
+			fputs((char *) m_slowed_sentence, m_result);
+			memset(m_slowed_sentence, 0, sizeof(m_slowed_sentence));
 		}
 
 		printf("\n");
