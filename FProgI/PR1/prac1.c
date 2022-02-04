@@ -154,11 +154,11 @@ int main()
 	return 0;
 }
 
-void alenteix_frase(char *m_sentence, char *m_slowed_sentence, int m_speed)
+void alenteix_frase(char frase[], char frase_lenta[], int velocitat)
 {
-	(void) m_sentence;
-	(void) m_slowed_sentence;
-	(void) m_speed;
+	(void) frase;
+	(void) frase_lenta;
+	(void) velocitat;
 
 	printf("... ");
 }
@@ -166,7 +166,7 @@ void alenteix_frase(char *m_sentence, char *m_slowed_sentence, int m_speed)
 int m_read_sentences(FILE *m_file, char m_s[MAX_LINES][15 * 15], char *m_w_m[MAX_LINES][15][15], char *m_sentence_words)
 {
 	char m_char;
-	int i, m_lines = 0, m_line_chars = 0;
+	int i, m_lines = 0, m_line_chars = 0, m_length;
 
 	// While loop that runs until fgetc() gets to End-Of-File (stdlib.h)
 	while ((m_char = fgetc(m_file)) != EOF)
@@ -207,7 +207,7 @@ int m_read_sentences(FILE *m_file, char m_s[MAX_LINES][15 * 15], char *m_w_m[MAX
 		fgets(m_s[i], (15 * 15), m_file);
 
 		// Get it's length
-		int m_length = strlen(m_s[i]);
+		m_length = strlen(m_s[i]);
 
 		// If the sentence exists, check if the last byte on the sentece is a LF (\n)
 		if (m_length > 0 && m_s[i][m_length - 1] == '\n')
@@ -273,9 +273,10 @@ void m_yodify(int m_total_lines, char *m_word_matrix[MAX_LINES][15][15], char *m
 {
 	FILE *m_result = fopen("result.txt", "w");
 	char m_slowed_sentence[300] = {0};
+	int i, j, k;
 
 	// Do this for every line
-	for (int i = 0; i < m_total_lines; i++)
+	for (i = 0; i < m_total_lines; i++)
 	{
 		// Check if the sentence has 4 or more words
 		if (m_sentence_words[i] >= 4)
@@ -288,7 +289,7 @@ void m_yodify(int m_total_lines, char *m_word_matrix[MAX_LINES][15][15], char *m
 				Do this for all the words in the sentence
 			*/
 
-			for (int j = 0; j < m_sentence_words[i]; j++)
+			for (j = 0; j < m_sentence_words[i]; j++)
 			{
 				if (m_yodification)
 				{
@@ -296,13 +297,12 @@ void m_yodify(int m_total_lines, char *m_word_matrix[MAX_LINES][15][15], char *m
 						If they do, create an array sized the total word-length of a sentence.
 						So if the sentence has 6 words, array will contain 6 numbers.
 					*/
-
 					int m_array[m_sentence_words[i]];
 		
 					// Populate the newly created array with numbers starting from 0
-					for (int l = 0; l < m_sentence_words[i]; l++)
+					for (k = 0; k < m_sentence_words[i]; k++)
 					{
-						m_array[l] = l;
+						m_array[k] = k;
 					}
 	
 					// Shuffle the array (Change the order of the numerical serie)
@@ -322,24 +322,24 @@ void m_yodify(int m_total_lines, char *m_word_matrix[MAX_LINES][15][15], char *m
 					if ((j) && (j % 2 == 1))
 					{
 						alenteix_frase((char *) m_word_matrix[i][j], m_slowed_sentence, m_speed);
-						strcat(m_slowed_sentence,  "... ");
+						strcat(m_slowed_sentence, "... ");
 					}
 					else
 					{
 						printf(" ");
-						strcat(m_slowed_sentence,  " ");
+						strcat(m_slowed_sentence, " ");
 					}
 				}
 				// Or, if speed = 2, print 3 dots and space after each word
 				else if (m_speed == 2)
 				{
 					alenteix_frase((char *) m_word_matrix[i][j], m_slowed_sentence, m_speed);
-					strcat(m_slowed_sentence,  "... ");
+					strcat(m_slowed_sentence, "... ");
 				}
 				else
 				{
 					// If speed = 0
-					strcat(m_slowed_sentence,  " ");
+					strcat(m_slowed_sentence, " ");
 					printf(" ");
 				}
 
