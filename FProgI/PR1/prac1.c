@@ -156,6 +156,10 @@ int main()
 
 void alenteix_frase(char *m_sentence, char *m_slowed_sentence, int m_speed)
 {
+	(void) m_sentence;
+	(void) m_slowed_sentence;
+	(void) m_speed;
+
 	printf("... ");
 }
 
