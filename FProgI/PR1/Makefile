@@ -3,7 +3,7 @@ CC = clang
 
 # Setup the basic compilation flags
 # Warn all, extra and compile for c2x
-CFLAGS := -Wall -Wextra -pedantic -std=c2x
+CFLAGS := -Wall -Wextra -pedantic -Wpedantic -std=c2x
 
 BINARY := a.out
 
