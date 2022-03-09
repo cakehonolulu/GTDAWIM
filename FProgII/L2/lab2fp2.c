@@ -6,7 +6,7 @@
 int main()
 {
 	int m_vec[50] = {0};
-	int m_num = 0;
+	int m_num = 0, m_max = 0, m_min = 0;
 	bool m_cond = true;
 
 	printf("Quants enters vol introduir (Mínim 1, Máxim 50)? ");
@@ -33,6 +33,12 @@ int main()
 	obtenir_dades(m_vec, m_num, 10, 90);
 
 	mostrar_dades(m_vec, m_num);
+
+	printf("La mitjana dels nombres del vector es: %0.2f\n", mitjana(m_vec, m_num));
+
+	maxmin(m_vec, m_num, &m_max, &m_min);
+
+	printf("El nombre més alt es: %d; el més baix: %d\n", m_max, m_min);
 
 	return 0;
 }
