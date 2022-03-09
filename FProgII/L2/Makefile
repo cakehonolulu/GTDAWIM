@@ -14,6 +14,10 @@ else
 	ifeq ($(UNAME), Linux)
 		HOST = Linux
 		
+		CFILES := $(notdir $(wildcard *.c))
+		COBJECTS := $(CFILES:.c=.o)
+		BINARY := lab2fp2
+
 		# Default to clang
 		CC = clang
 
@@ -23,11 +27,8 @@ else
 
 		ifdef CCWIN
 		CC = mingw64-gcc
+		BINARY := lab2fp2.exe
 		endif
-
-		CFILES := $(notdir $(wildcard *.c))
-		COBJECTS := $(CFILES:.c=.o)
-		BINARY := lab2fp2
 	endif
 endif
 
@@ -40,7 +41,7 @@ info:
 	@echo "Building With: $(CC)"
 
 $(BINARY): $(COBJECTS)
-	@echo " \033[0;36mLD \033[0ml2"
+	@echo " \033[0;36mLD \033[0m$(BINARY)"
 	@$(CC) -o $@ $(COBJECTS) $(LDFLAGS)
 
 %.o: %.c
