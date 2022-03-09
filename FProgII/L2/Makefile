@@ -70,7 +70,7 @@ endif
 	@echo " \033[0;35mCC\033[0m $<"
 
 clean:
-	-@rm *.exe
-	-@rm *.o
-	-@rm lab2fp2
-	-@rm libinhouse_dades.a
+	-@rm -f *.exe
+	-@rm -f *.o
+	-@rm -f lab2fp2
+	-@rm -f libinhouse_dades.a
