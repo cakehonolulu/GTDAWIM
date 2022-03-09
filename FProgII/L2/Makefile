@@ -18,8 +18,9 @@ else
 		HOST = Linux
 		
 		CFILES := $(notdir $(wildcard *.c))
-		CFILES := $(filter-out dades.c,$(CFILES))
+		LIB := dades.o
 		COBJECTS := $(CFILES:.c=.o)
+
 		BINARY := lab2fp2
 
 		# Default to clang
@@ -43,7 +44,7 @@ CFLAGS := -Wall -Wextra -pedantic -std=c2x -I.
 LDFLAGS := 
 
 ifeq ($(HOST), Windows)
-LDFLAGS += -s libdades.a
+LDFLAGS += -L. -ldades
 else
 LDFLAGS += -L. -linhouse_dades
 endif
@@ -54,13 +55,14 @@ info:
 	@echo "Building With: $(CC)"
 
 $(BINARY): $(COBJECTS)
-	@echo " \033[0;36mLD \033[0m$(BINARY)"
 ifeq ($(HOST), Windows)
+	@echo " \033[0;36mLD \033[0m$(BINARY)"
 	@$(CC) -o $@ $(COBJECTS) $(LDFLAGS)
 else
-	@$(CC) $(CFLAGS) -c dades.c -o dades.o
+	@echo " \033[0;33mAR \033[0minhouse_dades.a"
 	@$(AR) rcs libinhouse_dades.a dades.o
-	@$(CC) -o $@ $(COBJECTS) $(LDFLAGS)
+	@echo " \033[0;36mLD \033[0m$(BINARY)"
+	@$(CC) -o $@ $(filter-out $(LIB),$(CFILES:.c=.o)) $(LDFLAGS)
 endif
 
 %.o: %.c
