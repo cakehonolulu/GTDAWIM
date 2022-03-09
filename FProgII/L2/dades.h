@@ -6,7 +6,7 @@
  * @param min (Valor (E): enter). El valor minim que prenen els valors
  * @param max (Valor (E): enter). El valor maxim que prenen els valors
  */ 
-void obtenir_dades(int taula[], int nv, int min, int max);    
+void obtenir_dades(int taula[], int nv, int min, int max);
 
 /** 
  * Funcio que mostra per pantalla les dades

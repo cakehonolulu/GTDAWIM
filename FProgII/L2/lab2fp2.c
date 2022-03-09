@@ -9,10 +9,9 @@ int main()
 	int m_num = 0, m_max = 0, m_min = 0;
 	bool m_cond = true;
 
-	printf("Quants enters vol introduir (Mínim 1, Máxim 50)? ");
-
 	while (m_cond)
 	{
+		printf("Quants enters vol introduir (Mínim 1, Máxim 50)? ");
 		scanf("%d", &m_num);
 
 		if (m_num < 1)
