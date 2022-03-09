@@ -6,7 +6,7 @@
 #### I used a **legit**... _wink wink_... IDA Pro with x86(_64) dissasembler (**NOTE:** Hopper, Ghidra or other should be capable too, but I'm most confortable with IDA, after all it's what I've been using for some years already so why change it...).
 
 ## This is the assembly code graph for mostrar_dades()
-![Mostrar Dades](L2/mostrar_dades.png)
+![Mostrar Dades](mostrar_dades.png)
 
 #### At a first glance I identified the typical for() loop graph flow.
 #### So that's what I ended up starting with.
@@ -14,7 +14,7 @@
 #### ...on to implementing the second one (Actually, the first...)...
 
 ## This is the assembly code graph for obtenir_dades()
-![Obtenir Dades](L2/obtenir_dades.png)
+![Obtenir Dades](obtenir_dades.png)
 
 #### Alright alright, this one looks a bit lenghtier than the first one, but the idea is kinda the same:
 #### Iterating through the integer array assigning a value (Or printing, in the case of mostrar_dades).
