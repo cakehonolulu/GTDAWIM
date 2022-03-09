@@ -48,5 +48,5 @@ $(BINARY): $(COBJECTS)
 	@echo " \033[0;35mCC\033[0m $<"
 
 clean:
-	-@rm *.exe
+	-@rm $(BINARY)
 	-@rm *.o
