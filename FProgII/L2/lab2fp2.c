@@ -1,4 +1,5 @@
 #include <calculs.h>
+#include <dades.h>
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -28,6 +29,10 @@ int main()
 			m_cond = false;
 		}
 	}
+
+	obtenir_dades(m_vec, m_num, 10, 90);
+
+	mostrar_dades(m_vec, m_num);
 
 	return 0;
 }
