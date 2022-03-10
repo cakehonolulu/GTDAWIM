@@ -1,4 +1,11 @@
+#ifdef BRUTEFORCE
 #include <bruteforce.h>
+#endif
+
+#ifdef OPTIMAL
+#include <optimal.h>
+#endif
+
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -10,9 +17,16 @@ int main()
 	printf("Introdueixi un nombre: ");
 	scanf("%d", &m_number);
 
+	if (m_number != 0)
+	{
 #ifdef BRUTEFORCE
-	m_triangular = bruteforce_triangular(m_number);
+		m_triangular = bruteforce_triangular(m_number);
 #endif
+
+#ifdef OPTIMAL
+		m_triangular = optimal_triangular(m_number);
+#endif	
+	}
 
 	if (m_triangular)
 	{

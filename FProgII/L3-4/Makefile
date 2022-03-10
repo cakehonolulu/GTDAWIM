@@ -15,6 +15,10 @@ ifdef BRUTEFORCE
 CFLAGS += -DBRUTEFORCE
 endif
 
+ifdef OPTIMAL
+CFLAGS += -DOPTIMAL -lm
+endif
+
 all: clean $(BINARY)
 
 $(BINARY): *.c
