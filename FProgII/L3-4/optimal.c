@@ -1,6 +1,6 @@
 #include <optimal.h>
 
-bool optimal_triangular(unsigned int m_number)
+bool es_triangular_op(unsigned int m_number)
 {
 	bool m_triangular = false;
 

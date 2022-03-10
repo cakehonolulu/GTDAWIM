@@ -1,4 +1,4 @@
 #include <stdbool.h>
 
 /* Function definitions */
-bool bruteforce_triangular(unsigned int m_number);
+bool es_triangular_fb(unsigned int m_number);

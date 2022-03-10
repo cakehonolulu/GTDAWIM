@@ -20,7 +20,7 @@ CFLAGS += -DOPTIMAL -lm
 endif
 
 ifdef TABLE
-CFLAGS += -DTABLE
+CFLAGS += -DTABLE -fsanitize=address -g
 endif
 
 all: clean $(BINARY)

@@ -1,6 +1,6 @@
 #include <bruteforce.h>
 
-bool bruteforce_triangular(unsigned int m_number)
+bool es_triangular_fb(unsigned int m_number)
 {
 	bool m_triangular = false, m_cond = true;
 	unsigned int i = 0, m_summation = 0;

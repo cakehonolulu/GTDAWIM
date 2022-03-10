@@ -2,4 +2,4 @@
 #include <math.h>
 
 /* Function definitions */
-bool optimal_triangular(unsigned int m_number);
+bool es_triangular_op(unsigned int m_number);
