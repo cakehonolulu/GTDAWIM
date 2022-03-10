@@ -1,19 +1,18 @@
 #include <table.h>
 #include <stdio.h>
 
-void calcula_triangulars(unsigned int m_table[])
+void calcula_triangulars(unsigned int *m_table)
 {
-	unsigned int m_summation = 0, i = 0;
+	unsigned int m_summation = 0, i;
 
-	while (i < P)
+	for (i = 0; i < P; i++)
 	{
 		m_summation = (m_summation + i);
 		m_table[i] = m_summation;
-		i++;
 	}
 }
 
-bool es_triangular_tau(unsigned int m_table[], unsigned int m_number)
+bool es_triangular_tau(unsigned int *m_table, unsigned int m_number)
 {
 	bool m_triangular = false;
 
