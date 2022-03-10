@@ -6,6 +6,10 @@
 #include <optimal.h>
 #endif
 
+#ifdef TABLE
+#include <table.h>
+#endif
+
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -25,7 +29,11 @@ int main()
 
 #ifdef OPTIMAL
 		m_triangular = optimal_triangular(m_number);
-#endif	
+#endif
+
+#ifdef TABLE
+		m_triangular = table_triangular(m_number);
+#endif
 	}
 
 	if (m_triangular)

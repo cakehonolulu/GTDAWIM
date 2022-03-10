@@ -19,11 +19,24 @@ ifdef OPTIMAL
 CFLAGS += -DOPTIMAL -lm
 endif
 
+ifdef TABLE
+CFLAGS += -DTABLE
+endif
+
 all: clean $(BINARY)
 
-$(BINARY): *.c
+ifdef BRUTEFORCE
+$(BINARY): lab2fp34.c bruteforce.c
+endif
+ifdef OPTIMAL
+$(BINARY): lab2fp34.c optimal.c
+endif
+ifdef TABLE
+$(BINARY): lab2fp34.c table.c
+endif
 	@echo "🚧 Building..."
 	$(CC) $(CFLAGS) $^ -o $@
+
 
 gdb:
 	gdb fp2lab34
