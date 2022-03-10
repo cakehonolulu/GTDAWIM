@@ -1,0 +1,100 @@
+NOTES
+
+BRUTEFORCE
+time ./fp2lab34
+
+real    0m0.002s
+user    0m0.001s
+sys     0m0.000s
+
+real    0m0.002s
+user    0m0.002s
+sys     0m0.000s
+
+real    0m0.002s
+user    0m0.002s
+sys     0m0.000s
+
+real    0m0.001s
+user    0m0.001s
+sys     0m0.000s
+
+real    0m0.001s
+user    0m0.001s
+sys     0m0.000s
+
+avg		0m0.00016s
+
+OPTIMAL:
+real    0m0.001s
+user    0m0.001s
+sys     0m0.000s
+
+real    0m0.001s
+user    0m0.001s
+sys     0m0.000s
+
+real    0m0.001s
+user    0m0.001s
+sys     0m0.000s
+
+real    0m0.001s
+user    0m0.001s
+sys     0m0.000s
+
+real    0m0.001s
+user    0m0.001s
+sys     0m0.000s
+
+avg		0m0.001s
+
+TAULA
+time ./fp2lab34
+
+W/ pointers:
+
+real    0m0.775s
+user    0m0.775s
+sys     0m0.000s
+
+real    0m0.775s
+user    0m0.775s
+sys     0m0.000s
+
+real    0m0.779s
+user    0m0.779s
+sys     0m0.000s
+
+real    0m0.772s
+user    0m0.772s
+sys     0m0.000s
+
+real    0m0.787s
+user    0m0.787s
+sys     0m0.000s
+
+avg		0m0.7776s
+
+W/o pointers:
+
+real    0m0.773s
+user    0m0.763s
+sys     0m0.010s
+
+real    0m0.755s
+user    0m0.745s
+sys     0m0.010s
+
+real    0m0.748s
+user    0m0.748s
+sys     0m0.000s
+
+real    0m0.787s
+user    0m0.787s
+sys     0m0.000s
+
+real    0m0.826s
+user    0m0.826s
+sys     0m0.000s
+
+avg		0m0.7778s
