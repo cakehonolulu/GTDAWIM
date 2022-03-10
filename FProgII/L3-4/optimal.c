@@ -4,7 +4,7 @@ bool es_triangular_op(unsigned int m_number)
 {
 	bool m_triangular = false;
 
-	double n = (((sqrt((8 * m_number) + 1)) - 1) / 2);
+	float n = (((sqrtf((8 * m_number) + 1)) - 1) / 2);
 
 	if (n == (unsigned int) n)
 	{
