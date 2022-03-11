@@ -32,7 +32,12 @@ bool es_triangular_tau(unsigned int *m_table, unsigned int m_number)
 	while (m_table[i] <= m_number)
 #endif
 	{
+
+#ifdef BENCHMARK
+		if (m_table[i] >= m_number)
+#else
 		if (m_table[i] == m_number)
+#endif
 		{
 #ifdef BENCHMARK
 			m_triangular = m_table[i];
