@@ -21,9 +21,7 @@ int main()
 {
 	unsigned int m_number = 0;
 
-#ifdef BENCHMARK
-	unsigned int m_triangular = 0;
-#else
+#ifndef BENCHMARK
 	bool m_triangular = false;
 #endif
 
@@ -48,7 +46,7 @@ int main()
 		for (int i = 0; i < N_VEGADES; i++)
 		{
 			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
-			m_triangular = es_triangular_fb(m_number);
+			es_triangular_fb(m_number);
 		}
 #endif
 #endif
@@ -60,7 +58,7 @@ int main()
 		for (int i = 0; i < N_VEGADES; i++)
 		{
 			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
-			m_triangular = es_triangular_op(m_number);	
+			es_triangular_op(m_number);	
 		}
 #endif
 #endif
@@ -74,7 +72,7 @@ int main()
 		{
 			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
 			calcula_triangulars(m_table);
-			m_triangular = es_triangular_tau(m_table, m_number);		
+			es_triangular_tau(m_table, m_number);		
 		}
 #endif
 #endif
