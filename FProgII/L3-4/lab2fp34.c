@@ -15,54 +15,81 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define N_VEGADES 10000
+
 int main()
 {
-	int m_number = 0;
+	unsigned int m_number = 0;
+
+#ifdef BENCHMARK
+	unsigned int m_triangular = 0;
+#else
 	bool m_triangular = false;
+#endif
 
 #ifdef TABLE
 	unsigned int m_table[P] = {0};
 #endif
 
-	srand(time(NULL));
-	m_number = rand()%((5000+1)-1) + 1;
+#ifdef BENCHMARK
+	srand(time(0));
+	m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
+#else
+	printf("Introdueixi un nombre: ");
+	scanf("%d", &m_number);
+#endif
 
 	if (m_number != 0)
 	{
 #ifdef BRUTEFORCE
-		for (int i = 0; i < 10000; i++)
+#ifndef BENCHMARK
+		m_triangular = es_triangular_fb(m_number);
+#else
+		for (int i = 0; i < N_VEGADES; i++)
 		{
-			m_number = rand()%((5000+1)-1) + 1;
+			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
 			m_triangular = es_triangular_fb(m_number);
 		}
 #endif
+#endif
 
 #ifdef OPTIMAL
-		for (int i = 0; i < 10000; i++)
+#ifndef BENCHMARK
+		m_triangular = es_triangular_op(m_number);
+#else
+		for (int i = 0; i < N_VEGADES; i++)
 		{
-			m_number = rand()%((5000+1)-1) + 1;
+			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
 			m_triangular = es_triangular_op(m_number);	
 		}
 #endif
+#endif
 
 #ifdef TABLE
-		for (int i = 0; i < 10000; i++)
+#ifndef BENCHMARK
+		calcula_triangulars(m_table);
+		m_triangular = es_triangular_tau(m_table, m_number);
+#else
+		for (int i = 0; i < N_VEGADES; i++)
 		{
-			m_number = rand()%((5000+1)-1) + 1;
+			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
 			calcula_triangulars(m_table);
 			m_triangular = es_triangular_tau(m_table, m_number);		
 		}
 #endif
+#endif
 	}
 
-	/*if (m_triangular)
+#ifndef BENCHMARK
+	if (m_triangular)
 	{
 		printf("El nombre %d es triangular!\n", m_number);
 	}
 	else
 	{
 		printf("El nombre %d no es triangular!\n", m_number);
-	}*/
+	}
+#endif
 
 	return 0;
 }
