@@ -45,6 +45,7 @@ int main()
 #else
 		for (int i = 0; i < N_VEGADES; i++)
 		{
+			srand(time(0));
 			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
 			es_triangular_fb(m_number);
 		}
@@ -57,6 +58,7 @@ int main()
 #else
 		for (int i = 0; i < N_VEGADES; i++)
 		{
+			srand(time(0));
 			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
 			es_triangular_op(m_number);	
 		}
@@ -70,6 +72,7 @@ int main()
 #else
 		for (int i = 0; i < N_VEGADES; i++)
 		{
+			srand(time(0));
 			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
 			calcula_triangulars(m_table);
 			es_triangular_tau(m_table, m_number);		
