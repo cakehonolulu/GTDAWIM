@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define N_VEGADES 10000
+#define N_VEGADES 10000000
 #define M_MAX_NUM 50000
 
 int main()
@@ -91,11 +91,12 @@ int main()
 		calcula_triangulars(m_table);
 		m_triangular = es_triangular_tau(m_table, m_number);
 #else
+		calcula_triangulars(m_table);
+
 		for (int i = 0; i < N_VEGADES; i++)
 		{
 			srand(time(0));
 			m_number = rand() % ((M_MAX_NUM + 1) - 1) + 1;
-			calcula_triangulars(m_table);
 			es_triangular_tau(m_table, m_number);		
 		}
 #endif
