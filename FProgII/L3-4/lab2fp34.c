@@ -97,7 +97,11 @@ int main()
 		{
 			srand(time(0));
 			m_number = rand() % ((M_MAX_NUM + 1) - 1) + 1;
-			es_triangular_tau(m_table, m_number);		
+			
+			if (m_number <= 0x4A81DE28)
+			{
+				es_triangular_tau(m_table, m_number);	
+			}
 		}
 #endif
 #endif
