@@ -70,3 +70,5 @@ endif
 clean:
 	@echo "🧹 Cleaning..."
 	-@rm $(BINARY)
+	-@rm bf op tb
+	-@rm bf.exe op.exe tb.exe
