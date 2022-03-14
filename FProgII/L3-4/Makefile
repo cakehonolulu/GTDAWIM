@@ -9,6 +9,10 @@ BINARY := fp2lab34
 
 TIMEFMT = "\t%E real\n\t%U user\n\t%S sys\n"
 
+ifdef WIN
+CC = mingw64-gcc
+endif
+
 ifdef DEBUG
 CFLAGS += -g
 endif
@@ -47,6 +51,7 @@ bench:
 	$(CC) $(CFLAGS) -DBENCHMARK -DBRUTEFORCE lab2fp34.c bruteforce.c -o bf
 	$(CC) $(CFLAGS) -DBENCHMARK -DOPTIMAL -lm lab2fp34.c optimal.c -o op
 	$(CC) $(CFLAGS) -DBENCHMARK -DTABLE lab2fp34.c table.c -o tb
+ifndef WIN
 	clear
 	-@echo "Bruteforce Method:"
 	-@/bin/time -f $(TIMEFMT) ./bf
@@ -55,9 +60,12 @@ bench:
 	-@echo "Table Method:"
 	-@/bin/time -f $(TIMEFMT) ./tb
 	-@rm bf op tb
+endif
 
-gdb:
+gdb: clean $(BINARY)
+ifndef WIN
 	gdb fp2lab34
+endif
 
 clean:
 	@echo "🧹 Cleaning..."
