@@ -9,7 +9,7 @@ bool es_triangular_fb(unsigned int m_number)
 #ifdef BENCHMARK
 	unsigned int m_triangular = 0;
 #else
-	bool m_triangular = false
+	bool m_triangular = false;
 #endif
 
 	bool m_cond = true;
@@ -24,7 +24,7 @@ bool es_triangular_fb(unsigned int m_number)
 #ifdef BENCHMARK
 			m_triangular = m_summation;
 #else
-			m_triangular = true
+			m_triangular = true;
 #endif
 			m_cond = false;
 		}
@@ -33,6 +33,7 @@ bool es_triangular_fb(unsigned int m_number)
 		if (m_number <= m_summation)
 		{
 			m_triangular = m_summation;
+			m_cond = false;
 		}
 #else
 		if (m_number < m_summation)
