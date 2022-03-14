@@ -16,6 +16,7 @@
 #include <time.h>
 
 #define N_VEGADES 10000
+#define M_MAX_NUM 50000
 
 int main()
 {
@@ -31,7 +32,7 @@ int main()
 
 #ifdef BENCHMARK
 	srand(time(0));
-	m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
+	m_number = rand() % ((M_MAX_NUM + 1) - 1) + 1;
 #else
 	printf("Introdueixi un nombre: ");
 	scanf("%d", &m_number);
@@ -46,7 +47,7 @@ int main()
 		for (int i = 0; i < N_VEGADES; i++)
 		{
 			srand(time(0));
-			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
+			m_number = rand() % ((M_MAX_NUM + 1) - 1) + 1;
 			es_triangular_fb(m_number);
 		}
 #endif
@@ -59,7 +60,7 @@ int main()
 		for (int i = 0; i < N_VEGADES; i++)
 		{
 			srand(time(0));
-			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
+			m_number = rand() % ((M_MAX_NUM + 1) - 1) + 1;
 			es_triangular_op(m_number);	
 		}
 #endif
@@ -73,7 +74,7 @@ int main()
 		for (int i = 0; i < N_VEGADES; i++)
 		{
 			srand(time(0));
-			m_number = rand() % ((N_VEGADES + 1) - 1) + 1;
+			m_number = rand() % ((M_MAX_NUM + 1) - 1) + 1;
 			calcula_triangulars(m_table);
 			es_triangular_tau(m_table, m_number);		
 		}
