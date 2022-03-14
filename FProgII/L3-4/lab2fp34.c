@@ -16,7 +16,7 @@
 #include <stdint.h>
 #include <time.h>
 
-#define N_VEGADES 1000000
+#define N_VEGADES 10000000
 
 int main()
 {
