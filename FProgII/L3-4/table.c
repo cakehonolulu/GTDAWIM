@@ -23,28 +23,35 @@ bool es_triangular_tau(unsigned int *m_table, unsigned int m_number)
 #else
 	bool m_triangular = false;
 #endif
-
+	bool m_cond = true;
 	int i = 0;
 
-#ifdef BENCHMARK
-	while (m_table[i] >= m_number)
-#else
-	while (m_table[i] <= m_number)
-#endif
+	while (m_cond)
 	{
 
-#ifdef BENCHMARK
-		if (m_table[i] >= m_number)
-#else
 		if (m_table[i] == m_number)
-#endif
 		{
 #ifdef BENCHMARK
 			m_triangular = m_table[i];
+			m_cond = false;
 #else
 			m_triangular = true;
+			m_cond = false;
 #endif
 		}
+#ifdef BENCHMARK
+		else
+		if (m_table[i] > m_number)
+		{
+			m_triangular = m_table[i];
+		}
+#else
+		else
+		if (m_table[i] > m_number)
+		{
+			m_cond = false;
+		}
+#endif
 
 		i++;
 	}

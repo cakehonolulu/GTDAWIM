@@ -19,24 +19,26 @@ bool es_triangular_fb(unsigned int m_number)
 	{
 		m_summation = (m_summation + (i++));
 
-		if (m_number == m_summation)
+		if (m_summation == m_number)
 		{
+
 #ifdef BENCHMARK
 			m_triangular = m_summation;
 #else
 			m_triangular = true;
 #endif
+
 			m_cond = false;
 		}
 		else
 #ifdef BENCHMARK
-		if (m_number <= m_summation)
+		if (m_summation > m_number)
 		{
 			m_triangular = m_summation;
 			m_cond = false;
 		}
 #else
-		if (m_number < m_summation)
+		if (m_summation > m_number)
 		{
 			m_cond = false;
 		}
