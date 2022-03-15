@@ -19,6 +19,10 @@ int main()
 	{
 		printf("Vàlid, més petit que 0x%06X (UINT32_MAX)\nValor constant per al programa: 0x%06X\n", UINT32_MAX, m_triang);
 	}
+	else
+	{
+		printg("No vàlid! Provi un nombre més petit...\n");
+	}
 
 	return 0;
 }

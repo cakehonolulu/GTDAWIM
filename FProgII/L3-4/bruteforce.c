@@ -1,5 +1,6 @@
 #include <bruteforce.h>
 
+// Based-off the make flags, change the function's return type
 #ifdef BENCHMARK
 unsigned int es_triangular_fb(unsigned int m_number)
 #else
@@ -15,14 +16,18 @@ bool es_triangular_fb(unsigned int m_number)
 	bool m_cond = true;
 	unsigned int i = 0, m_summation = 0;
 
+	// Do this while m_cond = 1 (true)
 	while (m_cond)
 	{
+		// m_triangular_num = m_prev_triang_summation + current_index++
 		m_summation = (m_summation + (i++));
 
+		// Check if summation equals provided number
 		if (m_summation == m_number)
 		{
 
 #ifdef BENCHMARK
+			// Set the return value accordingly
 			m_triangular = m_summation;
 #else
 			m_triangular = true;
@@ -32,12 +37,17 @@ bool es_triangular_fb(unsigned int m_number)
 		}
 		else
 #ifdef BENCHMARK
+		/*
+			On benchmark, the next triangular number that is higher
+			than provided number is a valid return
+		*/
 		if (m_summation > m_number)
 		{
 			m_triangular = m_summation;
 			m_cond = false;
 		}
 #else
+		// Not accepted in non-benchmark builds
 		if (m_summation > m_number)
 		{
 			m_cond = false;
@@ -45,5 +55,9 @@ bool es_triangular_fb(unsigned int m_number)
 #endif
 	}
 
+	/*
+		This only adds an additional instruction (Moves the result to %rax)
+		following x86_64 SysV ABI, at the end 1 instruction shouldn't be noticed at all
+	*/
 	return m_triangular;
 }

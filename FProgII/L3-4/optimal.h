@@ -1,4 +1,7 @@
+#ifndef BENCHMARK
 #include <stdbool.h>
+#endif
+
 #include <math.h>
 
 /* Function definitions */
