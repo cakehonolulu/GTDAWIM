@@ -36,23 +36,17 @@ bool es_triangular_fb(unsigned int m_number)
 			m_cond = false;
 		}
 		else
-#ifdef BENCHMARK
 		/*
 			On benchmark, the next triangular number that is higher
 			than provided number is a valid return
 		*/
 		if (m_summation > m_number)
 		{
+#ifdef BENCHMARK
 			m_triangular = m_summation;
-			m_cond = false;
-		}
-#else
-		// Not accepted in non-benchmark builds
-		if (m_summation > m_number)
-		{
-			m_cond = false;
-		}
 #endif
+			m_cond = false;
+		}
 	}
 
 	/*
