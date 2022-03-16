@@ -32,9 +32,9 @@ void timed_benchmark()
 
 	printf("El métode Óptim ha trigat %ld segons\n", (m_end - m_start));
 
-	m_start = time(NULL);
-
 	calcula_triangulars(m_table);
+
+	m_start = time(NULL);
 
 	for (int i = 0; i < N_VEGADES; i++)
 	{
