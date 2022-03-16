@@ -1,6 +1,4 @@
-#ifndef BENCHMARK
 #include <stdbool.h>
-#endif
 
 /* Function definitions */
 #ifdef BENCHMARK

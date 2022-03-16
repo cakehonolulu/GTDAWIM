@@ -1,6 +1,4 @@
-#ifndef BENCHMARK
 #include <stdbool.h>
-#endif
 
 /* Definitions */
 #define P 50000
