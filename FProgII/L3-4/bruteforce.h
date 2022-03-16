@@ -4,7 +4,7 @@
 
 /* Function definitions */
 #ifdef BENCHMARK
-void es_triangular_fb(unsigned int m_number);
+unsigned int es_triangular_fb(unsigned int m_number);
 #else
 bool es_triangular_fb(unsigned int m_number);
 #endif

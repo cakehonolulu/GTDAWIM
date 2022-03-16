@@ -26,11 +26,11 @@ bool es_triangular_op(unsigned int m_number)
 	/*
 		This is an interesting trick:
 
-		We can modulus by 1 to check if it'll return 0 (0._0_; 0 should
-		be the remainder thus being 'integer'), it should be good enough
-		for our pruposes.
+		If we try to compare the casted integer version of n to it's float
+		counterpart and n doesn't have decimals the truncation of the float to
+		be able to be represented by the integer will yield a succesful comparison (No decimals)
 	*/
-	if (n % 1 = 0)
+	if ((unsigned int) n == n)
 	{
 #ifdef BENCHMARK
 		m_triangular = (unsigned int) n;

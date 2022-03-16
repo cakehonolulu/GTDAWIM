@@ -10,7 +10,7 @@ BINARY := fp2lab34
 TIMEFMT = "\t%E real\n\t%U user\n\t%S sys\n"
 
 ifdef WIN
-CC = mingw64-gcc
+CC = x86_64-w64-mingw32-gcc
 endif
 
 ifdef DEBUG
@@ -29,12 +29,18 @@ ifdef TABLE
 CFLAGS += -DTABLE
 endif
 
-ifdef BENCHMARK
-CFLAGS += -DBENCHMARK
+ifdef EXTERNAL_TIME
+CFLAGS += -DEXTERNAL_TIME
 endif
 
 all: clean $(BINARY)
 
+ifndef EXTERNAL_TIME
+ifndef RETAIL
+$(BINARY): lab2fp34.c benchmark.c bruteforce.c optimal.c table.c
+	@echo "🚧 Building..."
+	$(CC) $(CFLAGS) -DBENCHMARK $^ -o $@ -lm
+else
 ifdef BRUTEFORCE
 $(BINARY): lab2fp34.c bruteforce.c
 endif
@@ -46,11 +52,25 @@ $(BINARY): lab2fp34.c table.c
 endif
 	@echo "🚧 Building..."
 	$(CC) $(CFLAGS) $^ -o $@
+endif
+else
+ifdef BRUTEFORCE
+$(BINARY): lab2fp34.c bruteforce.c
+endif
+ifdef OPTIMAL
+$(BINARY): lab2fp34.c optimal.c
+endif
+ifdef TABLE
+$(BINARY): lab2fp34.c table.c
+endif
+	@echo "🚧 Building..."
+	$(CC) $(CFLAGS) -DBENCHMARK $^ -o $@
+endif
 
 bench:
-	$(CC) $(CFLAGS) -DBENCHMARK -DBRUTEFORCE lab2fp34.c bruteforce.c -o bf
-	$(CC) $(CFLAGS) -DBENCHMARK -DOPTIMAL -lm lab2fp34.c optimal.c -o op
-	$(CC) $(CFLAGS) -DBENCHMARK -DTABLE lab2fp34.c table.c -o tb
+	$(CC) $(CFLAGS) -DBENCHMARK -DEXTERNAL_TIME -DBRUTEFORCE lab2fp34.c bruteforce.c -o bf
+	$(CC) $(CFLAGS) -DBENCHMARK -DEXTERNAL_TIME -DOPTIMAL -lm lab2fp34.c optimal.c -o op
+	$(CC) $(CFLAGS) -DBENCHMARK -DEXTERNAL_TIME -DTABLE lab2fp34.c table.c -o tb
 ifndef WIN
 	clear
 	-@echo "Bruteforce Method:"
@@ -69,6 +89,6 @@ endif
 
 clean:
 	@echo "🧹 Cleaning..."
-	-@rm $(BINARY)
-	-@rm bf op tb
-	-@rm bf.exe op.exe tb.exe
+	-@rm -f $(BINARY)
+	-@rm -f bf op tb
+	-@rm -f bf.exe op.exe tb.exe

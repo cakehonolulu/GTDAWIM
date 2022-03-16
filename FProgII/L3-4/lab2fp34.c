@@ -1,7 +1,24 @@
 /*
 	Use ifdefs to reduce binary size (Only compiles one method,
-	configurable via Make arguments or -D switches if compiling manually)
+	configurable via Make arguments, -D switches if compiling manually or define's)
 */
+#ifdef BENCHMARK
+
+#include <benchmark.h>
+
+#else
+
+#ifdef RETAIL
+/*
+I tend to use the latest standard available so the compiler warns be about
+stdbool.h being deprecated (warning: "the <stdbool.h> header is deprecated in C2x" [-W#warnings])
+but this is probably going to be compiled on an older (And non-clang) compiler so I'll leave it as-is.
+*/
+#include <stdbool.h>
+#endif
+
+#endif
+
 #ifdef BRUTEFORCE
 #include <bruteforce.h>
 #endif
@@ -14,46 +31,25 @@
 #include <table.h>
 #endif
 
-#ifndef BENCHMARK
-// Only needed for "Release"-type builds
 #include <stdio.h>
-/*
-I tend to use the latest standard available so the compiler warns be about
-stdbool.h being deprecated (warning: "the <stdbool.h> header is deprecated in C2x" [-W#warnings])
-but this is probably going to be compiled on an older (And non-clang) compiler so I'll leave it as-is.
-*/
-#include <stdbool.h>
-#else
-
-// We will only need the next headers if compiling for benchmark
-// rand() & derivates (srand...)
-#include <stdlib.h>
-
-// Needed for UINT32_MAX's val.
-#include <stdint.h>
-
-// For time(struct...)
-#include <time.h>
-#endif
-
-// Configurable benchmark number, default to 10M (1M offers good insight too)
-#define N_VEGADES 10000000
 
 int main()
 {
-	unsigned int m_number = 0;
-
-#ifndef BENCHMARK
-	bool m_triangular = false;
-	bool m_cond = true;
-#endif
-
+#ifdef BENCHMARK
+#ifdef EXTERNAL_TIME
 #ifdef TABLE
-	// Table with positive integers for the table method
+	unsigned int m_table[P] = {0};
+#endif
+#endif
+#else
+#ifdef TABLE
 	unsigned int m_table[P] = {0};
 #endif
 
-#ifndef BENCHMARK
+	bool m_cond = true;
+	unsigned int m_number = 0;
+	bool m_triangular = false;
+
 	// Simple while, keep checking until good input found
 	while (m_cond)
 	{
@@ -77,77 +73,52 @@ int main()
 		like to compile the program as-is with user input support and without
 		the benchmarking complement.
 	*/
-#ifdef BRUTEFORCE
-#ifndef BENCHMARK
-	m_triangular = es_triangular_fb(m_number);
+#ifdef BENCHMARK
+#ifndef EXTERNAL_TIME
+	timed_benchmark();
 #else
-	// Do this for N_VEGADES
+
+#ifdef BRUTEFORCE
 	for (int i = 0; i < N_VEGADES; i++)
 	{
-		// Each time we RNG a number, we *should* provide a fresh seed
 		srand(time(0));
-
-		// Generate a a number ranging from 0 to UINT32_MAX (0xFFFFFFFF)
-		// Formula discussed in FProg 1
-		// https://github.com/cakehonolulu/GTDAWIM/blob/main/FProgI/L5AGE/jocedat.c#L32
-		m_number = rand() % ((UINT32_MAX + 1) - 1) + 1;
-
-		/*
-			Call the function, could assign the return value to a variable
-			but it'd be pointless and cause a non-used-variable-related
-			compiler warning.
-		*/
-		es_triangular_fb(m_number);
+		es_triangular_fb(rand() % ((UINT32_MAX + 1) - 1) + 1);
 	}
-#endif
 #endif
 
 #ifdef OPTIMAL
-#ifndef BENCHMARK
-	m_triangular = es_triangular_op(m_number);
-#else
-	// Pretty much the same as Bruteforce...
 	for (int i = 0; i < N_VEGADES; i++)
 	{
 		srand(time(0));
-		m_number = rand() % ((UINT32_MAX + 1) - 1) + 1;
-		es_triangular_op(m_number);	
+		es_triangular_op(rand() % ((UINT32_MAX + 1) - 1) + 1);
 	}
-#endif
 #endif
 
 #ifdef TABLE
-#ifndef BENCHMARK
-	calcula_triangulars(m_table);
-	m_triangular = es_triangular_tau(m_table, m_number);
-#else
-	/*
-		We only populate the table once, else it'd be expensive exec-time
-	 	Function works with pointers to avoid passing by value (Pass by ref. instead)
-	*/
 	calcula_triangulars(m_table);
 
 	for (int i = 0; i < N_VEGADES; i++)
 	{
 		srand(time(0));
-		m_number = rand() % ((UINT32_MAX + 1) - 1) + 1;
-		
-		/*
-			This hardcoded number comes from an utility I designed to check
-			the 'nth triangular number (Provided by the user)
-
-			File: m_triang.c
-
-			Tested with P = 50000 "limitation"
-		*/
-		if (m_number <= 0x4A81DE28)
-		{
-			es_triangular_tau(m_table, m_number);	
-		}
+		es_triangular_tau(m_table, rand() % ((UINT32_MAX + 1) - 1) + 1);
 	}
 #endif
+
+#endif
+#else
+#ifdef BRUTEFORCE
+	m_triangular = es_triangular_fb(m_number);
 #endif
 
+#ifdef OPTIMAL
+	m_triangular = es_triangular_op(m_number);
+#endif
+
+#ifdef TABLE
+	calcula_triangulars(m_table);
+	m_triangular = es_triangular_tau(m_table, m_number);
+#endif
+#endif
 
 #ifndef BENCHMARK
 	// If not in benchmark number, tell the user if it's triangular or not
