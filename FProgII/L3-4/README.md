@@ -33,9 +33,9 @@ Builds bruteforce method in retail mode and the resulting program asks the user 
 # Tested on
 ## Ryzen PC
 ### 6-core Ryzen 5 5600G | 16 GB DDR4 3200MHz (1600MT/s)
-### Linux 5.10.102.1 | Ubuntu Jammy Jellyfish (development branch) (22.04) (WSL, Hyper-V based)
+### Linux 5.10.102.1 | Ubuntu Jammy Jellyfish (development branch) (22.04) (WSL, Hyper-V based) PATCHED CPU Vulns (Reduce perf.)
 --------
 
 ## HP Pavilion-15  CS3003NS
 ### 4-core Intel i5-1035G1 | 16 GB DDR4 2667 MHz (1333MT/s)
-### Linux 5.16.9 | Ubuntu Jammy Jellyfish (development branch) (22.04) 
+### Linux 5.16.9 | Ubuntu Jammy Jellyfish (development branch) (22.04) PATCHED CPU Vulns (Reduce perf.)
