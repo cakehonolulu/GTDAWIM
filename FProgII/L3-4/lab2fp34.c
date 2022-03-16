@@ -36,6 +36,7 @@ but this is probably going to be compiled on an older (And non-clang) compiler s
 int main()
 {
 #ifdef BENCHMARK
+	int i = 0;
 #ifdef EXTERNAL_TIME
 #ifdef TABLE
 	unsigned int m_table[P] = {0};
@@ -79,7 +80,7 @@ int main()
 #else
 
 #ifdef BRUTEFORCE
-	for (int i = 0; i < N_VEGADES; i++)
+	for (i = 0; i < N_VEGADES; i++)
 	{
 		srand(time(0));
 		es_triangular_fb(rand() % ((UINT32_MAX + 1) - 1) + 1);
@@ -87,7 +88,7 @@ int main()
 #endif
 
 #ifdef OPTIMAL
-	for (int i = 0; i < N_VEGADES; i++)
+	for (i = 0; i < N_VEGADES; i++)
 	{
 		srand(time(0));
 		es_triangular_op(rand() % ((UINT32_MAX + 1) - 1) + 1);
@@ -97,7 +98,7 @@ int main()
 #ifdef TABLE
 	calcula_triangulars(m_table);
 
-	for (int i = 0; i < N_VEGADES; i++)
+	for (i = 0; i < N_VEGADES; i++)
 	{
 		srand(time(0));
 		es_triangular_tau(m_table, rand() % ((UINT32_MAX + 1) - 1) + 1);

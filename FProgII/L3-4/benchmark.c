@@ -7,10 +7,11 @@
 void timed_benchmark()
 {
 	unsigned int m_table[P] = {0};
+	int i = 0;
 	time_t m_end = time(NULL);
 	time_t m_start = time(NULL);
 
-	for (int i = 0; i < N_VEGADES; i++)
+	for (i = 0; i < N_VEGADES; i++)
 	{
 		srand(time(0));
 		es_triangular_fb(rand() % ((UINT32_MAX + 1) - 1) + 1);
@@ -22,7 +23,7 @@ void timed_benchmark()
 
 	m_start = time(NULL);
 
-	for (int i = 0; i < N_VEGADES; i++)
+	for (i = 0; i < N_VEGADES; i++)
 	{
 		srand(time(0));
 		es_triangular_op(rand() % ((UINT32_MAX + 1) - 1) + 1);
@@ -36,7 +37,7 @@ void timed_benchmark()
 
 	calcula_triangulars(m_table);
 
-	for (int i = 0; i < N_VEGADES; i++)
+	for (i = 0; i < N_VEGADES; i++)
 	{
 		srand(time(0));
 		es_triangular_tau(m_table, rand() % ((UINT32_MAX + 1) - 1) + 1);
