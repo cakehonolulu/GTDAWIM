@@ -19,3 +19,7 @@ External Timing (O3-level Optimizations)
 Bruteforce: 297632 Bytes (≈ ±0,0060% Size)
 Optimal:	304217 Bytes (≈ +0,0060% Size)
 Table:		297846 Bytes (≈ ±0,0061% Size)
+
+// Host Information
+Windows 11 Pro (Insider Preview, Fast Channel)
+Build 22572.ni_release.220304-1536
