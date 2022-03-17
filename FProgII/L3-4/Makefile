@@ -82,7 +82,6 @@ bench:
 	$(CC) $(CFLAGS) -DBENCHMARK -DEXTERNAL_TIME -DOPTIMAL -lm lab2fp34.c optimal.c -o op
 	$(CC) $(CFLAGS) -DBENCHMARK -DEXTERNAL_TIME -DTABLE lab2fp34.c table.c -o tb
 ifndef WIN
-	clear
 	-@echo "Bruteforce Method:"
 	-@/bin/time -f $(TIMEFMT) ./bf
 	-@echo "Optimal Method:"

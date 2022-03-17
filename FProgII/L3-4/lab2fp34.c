@@ -40,6 +40,9 @@ int main()
 #ifdef TABLE
 	unsigned int m_table[P] = {0};
 #endif
+#ifdef EXTERNAL_TIME
+	unsigned int i;
+#endif
 #endif
 #else
 #ifdef TABLE
