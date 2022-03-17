@@ -7,10 +7,12 @@ unsigned int es_triangular_op(unsigned int m_number)
 bool es_triangular_op(unsigned int m_number)
 #endif
 {
-#ifdef BENCHMARK
-	unsigned int m_next_num, m_pow, m_triangular;
-#else
+#ifndef BENCHMARK
 	bool m_triangular = false;
+#else
+	unsigned int m_triangular = 0, i;
+	bool m_cond = true;
+	float x;
 #endif
 
 	/*
@@ -26,11 +28,10 @@ bool es_triangular_op(unsigned int m_number)
 	/*
 		This is an interesting trick:
 
-		If we try to compare the casted integer version of n to it's float
-		counterpart and n doesn't have decimals the truncation of the float to
-		be able to be represented by the integer will yield a succesful comparison (No decimals)
+		If the ceil'd version of n and the floor'd version of n are the same,
+		it's safe to assume n is a natural number without fractional part.
 	*/
-	if ((unsigned int) n == n)
+	if (ceil(n) == floor(n))
 	{
 #ifdef BENCHMARK
 		m_triangular = (unsigned int) n;
@@ -44,20 +45,23 @@ bool es_triangular_op(unsigned int m_number)
 		/*
 			If it's not a triangular number, find the next one.
 			Reconstruct the original formula to get the original number.
-
-				1	   1
-			x = - n² + - n
-				2	   2
+			Keep feeding values until the next closer triangular is found (Not the previous!)
 		*/
+		i = 0;
+		
+		while (m_cond)
+		{
+			x = (((floor(sqrtf(2 * (m_number + i))))) * (((floor(sqrtf(2 * (m_number + i))))) + 1) / 2);
 
-		// Round up the number (As we need to find the *next* triangular number closest to our num)
-		m_next_num = ceil(n);
+			if (x >= m_number)
+			{
+				m_triangular = (unsigned int) x;
+				
+				m_cond = false;
+			}
 
-		// Calculate power of 2 (Multiply by itself 1 time)
-		m_pow = (m_next_num * m_next_num);
-
-		// Apply the formula described before
-		m_triangular = (unsigned int) (((1 / 2) * m_pow) + ((1 / 2) * m_next_num));
+			i++;
+		}		
 	}
 #endif
 
