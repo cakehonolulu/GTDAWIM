@@ -1,0 +1,15 @@
+Si utilitza clang:
+
+clang -Wall -Wextra -pedantic -I. main.c bruteforce.c optimal.c table.c benchmark.c -o nom_del_executable -lm
+
+gcc:
+
+gcc -Wall -Wextra -pedantic -I. main.c bruteforce.c optimal.c table.c benchmark.c -o nom_del_executable -lm
+
+mingw:
+
+x86_64-w64-mingw-gcc -Wall -Wextra -pedantic -I. main.c bruteforce.c optimal.c table.c benchmark.c -o fp2lab34 -lm
+
+Per compilar la utilitat amb la que he comprovat el valor triangular a la posició P (50.000):
+
+nom_del_compilador -Wall -Wextra -pedantic m_triang.c -o nom_de_la_utilitat
