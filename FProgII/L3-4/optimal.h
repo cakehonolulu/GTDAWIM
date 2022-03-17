@@ -1,5 +1,7 @@
 #ifndef BENCHMARK
+#ifndef C23
 #include <stdbool.h>
+#endif
 #endif
 
 #include <math.h>

@@ -1,4 +1,6 @@
+#ifndef C23
 #include <stdbool.h>
+#endif
 
 /* Definitions */
 #define P 50000

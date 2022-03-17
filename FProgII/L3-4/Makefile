@@ -37,6 +37,12 @@ ifdef OPTIMIZATION
 CFLAGS += -O3
 endif
 
+COMPILER_VERSION := $(shell $(CC) --version)
+
+ifneq '' '$(findstring clang version 15.0,$(COMPILER_VERSION))'
+  CFLAGS += -DC23
+ endif
+
 all: clean $(BINARY)
 
 ifndef EXTERNAL_TIME
