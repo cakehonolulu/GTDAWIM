@@ -21,7 +21,7 @@ int main()
 	}
 	else
 	{
-		printg("No vàlid! Provi un nombre més petit...\n");
+		printf("No vàlid! Provi un nombre més petit...\n");
 	}
 
 	return 0;
