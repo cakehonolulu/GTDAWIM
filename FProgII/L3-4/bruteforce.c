@@ -13,14 +13,13 @@ bool es_triangular_fb(unsigned int m_number)
 	bool m_triangular = false;
 #endif
 
-	bool m_cond = true;
-	unsigned int i = 0, m_summation = 0;
+	unsigned int i, m_summation = 0;
 
 	// Do this while m_cond = 1 (true)
-	while (m_cond)
+	for (i = 0; m_summation <= m_number; i++)
 	{
 		// m_triangular_num = m_prev_triang_summation + current_index++
-		m_summation = (m_summation + (i++));
+		m_summation = (m_summation + i);
 
 		// Check if summation equals provided number
 		if (m_summation == m_number)
@@ -33,21 +32,19 @@ bool es_triangular_fb(unsigned int m_number)
 			m_triangular = true;
 #endif
 
-			m_cond = false;
-		}
-		else
-		/*
-			On benchmark, the next triangular number that is higher
-			than provided number is a valid return
-		*/
-		if (m_summation > m_number)
-		{
-#ifdef BENCHMARK
-			m_triangular = m_summation;
-#endif
-			m_cond = false;
 		}
 	}
+
+#ifdef BENCHMARK
+	/*
+		On benchmark, the next triangular number that is higher
+		than provided number is a valid return
+	*/
+	if (m_summation > m_number)
+	{
+		m_triangular = m_summation;
+	}
+#endif
 
 	/*
 		This only adds an additional instruction (Moves the result to %rax)
