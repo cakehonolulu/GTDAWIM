@@ -10,10 +10,10 @@ bool es_triangular_op(unsigned int m_number)
 #ifndef BENCHMARK
 	bool m_triangular = false;
 #else
-	unsigned int m_triangular = 0, i;
-	bool m_cond = true;
-	float x;
+	unsigned int m_triangular = 0;
 #endif
+
+	unsigned int i;
 
 	/*
 		Use a float, less memory footprint than using a double
@@ -47,21 +47,17 @@ bool es_triangular_op(unsigned int m_number)
 			Reconstruct the original formula to get the original number.
 			Keep feeding values until the next closer triangular is found (Not the previous!)
 		*/
-		i = 0;
-		
-		while (m_cond)
+
+		for (i = 0; n <= m_number; i++)
 		{
-			x = (((floor(sqrtf(2 * (m_number + i))))) * (((floor(sqrtf(2 * (m_number + i))))) + 1) / 2);
+			n = (((floor(sqrtf(2 * (m_number + i))))) * (((floor(sqrtf(2 * (m_number + i))))) + 1) / 2);
 
-			if (x >= m_number)
+			if (ceil(n) == floor(n) && (n >= m_number))
 			{
-				m_triangular = (unsigned int) x;
-				
-				m_cond = false;
+				m_triangular = (unsigned int) n;
 			}
-
-			i++;
-		}		
+		}
+	
 	}
 #endif
 
