@@ -33,6 +33,10 @@ ifdef EXTERNAL_TIME
 CFLAGS += -DEXTERNAL_TIME
 endif
 
+ifdef OPTIMIZATION
+CFLAGS += -O3
+endif
+
 all: clean $(BINARY)
 
 ifndef EXTERNAL_TIME
