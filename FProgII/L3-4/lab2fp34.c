@@ -103,7 +103,7 @@ int main()
 	for (i = 0; i < N_VEGADES; i++)
 	{
 		srand(time(0));
-		es_triangular_tau(m_table, rand() % ((UINT32_MAX + 1) - 1) + 1);
+		es_triangular_tau(m_table, rand() % ((0x4A81DE28 + 1) - 1) + 1);
 	}
 #endif
 
