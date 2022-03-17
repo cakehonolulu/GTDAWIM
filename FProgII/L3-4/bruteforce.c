@@ -15,10 +15,10 @@ bool es_triangular_fb(unsigned int m_number)
 
 	unsigned int i, m_summation = 0;
 
-	// Do this while m_cond = 1 (true)
+	// Do this while the summatory is <= number provided
 	for (i = 0; m_summation <= m_number; i++)
 	{
-		// m_triangular_num = m_prev_triang_summation + current_index++
+		// m_triangular_num = m_prev_triang_summation + i
 		m_summation = (m_summation + i);
 
 		// Check if summation equals provided number

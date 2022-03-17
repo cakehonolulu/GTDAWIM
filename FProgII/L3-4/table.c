@@ -29,30 +29,33 @@ bool es_triangular_tau(unsigned int *m_table, unsigned int m_number)
 
 	unsigned int i;
 
-	// Do while condition lasts
-	for (i = 0; m_table[i] <= m_number; i++)
+	if (m_number <= 0x4A81DE28)
 	{
-		// Compare each table's index value against the provide number
-		if (m_table[i] == m_number)
+		// Do while condition lasts
+		for (i = 0; m_table[i] <= m_number; i++)
 		{
+			// Compare each table's index value against the provide number
+			if (m_table[i] == m_number)
+			{
 #ifdef BENCHMARK
-			// Return the value
-			m_triangular = m_table[i];
+				// Return the value
+				m_triangular = m_table[i];
 #else
-			m_triangular = true;
+				m_triangular = true;
 #endif
+			}
 		}
-	}
 
 #ifdef BENCHMARK
-	// If bigger, assign it
-	if (m_table[i] > m_number)
-	{
-		// Only on benchmark mode, assign the value (first_triang >= n)
-		m_triangular = m_table[i];
-	}
+		// If bigger, assign it
+		if (m_table[i] > m_number)
+		{
+			// Only on benchmark mode, assign the value (first_triang >= n)
+			m_triangular = m_table[i];
+		}
 #endif
-	
+	}
+
 	/*
 		This only adds an additional instruction (Moves the result to %rax)
 		following x86_64 SysV ABI, at the end 1 instruction shouldn't be noticed at all

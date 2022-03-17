@@ -11,9 +11,10 @@ bool es_triangular_op(unsigned int m_number)
 	bool m_triangular = false;
 #else
 	unsigned int m_triangular = 0;
+	unsigned int i;
 #endif
 
-	unsigned int i;
+	
 
 	/*
 		Use a float, less memory footprint than using a double
@@ -47,7 +48,6 @@ bool es_triangular_op(unsigned int m_number)
 			Reconstruct the original formula to get the original number.
 			Keep feeding values until the next closer triangular is found (Not the previous!)
 		*/
-
 		for (i = 0; n <= m_number; i++)
 		{
 			n = (((floor(sqrtf(2 * (m_number + i))))) * (((floor(sqrtf(2 * (m_number + i))))) + 1) / 2);
@@ -57,7 +57,6 @@ bool es_triangular_op(unsigned int m_number)
 				m_triangular = (unsigned int) n;
 			}
 		}
-	
 	}
 #endif
 
