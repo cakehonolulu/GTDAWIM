@@ -1,0 +1,21 @@
+NOTES:
+
+In-house Timing (No Optimizations)
+
+16752 Bytes
+
+In-house Timing (O3-level Optimizations)
+
+16808 Bytes (≈ +0,3332% Size)
+
+External Timing (No Optimizations)
+
+Bruteforce: 16232 Bytes
+Optimal:	16384 Bytes
+Table:		16328 Bytes
+
+External Timing (O3-level Optimizations)
+
+Bruteforce: 16232 Bytes (≈ ±0% Size)
+Optimal:	16432 Bytes (≈ +0,2922% Size)
+Table:		16328 Bytes (≈ ±0% Size)
