@@ -14,8 +14,6 @@ bool es_triangular_op(unsigned int m_number)
 	unsigned int i;
 #endif
 
-	
-
 	/*
 		Use a float, less memory footprint than using a double
 		

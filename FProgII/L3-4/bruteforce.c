@@ -24,14 +24,12 @@ bool es_triangular_fb(unsigned int m_number)
 		// Check if summation equals provided number
 		if (m_summation == m_number)
 		{
-
 #ifdef BENCHMARK
 			// Set the return value accordingly
 			m_triangular = m_summation;
 #else
 			m_triangular = true;
 #endif
-
 		}
 	}
 
