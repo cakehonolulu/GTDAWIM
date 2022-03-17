@@ -36,7 +36,6 @@ but this is probably going to be compiled on an older (And non-clang) compiler s
 int main()
 {
 #ifdef BENCHMARK
-	int i = 0;
 #ifdef EXTERNAL_TIME
 #ifdef TABLE
 	unsigned int m_table[P] = {0};
