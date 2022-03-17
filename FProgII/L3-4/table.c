@@ -26,11 +26,11 @@ bool es_triangular_tau(unsigned int *m_table, unsigned int m_number)
 #else
 	bool m_triangular = false;
 #endif
-	bool m_cond = true;
-	int i = 0;
+
+	unsigned int i;
 
 	// Do while condition lasts
-	while (m_cond)
+	for (i = 0; m_table[i] <= m_number; i++)
 	{
 		// Compare each table's index value against the provide number
 		if (m_table[i] == m_number)
@@ -41,21 +41,17 @@ bool es_triangular_tau(unsigned int *m_table, unsigned int m_number)
 #else
 			m_triangular = true;
 #endif
-			m_cond = false;
 		}
-		else
-		// If bigger, stop
-		if (m_table[i] > m_number)
-		{
-#ifdef BENCHMARK
-			// But if on benchmark mode, assign the value (first_triang >= n)
-			m_triangular = m_table[i];
-#endif
-			m_cond = false;
-		}
-
-		i++;
 	}
+
+#ifdef BENCHMARK
+	// If bigger, assign it
+	if (m_table[i] > m_number)
+	{
+		// Only on benchmark mode, assign the value (first_triang >= n)
+		m_triangular = m_table[i];
+	}
+#endif
 	
 	/*
 		This only adds an additional instruction (Moves the result to %rax)
