@@ -2,7 +2,7 @@
 
 unsigned int es_triangular_op(unsigned int m_number)
 {
-	unsigned int m_triangular = 0, i;
+	unsigned int m_triangular = 0;
 
 	/*
 		Use a float, less memory footprint than using a double

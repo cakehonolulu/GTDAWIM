@@ -10,7 +10,7 @@ bool es_triangular_op(unsigned int m_number)
 #ifndef BENCHMARK
 	bool m_triangular = false;
 #else
-	unsigned int m_triangular = 0, i;
+	unsigned int m_triangular = 0;
 	float m_nearest;
 #endif
 
