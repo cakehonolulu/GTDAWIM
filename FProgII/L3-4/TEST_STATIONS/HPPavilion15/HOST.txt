@@ -1,0 +1,17 @@
+MOBO:
+Propietary Intel Chipset (HP)
+
+CPU:
+INTEL I5 1035G1 (4C / 8T; 1.0-3.6GHz)
+
+RAM:
+KINGSTON HYPERX SO-DIMM DDR4 2667MHz (1333MT/s)
+
+iGPU:
+Intel Iris Plus Graphics G1
+
+dGPU:
+NVIDIA GEFORCE GTX 1050 Max-Q
+
+M.2 SSD:
+Propietary HP 240GB M.2
