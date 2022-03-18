@@ -91,6 +91,11 @@ ifndef WIN
 	-@rm bf op tb
 endif
 
+benchfiles:
+	$(CC) $(CFLAGS) -DBENCHMARK -DEXTERNAL_TIME -DBRUTEFORCE lab2fp34.c bruteforce.c -o bf
+	$(CC) $(CFLAGS) -DBENCHMARK -DEXTERNAL_TIME -DOPTIMAL -lm lab2fp34.c optimal.c -o op
+	$(CC) $(CFLAGS) -DBENCHMARK -DEXTERNAL_TIME -DTABLE lab2fp34.c table.c -o tb
+
 gdb: clean $(BINARY)
 ifndef WIN
 	gdb fp2lab34
