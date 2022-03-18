@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="P1-FProgII" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/P1-FProgII" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/P1-FProgII" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-pedantic" />
+			<Add option="-Wfatal-errors" />
+			<Add option="-Wextra" />
+			<Add option="-Wall" />
+			<Add option="-I." />
+		</Compiler>
+		<Linker>
+			<Add option="-lm" />
+		</Linker>
+		<Unit filename="benchmark.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="benchmark.h" />
+		<Unit filename="bruteforce.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="bruteforce.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="optimal.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="optimal.h" />
+		<Unit filename="table.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="table.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

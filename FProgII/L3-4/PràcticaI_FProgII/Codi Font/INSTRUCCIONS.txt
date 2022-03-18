@@ -12,4 +12,4 @@ x86_64-w64-mingw-gcc -Wall -Wextra -pedantic -I. main.c bruteforce.c optimal.c t
 
 Per compilar la utilitat amb la que he comprovat el valor triangular a la posició P (50.000):
 
-nom_del_compilador -Wall -Wextra -pedantic m_triang.c -o nom_de_la_utilitat
+nom_del_compilador -Wall -Wextra -pedantic m_triang.c -o nom_de_la_utilitat -lm

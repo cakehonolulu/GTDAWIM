@@ -17,9 +17,7 @@ void calcula_triangulars(unsigned int *m_table)
 
 unsigned int es_triangular_tau(unsigned int *m_table, unsigned int m_number)
 {
-	unsigned int m_triangular = 0;
-
-	unsigned int i;
+	unsigned int m_triangular = 0, i;
 
 	// 0x4A81DE28 in decimal is the P'th triangular number value
 	if (m_number <= 0x4A81DE28)

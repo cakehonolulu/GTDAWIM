@@ -14,7 +14,7 @@ unsigned int es_triangular_op(unsigned int m_number)
 	*/
 	float m_nearest, m_result;
 
-	m_result = (((sqrtf((8 * m_number) + 1)) - 1) / 2)
+	m_result = (((sqrtf((8 * m_number) + 1)) - 1) / 2);
 
 	/*
 		This is an interesting trick:
@@ -28,7 +28,17 @@ unsigned int es_triangular_op(unsigned int m_number)
 	}
 	else
 	{
-		m_nearest = ceil(((sqrtf(1 + 8 * m_number)) - 1) / 2);
+		/*
+			Formula:
+					  [sqrt(8x+1)] - 1
+			ceil(n) = ----------------
+				   			 2
+
+						  (n * (n + 1))
+			next_triang = -------------
+							    2
+		*/
+		m_nearest = ceil(m_result);
     	m_nearest = ((m_nearest * (m_nearest + 1)) / 2);
 	}
 
