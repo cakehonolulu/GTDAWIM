@@ -1,0 +1,57 @@
+NOTES:
+
+In-house Timing (No Optimizations)
+
+50072 Bytes
+
+In-house Timing (O3-level Optimizations)
+
+50072 Bytes (≈ ±0% Size)
+
+External Timing (No Optimizations)
+
+Bruteforce: 49568 Bytes
+Optimal:	49568 Bytes
+Table:		49864 Bytes
+
+External Timing (O3-level Optimizations)
+
+Bruteforce: 49568 Bytes (≈ ±0% Size)
+Optimal:	49568 Bytes (≈ ±0% Size)
+Table:		49864 Bytes (≈ ±0% Size)
+
+// macOS Host Information
+Kernel (uname -a):
+Darwin MacBook-Air-de-Joel.local 21.3.0 Darwin Kernel Version 21.3.0: Wed Jan  5 21:37:58 PST 2022; root:xnu-8019.80.24~20/RELEASE_X86_64 x86_64
+
+OS (About this Mac):
+macOS Monterey 12.2.1
+
+Compilers:
+clang (clang -v):
+Apple clang version 13.0.0 (clang-1300.0.29.30)
+Target: x86_64-apple-darwin21.3.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+gcc (gcc -v):
+Configured with: --prefix=/Library/Developer/CommandLineTools/usr --with-gxx-include-dir=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/4.2.1
+Apple clang version 13.0.0 (clang-1300.0.29.30)
+Target: x86_64-apple-darwin21.3.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+
+mingw (x86_64-w64-mingw32-gcc -v):
+Not installed
+
+Make (make -v):
+GNU Make 3.81
+Copyright (C) 2006  Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+
+This program built for i386-apple-darwin11.3.0
+
+shell version (zsh --version):
+zsh 5.8 (x86_64-apple-darwin21.0)
