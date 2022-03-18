@@ -33,7 +33,7 @@ bool es_triangular_op(unsigned int m_number)
 	if (ceil(m_result) == floor(m_result))
 	{
 #ifdef BENCHMARK
-		m_triangular = (unsigned int) n;
+		m_triangular = (unsigned int) m_result;
 #else
 		m_triangular = true;
 #endif
