@@ -1,0 +1,7 @@
+disass /r main
+Dump of assembler code for function main:
+   0x0000800c <+0>:	2c 00 9f e5	ldr	r0, [pc, #44]	; 0x8040 <loop+20>
+   0x00008010 <+4>:	01 10 a0 e3	mov	r1, #1
+   ...
+
+Byte at Offset +3: 0xE5
