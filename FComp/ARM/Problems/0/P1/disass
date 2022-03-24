@@ -1,0 +1,7 @@
+disass /r main
+Dump of assembler code for function main:
+   0x0000800c <+0>:  38 30 9f e5 ldr   r3, [pc, #56]  ; 0x804c <.loop+28>
+   0x00008010 <+4>:  38 40 9f e5 ldr   r4, [pc, #56]  ; 0x8050 <.loop+32>
+   ...
+
+Opcode at Offset +4 (LE): 0x38309fe5
