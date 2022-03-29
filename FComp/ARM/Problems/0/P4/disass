@@ -1,0 +1,7 @@
+disass /r
+Dump of assembler code for bootstrap:
+   0x00008000 <+0>:  00 00 a0 e1 nop         ; (mov r0, r0)
+   0x00008004 <+4>:  00 00 00 eb bl 0x800c <main>
+   ...
+
+Opcode for first branch (LE): 0x000000eb
