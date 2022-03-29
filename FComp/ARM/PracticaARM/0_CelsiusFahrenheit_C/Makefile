@@ -10,7 +10,7 @@
 ARCH	:= -march=armv5te -mlittle-endian
 INCL    := -I./include
 ASFLAGS	:= $(ARCH) $(INCL) -g
-CCFLAGS	:= -Wall -gdwarf-3 -O0 $(ARCH) $(INCL)
+CCFLAGS	:= -Wall -g -O0 $(ARCH) $(INCL)
 LDFLAGS := -z max-page-size=0x8000 -Lp_lib
 
 #-------------------------------------------------------------------------------
@@ -33,6 +33,15 @@ test_CelsiusFahrenheit.elf : build/test_CelsiusFahrenheit.o build/CelsiusFahrenh
 build/test_CelsiusFahrenheit.o: tests/test_CelsiusFahrenheit.c include/CelsiusFahrenheit.h include/Q12.h
 	arm-none-eabi-gcc $(CCFLAGS) -c tests/test_CelsiusFahrenheit.c -o build/test_CelsiusFahrenheit.o
 
+debug:
+	qemu-arm -L /usr/share/gcc-arm-none-eabi/lib -g 1337 demo.elf &
+	-@arm-none-eabi-gdb -x gdb_cmd
+	-@pkill -9 qemu-arm
+
+debugtest:
+	qemu-arm -L /usr/share/gcc-arm-none-eabi/lib -g 1337 test_CelsiusFahrenheit.elf &
+	-@arm-none-eabi-gdb -x gdb_cmd_test
+	-@pkill -9 qemu-arm
 
 #-------------------------------------------------------------------------------
 # clean commands
@@ -47,10 +56,3 @@ clean :
 #-----------------------------------------------------------------------------
 run : demo.elf
 	arm-eabi-insight demo.elf &
-
-
-#-----------------------------------------------------------------------------
-# debug commands
-#-----------------------------------------------------------------------------
-debug : test_CelsiusFahrenheit.elf
-	arm-eabi-insight test_CelsiusFahrenheit.elf &
