@@ -15,13 +15,13 @@
 
 .data
 		.align 2
-	temp1C:	.word 0x0002335C		@; temp1C = 35.21 ºC
-	temp2F:	.word 0xFFFE8400		@; temp2F = -23.75 ºF
+	temp1C:	.word 0x0002335C		@; temp1C = 35.21 ï¿½C
+	temp2F:	.word 0xFFFE8400		@; temp2F = -23.75 ï¿½F
 
 .bss
 		.align 2
-	temp1F:	.space 4				@; expected conversion:  95.379638671875 ºF
-	temp2C:	.space 4				@; expected conversion: -30.978271484375 ºC
+	temp1F:	.space 4				@; expected conversion:  95.379638671875 ï¿½F
+	temp2C:	.space 4				@; expected conversion: -30.978271484375 ï¿½C
 
 
 .text
@@ -31,6 +31,31 @@
 main:
 		push {lr}
 		
+		ldr r2, =temp1C
+		ldr r3, =temp2F
+		ldr r5, =temp1F
+		ldr r6, =temp2C
+
+		# R1 = temp1C
+		ldr r1, [r2]
+
+		mov r0, r1
+
+		bl Celsius2Fahrenheit
+
+		# R3 = temp1F
+		str r0, [r5]
+
+		# R2 = temp2F
+		ldr r2, [r3]
+
+		mov r0, r2
+
+		bl Fahrenheit2Celsius
+
+		# R4 = temp2C
+		str r0, [r6]
+
 			@; temp1F = Celsius2Fahrenheit(temp1C);
 		
 			@; temp2C = Fahrenheit2Celsius(temp2F);

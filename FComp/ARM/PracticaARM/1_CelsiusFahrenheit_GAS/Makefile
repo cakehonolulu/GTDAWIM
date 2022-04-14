@@ -10,7 +10,7 @@
 ARCH	:= -march=armv5te -mlittle-endian
 INCL    := -I./include
 ASFLAGS	:= $(ARCH) $(INCL) -g
-CCFLAGS	:= -Wall -gdwarf-3 -O0 $(ARCH) $(INCL)
+CCFLAGS	:= -Wall -g -O0 $(ARCH) $(INCL)
 LDFLAGS := -z max-page-size=0x8000 -Lp_lib
 
 #-------------------------------------------------------------------------------
@@ -52,5 +52,12 @@ run : demo.elf
 #-----------------------------------------------------------------------------
 # debug commands
 #-----------------------------------------------------------------------------
-debug : test_CelsiusFahrenheit.elf
-	arm-eabi-insight test_CelsiusFahrenheit.elf &
+debug:
+	qemu-arm -L /usr/lib/arm-none-eabi/lib/ -g 1337 demo.elf &
+	-@arm-none-eabi-gdb -x gdb_cmd
+	-@pkill -9 qemu-arm
+
+debugtest:
+	qemu-arm -L /usr/lib/arm-none-eabi/lib/ -g 1337 test_CelsiusFahrenheit.elf &
+	-@arm-none-eabi-gdb -x gdb_cmd_test
+	-@pkill -9 qemu-arm
