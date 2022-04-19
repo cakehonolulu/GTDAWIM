@@ -50,40 +50,17 @@ inv_Q12:
 Celsius2Fahrenheit:
 		push {r3, r5, lr}
 
-		ldr r5, =prod64
-		ldr r6, =output
-
-		ldr r7, =Q12
-
-		ldr r8, =inv_a_Q12
-
-		ldr r9, [r8]
-
-		# R2 = lo 32-bits
-		ldr r1, [r5]
-
-		# R3 = hi 32-bits
-		ldr r2, [r5, #4]
-
-		# R5 = output
-		ldr r3, [r6]
-
-		# R7 = MAKE_Q12(9.0/5.0)
-		ldr r4, [r7]
-
-		smull r1, r2, r0, r4
-
-		ldr r5, =MASK_FRAC
-
-		and r5, r2, r5
-
-		mov r5, r5, lsl #20
-
-		orr r2, r5, r0
+		ldr r1, =0x1CCD
+		smull r2, r3, r0, r1
+		mov r2, r2, lsr #12
+		ldr r5, =0x00000FFF
+		and r4, r3, r5
+		mov r4, r4, lsl #20
+		orr r0, r4, r2
 		mov r3, r3, asr #12
-
+		add r2, r2, #131072
 		mov r0, r2
-		
+
 		pop {r3, r5, pc}
 
 @; Fahrenheit2Celsius(): converteix una temperatura en graus Fahrenheit a la
