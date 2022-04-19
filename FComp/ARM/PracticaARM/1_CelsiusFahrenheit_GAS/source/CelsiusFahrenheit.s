@@ -49,7 +49,7 @@ inv_Q12:
 	.global Celsius2Fahrenheit
 Celsius2Fahrenheit:
 		push {r3, r5, lr}
-	
+	inv_Q12
 		ldr r5, =prod64
 		ldr r6, =output
 
