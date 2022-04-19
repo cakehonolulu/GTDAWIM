@@ -34,7 +34,6 @@ main:
 		ldr r2, =temp1C
 		ldr r3, =temp2F
 		ldr r5, =temp1F
-		ldr r6, =temp2C
 
 		# R1 = temp1C
 		ldr r1, [r2]
@@ -54,11 +53,12 @@ main:
 		bl Fahrenheit2Celsius
 
 		# R4 = temp2C
+		ldr r6, =temp2C
 		str r0, [r6]
 
 			@; temp1F = Celsius2Fahrenheit(temp1C);
 		
-			@; temp2C = Fahrenheit2Celsius(temp2F);
+			@; temp2C = Fahrenhhttp://localhost:8000/eit2Celsius(temp2F);
 
 @; TESTING POINT: check the results
 @;	(gdb) p /x temp1F		-> 0x0005F613

@@ -49,7 +49,7 @@ inv_Q12:
 	.global Celsius2Fahrenheit
 Celsius2Fahrenheit:
 		push {r3, r5, lr}
-	inv_Q12
+
 		ldr r5, =prod64
 		ldr r6, =output
 
@@ -71,11 +71,18 @@ Celsius2Fahrenheit:
 		# R7 = MAKE_Q12(9.0/5.0)
 		ldr r4, [r7]
 
-		umull r1, r2, r0, r4
+		smull r1, r2, r0, r4
 
-		mov r0, r1, lsr #12
+		ldr r5, =MASK_FRAC
 
-		add r0, r9
+		and r5, r2, r5
+
+		mov r5, r5, lsl #20
+
+		orr r2, r5, r0
+		mov r3, r3, asr #12
+
+		mov r0, r2
 		
 		pop {r3, r5, pc}
 
@@ -114,8 +121,19 @@ Fahrenheit2Celsius:
 		# R7 = MAKE_Q12(9.0/5.0)
 		ldr r4, [r7]
 
-		umull r1, r2, r0, r4
+		smull r1, r2, r0, r4
 
 		mov r0, r1, lsr #12
+
+		ldr r5, =MASK_FRAC
+
+		and r5, r2, r5
+
+		mov r5, r5, lsl #20
+
+		orr r2, r5, r0
+		mov r3, r3, asr #12
+
+		mov r0, r2
 		
 		pop {r3, r5, pc}
