@@ -1,34 +1,34 @@
 /*-----------------------------------------------------------------------
 |   "geotemp.c":
-|		programa per calcular els valors mig, màxim i mínim d'una taula
-|	de temperatures, expressades en graus ºC o ºF i en format Q12, on
+|		programa per calcular els valors mig, mï¿½xim i mï¿½nim d'una taula
+|	de temperatures, expressades en graus ï¿½C o ï¿½F i en format Q12, on
 |	cada fila correspon a una ciutat i cada columna a un mes.
-|	Les taules amb la informació estan definides en un altre mòdul
+|	Les taules amb la informaciï¿½ estan definides en un altre mï¿½dul
 |	(variables globals externes).
 |------------------------------------------------------------------------
 |	santiago.romani@urv.cat
 |	pere.millan@urv.cat
-|	(Abril 2021, Març 2022)
+|	(Abril 2021, Marï¿½ 2022)
 | -----------------------------------------------------------------------*/
 
 #include "Q12.h"				/* Q12: tipus Coma Fixa 1:19:12 */
 #include "divmod.h"				/* rutina div_mod(), en "LibFonCompus.a" */
-#include "CelsiusFahrenheit.h"	/* rutines de conversió C->F i F->C */
-#include "avgmaxmintemp.h"		/* mmres: tipus de retorn de màxim i mínim */
+#include "CelsiusFahrenheit.h"	/* rutines de conversiï¿½ C->F i F->C */
+#include "avgmaxmintemp.h"		/* mmres: tipus de retorn de mï¿½xim i mï¿½nim */
 #include "geotemp.h"			/* t_cityinfo: tipus amb info. de ciutat */
-#include "data.h"				/* definició de dades externes */
+#include "data.h"				/* definiciï¿½ de dades externes */
 
 
-/* normalitzar_temperatures(): funció per a convertir les temperatures
+/* normalitzar_temperatures(): funciï¿½ per a convertir les temperatures
 			expressades en graus Fahrenheit a graus Celsius, segons el
-			vector d'informació de les ciutats registrades.
-	Paràmetres:
+			vector d'informaciï¿½ de les ciutats registrades.
+	Parï¿½metres:
 		vinfo[]		-> vector amb una entrada per ciutat, indicant el nom
 					   i l'escala utilitzada per expressar les temperatures,
 		ttemp[][12]	-> taula amb una fila per ciutat i una columna per mes;
 					   se suposa que les temperatures de cada fila estaran
 					   expressades en l'escala indicada en t_info[];
-		num_cities	-> número de ciutats, tant al vector tinfo[] com a la
+		num_cities	-> nï¿½mero de ciutats, tant al vector tinfo[] com a la
 					   matriu ttemp[];
 	Resultats:
 		ttemp[][12]	-> les temperatures convertides a graus Celsius es
@@ -40,7 +40,7 @@ void normalitzar_temperatures(t_cityinfo vinfo[], Q12 ttemp[][12], unsigned shor
 	unsigned short i, j;
 	
 	for (i = 0; i < num_cities; i++)	// recorregut de totes les ciutats
-		if (vinfo[i].scale == 'F')		// si l'escala utilitzada és Fahrenheit
+		if (vinfo[i].scale == 'F')		// si l'escala utilitzada ï¿½s Fahrenheit
 			for (j = 0; j < 12; j++)	// recorregut de tots els mesos
 				ttemp[i][j] = Fahrenheit2Celsius(ttemp[i][j]);
 }
@@ -55,13 +55,13 @@ int main(void)
 	normalitzar_temperatures(info_HNord, tempHNord_2020, NUMCITIESHNORD);
 	normalitzar_temperatures(info_HSud, tempHSud_2020, NUMCITIESHSUD);
 	
-			// càlculs sobre George Town (Cayman Island)
+			// cï¿½lculs sobre George Town (Cayman Island)
 	avgres[0] = avgmaxmin_city(tempHNord_2020, NUMCITIESHNORD, 6, &maxminres[0]);
-			// càlculs sobre el mes d'agost (hemisferi nord)
+			// cï¿½lculs sobre el mes d'agost (hemisferi nord)
 	avgres[1] = avgmaxmin_month(tempHNord_2020, NUMCITIESHNORD, 7, &maxminres[1]);
-			// càlculs sobre Wellington (New Zealand)
+			// cï¿½lculs sobre Wellington (New Zealand)
 	avgres[2] = avgmaxmin_city(tempHSud_2020, NUMCITIESHSUD, 18, &maxminres[2]);
-			// càlculs sobre el mes de desembre (hemisferi sud)
+			// cï¿½lculs sobre el mes de desembre (hemisferi sud)
 	avgres[3] = avgmaxmin_month(tempHSud_2020, NUMCITIESHSUD, 11, &maxminres[3]);
 	
 	
