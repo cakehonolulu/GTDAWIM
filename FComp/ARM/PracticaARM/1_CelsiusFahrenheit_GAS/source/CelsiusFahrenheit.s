@@ -21,19 +21,6 @@ output:
 prod64:
 		.space 8
 
-.data
-.align 2
-Q12:
-	.int 0x00001CCD
-
-.align 2
-inv_a_Q12:
-	.int 0x00020000
-
-.align 2
-inv_Q12:
-	.int 0x000008E4
-
 .text
 		.align 2
 		.arm
@@ -46,71 +33,108 @@ inv_Q12:
 @;		input 	-> R0
 @;	Sortida:
 @;		R0 		-> output = (input * 9/5) + 32.0;
-	.global Celsius2Fahrenheit
+.global Celsius2Fahrenheit
 Celsius2Fahrenheit:
-		push {r3, r5, lr}
+		# We will clobber original r1 to r4 values
+		# push them to the stack to preserve them
+		# Push Link Register too to return to main()
+		push {r1 - r4, lr}
 
-		ldr r1, =0x1CCD
+		# r1 = MAKE_Q12(9.0/5.0)
+		ldr r1, =MAKE_Q12_9_div_5
+
+		# 32*32-bit multiplication (64-bit result)
+		# Takes 2 32-bit registers (32 bit low-high pair respectively)
+		# multiplies them and sets the low and high values accordingly
+		# Example:
+		# r0 (32) * r1 (32) = [r2 (32) : r3 (32)] (64)
 		smull r2, r3, r0, r1
+
+		# Grab the integer part of the value
 		mov r2, r2, lsr #12
-		ldr r5, =0x00000FFF
+		
+		# Load the mask val. to the register
+		ldr r5, =MASK_FRAC
+		
+		# Mask the fractional part
+		# pseudo:
+		# high_32bits = (64bit_val & 0xFFFF00000)
+		# r4 = high_32bits & MASK_FRAC (0x00000FFF)
 		and r4, r3, r5
+
 		mov r4, r4, lsl #20
 		orr r0, r4, r2
 		mov r3, r3, asr #12
-		add r2, r2, #131072
+
+		# Add MAKE_Q12(32.0)'s value to the result
+		add r2, r2, #MAKE_Q12_32
+
+		# Result value is expected to be in r0
 		mov r0, r2
 
-		pop {r3, r5, pc}
+		# Restore to the previous control block
+		pop {r1 - r4, pc}
 
 @; Fahrenheit2Celsius(): converteix una temperatura en graus Fahrenheit a la
 @;						temperatura equivalent en graus Celsius, utilitzant
 @;						valors codificats en Coma Fixa 1:19:12.
-@;	Entrada:
-@;		input 	-> R0
-@;	Sortida:
-@;		R0 		-> output = (input - 32.0) * 5/9;
-	.global Fahrenheit2Celsius
+@;	Entrada:r0
+.global Fahrenheit2Celsius
 Fahrenheit2Celsius:
-		push {r3, r5, lr}
-	
+		# We will clobber original r1 to r4 values
+		# push them to the stack to preserve them
+		# Push Link Register too to return to main()
+		push {r1 - r4, lr}
+
+		# r4 = MAKE_Q12(5.0/9.0)
+		ldr r4, =MAKE_Q12_5_div_9
+		
+		# r5 = &prod64
 		ldr r5, =prod64
+
+		# r6 = &output
 		ldr r6, =output
 
+		# r7 = MAKE_Q12(32.0)
+		ldr r7, =MAKE_Q12_32
 
-		ldr r7, =inv_Q12
-		
-		ldr r8, =inv_a_Q12
+		# Substract MAKE_Q12(32.0)'s value from input (r0) 
+		sub r0, r0, r7
 
-		ldr r9, [r8]
-
-		sub r0, r0, r9
-
-		# R2 = lo 32-bits
+		# r1 = lo 32 bits of prod64
 		ldr r1, [r5]
 
-		# R3 = hi 32-bits
+		# r2 = hi 32 bits of prod64 (Base + 4 offset)
 		ldr r2, [r5, #4]
 
-		# R5 = output
+		# r6 = output
 		ldr r3, [r6]
 
-		# R7 = MAKE_Q12(9.0/5.0)
-		ldr r4, [r7]
-
+		# 32*32-bit multiplication (64-bit result)
+		# Takes 2 32-bit registers (32 bit low-high pair respectively)
+		# multiplies them and sets the low and high values accordingly
+		# Example:
+		# r0 (32) * r1 (32) = [r2 (32) : r3 (32)] (64)
 		smull r1, r2, r0, r4
 
+		# Grab the integer part of the value
 		mov r0, r1, lsr #12
 
+		# Load the mask val. to the register
 		ldr r5, =MASK_FRAC
-
+		
+		# Mask the fractional part
+		# pseudo:
+		# high_32bits = (64bit_val & 0xFFFF00000)
+		# r4 = high_32bits & MASK_FRAC (0x00000FFF)
 		and r5, r2, r5
 
 		mov r5, r5, lsl #20
-
 		orr r2, r5, r0
 		mov r3, r3, asr #12
 
+		# Result value is expected to be in r0
 		mov r0, r2
 		
-		pop {r3, r5, pc}
+		# Restore to the previous control block
+		pop {r1 - r4, pc}
