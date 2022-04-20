@@ -33,6 +33,9 @@ test_CelsiusFahrenheit.elf : build/test_CelsiusFahrenheit.o build/CelsiusFahrenh
 build/test_CelsiusFahrenheit.o: tests/test_CelsiusFahrenheit.c include/CelsiusFahrenheit.h include/Q12.h
 	arm-none-eabi-gcc $(CCFLAGS) -c tests/test_CelsiusFahrenheit.c -o build/test_CelsiusFahrenheit.o
 
+lib: build/CelsiusFahrenheit.o
+	arm-none-eabi-ar rcs libcelfahr.a build/CelsiusFahrenheit.o
+
 
 #-------------------------------------------------------------------------------
 # clean commands
