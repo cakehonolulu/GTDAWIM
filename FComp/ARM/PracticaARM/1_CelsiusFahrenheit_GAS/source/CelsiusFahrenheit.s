@@ -52,19 +52,6 @@ Celsius2Fahrenheit:
 
 		# Grab the integer part of the value
 		mov r1, r1, lsr #12
-		
-		# Load the mask val. to the register
-		ldr r3, =MASK_FRAC
-		
-		# Mask the fractional part
-		# pseudo:
-		# high_32bits = (64bit_val & 0xFFFF00000)
-		# r0 = high_32bits & MASK_FRAC (0x00000FFF)
-		and r0, r2, r3
-
-		mov r0, r0, lsl #20
-		orr r0, r0, r1
-		mov r2, r2, asr #12
 
 		# Add MAKE_Q12(32.0)'s value to the result
 		add r1, r1, #MAKE_Q12_32
@@ -85,57 +72,50 @@ Fahrenheit2Celsius:
 		# We will clobber original r1 to r4 values
 		# push them to the stack to preserve them
 		# Push Link Register too to return to main()
-		push {r1 - r7, lr}
+		push {r1 - r3, lr}
 
-		# r4 = MAKE_Q12(5.0/9.0)
-		ldr r4, =MAKE_Q12_5_div_9
-		
-		# r5 = &prod64
-		ldr r5, =prod64
-
-		# r6 = &output
-		ldr r6, =output
-
-		# r7 = MAKE_Q12(32.0)
-		ldr r7, =MAKE_Q12_32
+		# r1 = MAKE_Q12(32.0)
+		ldr r1, =MAKE_Q12_32
 
 		# Substract MAKE_Q12(32.0)'s value from input (r0) 
-		sub r0, r0, r7
+		sub r0, r0, r1
+
+		# r5 = &prod64
+		ldr r3, =prod64
 
 		# r1 = lo 32 bits of prod64
-		ldr r1, [r5]
+		ldr r1, [r3]
 
 		# r2 = hi 32 bits of prod64 (Base + 4 offset)
-		ldr r2, [r5, #4]
+		ldr r2, [r3, #4]
 
-		# r6 = output
-		ldr r3, [r6]
-
+		# r3 = MAKE_Q12(5.0/9.0)
+		ldr r3, =MAKE_Q12_5_div_9
+		
 		# 32*32-bit multiplication (64-bit result)
 		# Takes 2 32-bit registers (32 bit low-high pair respectively)
 		# multiplies them and sets the low and high values accordingly
 		# Example:
 		# r0 (32) * r1 (32) = [r2 (32) : r3 (32)] (64)
-		smull r1, r2, r0, r4
+		smull r1, r2, r0, r3
 
 		# Grab the integer part of the value
 		mov r0, r1, lsr #12
 
 		# Load the mask val. to the register
-		ldr r5, =MASK_FRAC
+		ldr r3, =MASK_FRAC
 		
 		# Mask the fractional part
 		# pseudo:
 		# high_32bits = (64bit_val & 0xFFFF00000)
 		# r4 = high_32bits & MASK_FRAC (0x00000FFF)
-		and r5, r2, r5
+		and r3, r2, r3
 
-		mov r5, r5, lsl #20
-		orr r2, r5, r0
-		mov r3, r3, asr #12
+		mov r3, r3, lsl #20
+		orr r2, r3, r0
 
 		# Result value is expected to be in r0
 		mov r0, r2
 		
 		# Restore to the previous control block
-		pop {r1 - r7, pc}
+		pop {r1 - r3, pc}
