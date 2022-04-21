@@ -24,7 +24,7 @@
 
 */
 avgmaxmin_city:
-    push {r0 - r3, lr}
+    push {r1 - r12, lr}
 
     /*
         dir(i,j) = Base + (i * NC + j) * T
@@ -96,16 +96,38 @@ avgmaxmin_city:
     cmp  r10, #11
     ble .for
 
+    # 0x15555556 = Integer part of ((2^32 / 12) + 1)
     ldr r10, =0x15555556
 
     # R6 contains the avg /= 12 value
     umull r5, r6, r4, r10
 
+    mov r1, #4
+    strb r6, [r3, r1]
 
-    # Breakpoint
-    mov r0, #'X'
-    
-    
-    
-    push {r0 - r3, pc}
+    mov r1, #0
+    str r7, [r3, r1]
 
+    mov r0, r7
+
+    bl Celsius2Fahrenheit
+
+    mov r1, #8
+    str r0, [r3, r1]
+
+    mov r0, r6
+
+    bl Celsius2Fahrenheit
+
+    mov r1, #12
+    str r0, [r3, r1]
+
+    mov r1, #16
+    str r8, [r3, r1]
+
+    mov r1, #18
+    str r9, [r3, r1]
+
+    mov r0, r6
+
+    pop {r1 - r12, pc}
