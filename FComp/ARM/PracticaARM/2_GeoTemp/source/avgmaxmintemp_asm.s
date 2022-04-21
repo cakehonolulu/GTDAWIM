@@ -103,7 +103,7 @@ avgmaxmin_city:
     umull r5, r6, r4, r10
 
     mov r1, #4
-    strb r6, [r3, r1]
+    str r6, [r3, r1]
 
     mov r1, #0
     str r7, [r3, r1]
