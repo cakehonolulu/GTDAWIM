@@ -13,12 +13,26 @@ ASFLAGS	:= $(ARCH) $(INCL) -g
 CCFLAGS	:= -Wall -g -O0 $(ARCH) $(INCL)
 LDFLAGS := -z max-page-size=0x8000 -Lp_lib
 
+ifdef CHECK_ASM
+CCFLAGS += -DCHECK_ASM
+endif
+
 #-------------------------------------------------------------------------------
 # make commands
 #-------------------------------------------------------------------------------
+ifdef CHECK_ASM
+demo.elf : fahn startup build/data.o build/geotemp.o build/avgmaxmintemp_asm.o build/avgmaxmintemp.o 
+	arm-none-eabi-ld $(LDFLAGS) p_lib/startup.o build/data.o build/geotemp.o build/avgmaxmintemp_asm.o \
+					 build/avgmaxmintemp.o -Lp_lib -lfoncompus -lcelfahr -o demo.elf
+else
 demo.elf : fahn startup build/data.o build/geotemp.o build/avgmaxmintemp.o 
 	arm-none-eabi-ld $(LDFLAGS) p_lib/startup.o build/data.o build/geotemp.o \
 					 build/avgmaxmintemp.o -Lp_lib -lfoncompus -lcelfahr -o demo.elf
+endif
+
+test_CelsiusFahrenheit.elf : build/test_CelsiusFahrenheit.o build/CelsiusFahrenheit.o 
+	arm-none-eabi-ld $(LDFLAGS) build/test_CelsiusFahrenheit.o build/CelsiusFahrenheit.o \
+						p_lib/startup.o -o test_CelsiusFahrenheit.elf
 
 startup:
 	arm-none-eabi-as $(ASFLAGS) -c p_lib/startup.S -o p_lib/startup.o
@@ -36,12 +50,8 @@ build/geotemp.o: source/geotemp.c
 build/avgmaxmintemp.o: source/avgmaxmintemp.c
 	arm-none-eabi-gcc $(CCFLAGS) -c source/avgmaxmintemp.c -o build/avgmaxmintemp.o
 
-build/a.o: source/data.c
-	arm-none-eabi-as $(ASFLAGS) -c source/CelsiusFahrenheit.s -o build/CelsiusFahrenheit.o
-
-test_CelsiusFahrenheit.elf : build/test_CelsiusFahrenheit.o build/CelsiusFahrenheit.o 
-	arm-none-eabi-ld $(LDFLAGS) build/test_CelsiusFahrenheit.o build/CelsiusFahrenheit.o \
-						p_lib/startup.o -o test_CelsiusFahrenheit.elf
+build/avgmaxmintemp_asm.o: source/avgmaxmintemp_asm.s
+	arm-none-eabi-as $(ASFLAGS) -c source/avgmaxmintemp_asm.s -o build/avgmaxmintemp_asm.o
 
 build/test_CelsiusFahrenheit.o: tests/test_CelsiusFahrenheit.c include/CelsiusFahrenheit.h include/Q12.h
 	arm-none-eabi-gcc $(CCFLAGS) -c tests/test_CelsiusFahrenheit.c -o build/test_CelsiusFahrenheit.o

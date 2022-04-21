@@ -1,35 +1,36 @@
 /*----------------------------------------------------------------
-|   "avgmaxmintemp.c": rutines de càlcul de valors mitjans, màxims
-|	i mínims d'una taula de temperatures, expressades en graus
+|   "avgmaxmintemp.c": rutines de cï¿½lcul de valors mitjans, mï¿½xims
+|	i mï¿½nims d'una taula de temperatures, expressades en graus
 |	Celsius o Fahrenheit, en format Q12 (coma fixa 1:19:12).
 | ----------------------------------------------------------------
 |	santiago.romani@urv.cat
 |	pere.millan@urv.cat
-|	(Abril 2021, Març 2022)
+|	(Abril 2021, Marï¿½ 2022)
 | ----------------------------------------------------------------*/
 
-#include "Q12.h"				/* Q12: tipus Coma Fixa 1:19:12 */
+#include <Q12.h>				/* Q12: tipus Coma Fixa 1:19:12 */
 #include "divmod.h"				/* rutina div_mod(), en "LibFonCompus.a" */
-#include "CelsiusFahrenheit.h"	/* rutines de conversió C->F i F->C */
-#include "avgmaxmintemp.h"		/* mmres: tipus de retorn de màxim i mínim */
+#include "CelsiusFahrenheit.h"	/* rutines de conversiï¿½ C->F i F->C */
+#include "avgmaxmintemp.h"		/* mmres: tipus de retorn de mï¿½xim i mï¿½nim */
 
 
-/* avgmaxmin_city(): calcula la temperatura mitjana, màxima i mínima d'una
+/* avgmaxmin_city(): calcula la temperatura mitjana, mï¿½xima i mï¿½nima d'una
 |				ciutat d'una taula de temperatures, amb una fila per ciutat i
 |				una columna per mes, expressades en graus Celsius en format
 |				Q12.
-|	Paràmetres:
+|	Parï¿½metres:
 |		ttemp[][12]	->	taula de temperatures, amb 12 columnes i nrows files
-|		nrows		->	número de files de la taula
-|		id_city		->	índex de la fila (ciutat) a processar
-|		*mmres		->	adreça de l'estructura t_maxmin que retornarà els
-|						resultats de temperatures màximes i mínimes
+|		nrows		->	nï¿½mero de files de la taula
+|		id_city		->	ï¿½ndex de la fila (ciutat) a processar
+|		*mmres		->	adreï¿½a de l'estructura t_maxmin que retornarï¿½ els
+|						resultats de temperatures mï¿½ximes i mï¿½nimes
 |	Resultat:	temperatura mitjana, expressada en graus Celsius, en format Q12.
-*/		
+*/	
+#ifndef CHECK_ASM
 Q12 avgmaxmin_city(Q12 ttemp[][12], unsigned short nrows, unsigned short id_city, t_maxmin *mmres)
 {
 	Q12 avg, max, min;
-	unsigned short idmin = 0, idmax = 0;	// índexos de temp. mínima i màx.
+	unsigned short idmin = 0, idmax = 0;	// ï¿½ndexos de temp. mï¿½nima i mï¿½x.
 	unsigned short i;
 	Q12 tvar;						// variable temporal de temperatura
   
@@ -38,7 +39,7 @@ Q12 avgmaxmin_city(Q12 ttemp[][12], unsigned short nrows, unsigned short id_city
 	min = avg;
 	for (i = 1; i < 12; i++)		// per a la resta de mesos
 	{
-		tvar = ttemp[id_city][i];			// obtenir temperatura del següent mes
+		tvar = ttemp[id_city][i];			// obtenir temperatura del segï¿½ent mes
 		avg += tvar;
 		if (tvar > max)
 		{	max = tvar;						// actualitzar valors resultat
@@ -51,49 +52,48 @@ Q12 avgmaxmin_city(Q12 ttemp[][12], unsigned short nrows, unsigned short id_city
 		}
 	}
 
-	avg /= 12;						// ajustar valor mitjà
+	avg /= 12;						// ajustar valor mitjï¿½
 	
-	mmres->tmin_C = min;			// transferir mínim-màxim en Celsius
+	mmres->tmin_C = min;			// transferir mï¿½nim-mï¿½xim en Celsius
 	mmres->tmax_C = max;
-									// transferir mínim-màxim en Fahrenheit
+									// transferir mï¿½nim-mï¿½xim en Fahrenheit
 	mmres->tmin_F = Celsius2Fahrenheit(min);
 	mmres->tmax_F = Celsius2Fahrenheit(max);
-									// transferir índexos mínim i màxim
+									// transferir ï¿½ndexos mï¿½nim i mï¿½xim
 	mmres->id_min = idmin;
 	mmres->id_max = idmax;
 
 	return(avg);
 }
+#endif
 
-
-
-/* avgmaxmin_month(): calcula la temperatura mitjana, màxima i mínima d'un mes
+/* avgmaxmin_month(): calcula la temperatura mitjana, mï¿½xima i mï¿½nima d'un mes
 |				d'una taula de temperatures, amb una fila per ciutat i una
 |				columna per mes, expressades en graus Celsius en format Q12.
-|	Paràmetres:
+|	Parï¿½metres:
 |		ttemp[][12]	->	taula de temperatures, amb 12 columnes i nrows files
-|		nrows		->	número de files de la taula (mínim 1 fila)
-|		id_month	->	índex de la columna (mes) a processar
-|		*mmres		->	adreça de l'estructura t_maxmin que retornarà els
-|						resultats de temperatures màximes i mínimes
+|		nrows		->	nï¿½mero de files de la taula (mï¿½nim 1 fila)
+|		id_month	->	ï¿½ndex de la columna (mes) a processar
+|		*mmres		->	adreï¿½a de l'estructura t_maxmin que retornarï¿½ els
+|						resultats de temperatures mï¿½ximes i mï¿½nimes
 |	Resultat:	temperatura mitjana, expressada en graus Celsius, en format Q12.
 */		
 Q12 avgmaxmin_month(Q12 ttemp[][12], unsigned short nrows, unsigned short id_month, t_maxmin *mmres)
 {
 	Q12 avg, max, min;
-	unsigned short idmin = 0, idmax = 0;	// índexos de temp. mínima i màx.
+	unsigned short idmin = 0, idmax = 0;	// ï¿½ndexos de temp. mï¿½nima i mï¿½x.
 	unsigned short i;
 	Q12 tvar;						// variable temporal de temperatura
 	unsigned int mod;				// variable per invocar div_mod()
-	unsigned char avgNeg;			// booleà per indicar si mitjana negativa
+	unsigned char avgNeg;			// booleï¿½ per indicar si mitjana negativa
  
 	avg = ttemp[0][id_month];		// inicialitza valors amb primera fila
 	max = avg;						// (primera ciutat de la taula)
 	min = avg;
-	i = 1;							// posicionar índex a la segona fila
+	i = 1;							// posicionar ï¿½ndex a la segona fila
 	while (i < nrows)				// per a la resta de ciutats
 	{
-		tvar = ttemp[i][id_month];		// obtenir temperatura següent ciutat
+		tvar = ttemp[i][id_month];		// obtenir temperatura segï¿½ent ciutat
 		avg += tvar;
 		if (tvar > max)
 		{	max = tvar;						// actualitzar valors resultat
@@ -107,16 +107,16 @@ Q12 avgmaxmin_month(Q12 ttemp[][12], unsigned short nrows, unsigned short id_mon
 		i++;
 	}
 	avgNeg = (avg < 0);					// memoritza si valor acumulat negatiu
-	tvar = (avgNeg ? -avg : avg); 		// tvar conté valor absolut de avg
-	div_mod(tvar, nrows, (unsigned int *)&avg, &mod);	// calcular valor mitjà sobre avg
-	if (avgNeg) avg = -avg;				// canviar signe de valor mitjà
+	tvar = (avgNeg ? -avg : avg); 		// tvar contï¿½ valor absolut de avg
+	div_mod(tvar, nrows, (unsigned int *)&avg, &mod);	// calcular valor mitjï¿½ sobre avg
+	if (avgNeg) avg = -avg;				// canviar signe de valor mitjï¿½
 	
-	mmres->tmin_C = min;			// transferir mínim-màxim en Celsius
+	mmres->tmin_C = min;			// transferir mï¿½nim-mï¿½xim en Celsius
 	mmres->tmax_C = max;
-									// transferir mínim-màxim en Fahrenheit
+									// transferir mï¿½nim-mï¿½xim en Fahrenheit
 	mmres->tmin_F = Celsius2Fahrenheit(min);
 	mmres->tmax_F = Celsius2Fahrenheit(max);
-									// transferir índexos mínim i màxim
+									// transferir ï¿½ndexos mï¿½nim i mï¿½xim
 	mmres->id_min = idmin;
 	mmres->id_max = idmax;
 
