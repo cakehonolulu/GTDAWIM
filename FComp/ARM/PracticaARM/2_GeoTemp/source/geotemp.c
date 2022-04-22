@@ -35,6 +35,7 @@
 					   guardaran sobre la mateixa taula d'entrada (pas per
 					   referencia).
 */
+#ifndef CHECK_ASM
 void normalitzar_temperatures(t_cityinfo vinfo[], Q12 ttemp[][12], unsigned short num_cities)
 {
 	unsigned short i, j;
@@ -44,8 +45,7 @@ void normalitzar_temperatures(t_cityinfo vinfo[], Q12 ttemp[][12], unsigned shor
 			for (j = 0; j < 12; j++)	// recorregut de tots els mesos
 				ttemp[i][j] = Fahrenheit2Celsius(ttemp[i][j]);
 }
-
-
+#endif
 
 int main(void)
 {

@@ -3,7 +3,62 @@
 		.align 2
 		.arm
 
+.global normalitzar_temperatures
 .global avgmaxmin_city
+
+/*
+
+    r0: t_cityinfo vinfo[]
+    r1: Q12 ttemp[][12]
+    r2: unsigned short num_cities
+
+    typedef struct
+    {	
+        char *name;			// nom de la ciutat
+        char scale;			// escala utilitzada ('C': Celsius, 'F': Fahrenheit)
+    } t_cityinfo;
+*/
+normalitzar_temperatures:
+    push {r1 - r12, lr}
+    # r5: i = 0
+    mov r5, #0
+
+    # r6: j = 0
+    mov r6, #0
+
+.fori:
+    mov r7, r5
+    mov r7, r7, lsl #3
+    mov r8, r0
+    add r7, r8, r7
+    ldrb r7, [r7, #4]
+    cmp r7, #'F'
+    bne .cont
+.forj:
+    # dir(i,j) = Base + (i * NC + j) * T
+    mul r10, r5, r2
+    add r10, r6
+    mov r11, #4
+    mul r10, r11, r10
+
+    push {r0}
+
+    ldr r0, [r1, r10]
+    bl Fahrenheit2Celsius
+    str r0, [r1, r10]
+    
+    pop {r0}
+
+    add r6, r6, #1
+    cmp r6, #12
+    blo .forj
+
+.cont:
+    add r5, r5, #1
+    cmp r5, r2
+    blo .fori
+
+    pop {r1 - r12, pc}
 
 /*
 
