@@ -33,6 +33,7 @@ prod64:
 @;		input 	-> R0
 @;	Sortida:
 @;		R0 		-> output = (input * 9/5) + 32.0;
+@;		R3		-> 3_LibQ12
 .global Celsius2Fahrenheit
 Celsius2Fahrenheit:
 		# We will clobber original r1 to r4 values
@@ -53,20 +54,32 @@ Celsius2Fahrenheit:
 		# Grab the integer part of the value
 		mov r1, r1, lsr #12
 
-		# Add MAKE_Q12(32.0)'s value to the result
-		add r1, r1, #MAKE_Q12_32
+		# Load the Mask Value
+		ldr r3, =MASK_FRAC
 
-		# Result value is expected to be in r0
-		mov r0, r1
+		# Get the fractional part from hi register
+		# and AND-it with [r3's] mask
+		and r3, r2, r3
+
+		# Logical shift to the left the value
+		mov r3, r3, lsl #20
+
+		# Join r3 and r1 into r0, this is the result
+		orr r0, r3, r1
+
+		# Add MAKE_Q12(32.0)'s value to the result
+		add r0, #MAKE_Q12_32
 
 		# Restore to the previous control block
 		pop {r1 - r3, pc}
-
 
 @; Fahrenheit2Celsius(): converteix una temperatura en graus Fahrenheit a la
 @;						temperatura equivalent en graus Celsius, utilitzant
 @;						valors codificats en Coma Fixa 1:19:12.
 @;	Entrada:r0
+@;	Sortida:
+@;		R0 		-> output = (input - 32.0) * 5/9;
+@;		R3		-> 3_LibQ12
 .global Fahrenheit2Celsius
 Fahrenheit2Celsius:
 		# We will clobber original r1 to r4 values
@@ -111,8 +124,14 @@ Fahrenheit2Celsius:
 		# r4 = high_32bits & MASK_FRAC (0x00000FFF)
 		and r3, r2, r3
 
+		# This gets us the fractional part
 		mov r3, r3, lsl #20
+
+		# Join the registers
 		orr r2, r3, r0
+
+		# Last bitshift, accomodate in r3
+		mov r3, r3, asr #12
 
 		# Result value is expected to be in r0
 		mov r0, r2

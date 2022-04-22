@@ -4,7 +4,7 @@
 
 int main()
 {
-	printf("0x%x, %d\n", MAKE_Q12(5.0/9.0), (int) MAKE_Q12(5.0/9.0));
+	printf("0x%x, %d\n", MAKE_Q12(78.4), (int) MAKE_Q12(78.4));
 	return 0;
 }
 
