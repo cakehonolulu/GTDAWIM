@@ -1,0 +1,3 @@
+set can-use-hw-watchpoints 0
+file test_geotemp.elf
+target remote :1337

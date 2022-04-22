@@ -19,7 +19,7 @@ Q12 test_data[NUM_TEST_ROWS][12] = {
 	{MAKE_Q12(-2.2), MAKE_Q12(-3.5), MAKE_Q12(-5.8), MAKE_Q12(-7.5),	// all negatives
 	 MAKE_Q12(-11.5), MAKE_Q12(-15.4), MAKE_Q12(-18.8), MAKE_Q12(-18.5),
 	 MAKE_Q12(-14.9), MAKE_Q12(-10.3), MAKE_Q12(-5.7), MAKE_Q12(-3.0)},
-	{MAKE_Q12(0.1), MAKE_Q12(0.3), MAKE_Q12(0.7), MAKE_Q12(0.8),		// all values around 0º Celsius
+	{MAKE_Q12(0.1), MAKE_Q12(0.3), MAKE_Q12(0.7), MAKE_Q12(0.8),		// all values around 0ï¿½ Celsius
 	 MAKE_Q12(0.8), MAKE_Q12(-0.9), MAKE_Q12(-0.7), MAKE_Q12(0.5),
 	 MAKE_Q12(0.0), MAKE_Q12(0.7), MAKE_Q12(0.5), MAKE_Q12(-0.9)}
 };
@@ -43,7 +43,7 @@ test_struct test_case[] =
 	{MAKE_Q12(-18.8), MAKE_Q12(-2.2),
 	 MAKE_Q12(-1.84), MAKE_Q12(28.04),
 	 6, 0}},
- {'C', 2, MAKE_Q12(0.2),				/*  2: all values around 0º Celsius */
+ {'C', 2, MAKE_Q12(0.2),				/*  2: all values around 0ï¿½ Celsius */
 	{MAKE_Q12(-0.9), MAKE_Q12(0.8),
 	 MAKE_Q12(30.38), MAKE_Q12(33.44),
 	 5, 3}},
@@ -76,19 +76,19 @@ unsigned char error_bits(Q12 avg, t_maxmin *maxmin, Q12 xavg, t_maxmin *xmm)
 		nerr |= 1;						// set bit 0
 
 	error = abs_value(maxmin->tmin_C - xmm->tmin_C);
-	if (error > 4)						/* min temp. (ºC) divergence error */
+	if (error > 4)						/* min temp. (ï¿½C) divergence error */
 		nerr |= 2;						// set bit 1
 
 	error = abs_value(maxmin->tmax_C - xmm->tmax_C);
-	if (error > 4)						/* max temp. (ºC) divergence error */
+	if (error > 4)						/* max temp. (ï¿½C) divergence error */
 		nerr |= 4;						// set bit 2
 	
 	error = abs_value(maxmin->tmin_F - xmm->tmin_F);
-	if (error > 1024)					/* min temp. (ºF) divergence error */
+	if (error > 1024)					/* min temp. (ï¿½F) divergence error */
 		nerr |= 8;						// set bit 3
 	
 	error = abs_value(maxmin->tmax_F - xmm->tmax_F);
-	if (error > 1024)					/* max temp. (ºF) divergence error */
+	if (error > 1024)					/* max temp. (ï¿½F) divergence error */
 		nerr |= 16;						// set bit 4
 	
 	if (maxmin->id_min != xmm->id_min) /* min index divergence error */
@@ -109,6 +109,8 @@ int main(void)
 	unsigned int num_ko = 0;			/* number of wrong tests */
 	unsigned int num_tests = 			/* total number of tests */
 					sizeof(test_case) / sizeof(test_struct);
+
+	int unused = 0;
 
 	/********* evaluate the list of test case values *********/
 	for (i = 0; i < num_tests; i++)

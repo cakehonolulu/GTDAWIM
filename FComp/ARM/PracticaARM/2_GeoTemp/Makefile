@@ -30,9 +30,9 @@ demo.elf : fahn startup build/data.o build/geotemp.o build/avgmaxmintemp.o
 					 build/avgmaxmintemp.o -Lp_lib -lfoncompus -lcelfahr -o demo.elf
 endif
 
-test_CelsiusFahrenheit.elf : build/test_CelsiusFahrenheit.o build/CelsiusFahrenheit.o 
-	arm-none-eabi-ld $(LDFLAGS) build/test_CelsiusFahrenheit.o build/CelsiusFahrenheit.o \
-						p_lib/startup.o -o test_CelsiusFahrenheit.elf
+test_geotemp.elf : fahn startup build/test_geotemp.o build/avgmaxmintemp_asm.o build/data.o
+	arm-none-eabi-ld $(LDFLAGS) p_lib/startup.o build/data.o build/test_geotemp.o build/avgmaxmintemp_asm.o \
+						-Lp_lib -lfoncompus -lcelfahr -o test_geotemp.elf
 
 startup:
 	arm-none-eabi-as $(ASFLAGS) -c p_lib/startup.S -o p_lib/startup.o
@@ -47,15 +47,14 @@ build/data.o: source/data.c
 build/geotemp.o: source/geotemp.c
 	arm-none-eabi-gcc $(CCFLAGS) -c source/geotemp.c -o build/geotemp.o
 
+build/test_geotemp.o: tests/test_geotemp.c
+	arm-none-eabi-gcc $(CCFLAGS) -c tests/test_geotemp.c -o build/test_geotemp.o
+
 build/avgmaxmintemp.o: source/avgmaxmintemp.c
 	arm-none-eabi-gcc $(CCFLAGS) -c source/avgmaxmintemp.c -o build/avgmaxmintemp.o
 
 build/avgmaxmintemp_asm.o: source/avgmaxmintemp_asm.s
 	arm-none-eabi-as $(ASFLAGS) -c source/avgmaxmintemp_asm.s -o build/avgmaxmintemp_asm.o
-
-build/test_CelsiusFahrenheit.o: tests/test_CelsiusFahrenheit.c include/CelsiusFahrenheit.h include/Q12.h
-	arm-none-eabi-gcc $(CCFLAGS) -c tests/test_CelsiusFahrenheit.c -o build/test_CelsiusFahrenheit.o
-
 
 #-------------------------------------------------------------------------------
 # clean commands
@@ -83,11 +82,11 @@ debug:
 
 debugc:
 	qemu-arm -L /usr/lib/arm-none-eabi/lib/ -g 1338 democ.elf &
-	-@arm-none-eabi-gdb -x gdb_cmd_1
+	-@arm-none-eabi-gdb -x gdb_cmd_c
 	-@pkill -9 qemu-arm
 
 debugtest:
-	qemu-arm -L /usr/lib/arm-none-eabi/lib/ -g 1337 test_CelsiusFahrenheit.elf &
+	qemu-arm -L /usr/lib/arm-none-eabi/lib/ -g 1337 test_geotemp.elf &
 	-@arm-none-eabi-gdb -x gdb_cmd_test
 	-@pkill -9 qemu-arm
 
