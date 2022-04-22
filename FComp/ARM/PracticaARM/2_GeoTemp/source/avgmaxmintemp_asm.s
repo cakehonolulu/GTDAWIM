@@ -13,6 +13,7 @@
 .extern div_mod
 
 .include "Q12.i"
+.include "avgmaxmintemp.i"
 
 /*
 
@@ -167,30 +168,30 @@ avgmaxmin_city:
     # R6 contains the avg /= 12 value
     umull r5, r6, r4, r10
 
-    mov r1, #4
+    mov r1, #MM_TMAXC
     str r6, [r3, r1]
 
-    mov r1, #0
+    mov r1, #MM_TMINC
     str r7, [r3, r1]
 
     mov r0, r7
 
     bl Celsius2Fahrenheit
 
-    mov r1, #8
+    mov r1, #MM_TMINF
     str r0, [r3, r1]
 
     mov r0, r6
 
     bl Celsius2Fahrenheit
 
-    mov r1, #12
+    mov r1, #MM_TMAXF
     str r0, [r3, r1]
 
-    mov r1, #16
+    mov r1, #MM_IDMIN
     str r8, [r3, r1]
 
-    mov r1, #18
+    mov r1, #MM_IDMAX
     str r9, [r3, r1]
 
     mov r0, r6
@@ -289,18 +290,19 @@ avgmaxmin_month:
     # avgNeg = 0
     mov r11, #0
 
-    # tvar = avg
-    mov r5, r4
-
     # avg < 0?
     cmp r4, #0
-    bhi .notneg
-    # if a < 0, avgNeg = 1
+    bhi .higheravg
+
+    # if avg  < 0, avgNeg = 1
+    # avgNeg = (avg < 0) = 1
     mov r11, #1
-.notneg:
+
+.higheravg:
     # avgNeg = 1?
     cmp r11, #1
-    bne .skip
+    bne .skipternary
+
     # Negative number -avg
     # Load the mask val. to the register
 	ldr r12, =MASK_SIGN
@@ -308,28 +310,32 @@ avgmaxmin_month:
 	# Toggle sign bit
 	orr r5, r12, r4
 
-.skip:
-    ldr r12, =avg
-    str r5, [r12]
-    
+.skipternary:
+    # tvar = +-avg
+    mov r5, r4
+
+    # call to div_mod(r0: tvar; r1: r1; r2: &avg, r3: &mod)
     push {r0, r3}
     mov r0, r5
 
-    ldr r3, =avg
+    ldr r2, =avg
     ldr r3, =mod
-    bl =div_mod
+
+    bl div_mod
 
     pop {r0, r3}
     
+    # if (avgNeg)
     cmp r11, #1
-    bne .skipneg
+
+    bne .skipavgnegation
 
     ldr r12, =MASK_SIGN
 		
 	# Toggle sign bit
 	orr r4, r12, r4
 
-.skipneg:
+.skipavgnegation:
 
     mov r12, #0
     str r7, [r3, r12]
@@ -355,6 +361,7 @@ avgmaxmin_month:
     mov r12, #18
     str r9, [r3, r12]
 
-    mov r0 ,r4
+    ldr r1, =avg
+    ldr r0, [r1]
 
     pop {r1 - r12, pc}

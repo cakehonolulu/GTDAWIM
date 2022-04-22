@@ -1,0 +1,2 @@
+file democ.elf
+target remote :1338
