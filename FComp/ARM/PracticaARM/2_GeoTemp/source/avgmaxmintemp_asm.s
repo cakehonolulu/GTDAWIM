@@ -189,10 +189,10 @@ avgmaxmin_city:
     str r0, [r3, r1]
 
     mov r1, #MM_IDMIN
-    str r8, [r3, r1]
+    strh r8, [r3, r1]
 
     mov r1, #MM_IDMAX
-    str r9, [r3, r1]
+    strh r9, [r3, r1]
 
     mov r0, r12
 
@@ -337,29 +337,29 @@ avgmaxmin_month:
 
 .skipavgnegation:
 
-    mov r12, #0
-    str r7, [r3, r12]
+    mov r2, #0
+    str r7, [r3, r2]
 
-    mov r12, #4
-    str r6, [r3, r12]
+    mov r2, #4
+    str r6, [r3, r2]
 
     mov r0, r7
     bl Celsius2Fahrenheit
 
-    mov r12, #8
-    str r0, [r3, r12]
+    mov r2, #8
+    str r0, [r3, r2]
 
     mov r0, r6
     bl Celsius2Fahrenheit
 
-    mov r12, #12
-    str r0, [r3, r12]
+    mov r2, #12
+    str r0, [r3, r2]
 
-    mov r12, #16
-    str r8, [r3, r12]
+    mov r2, #16
+    strh r8, [r3, r2]
 
-    mov r12, #18
-    str r9, [r3, r12]
+    mov r2, #18
+    strh r9, [r3, r2]
 
     ldr r1, =avg
     ldr r0, [r1]

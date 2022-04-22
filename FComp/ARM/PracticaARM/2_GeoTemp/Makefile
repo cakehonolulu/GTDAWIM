@@ -30,8 +30,8 @@ demo.elf : fahn startup build/data.o build/geotemp.o build/avgmaxmintemp.o
 					 build/avgmaxmintemp.o -Lp_lib -lfoncompus -lcelfahr -o demo.elf
 endif
 
-test_geotemp.elf : fahn startup build/test_geotemp.o build/avgmaxmintemp_asm.o build/avgmaxmintemp.o build/data.o
-	arm-none-eabi-ld $(LDFLAGS) p_lib/startup.o build/data.o build/test_geotemp.o build/avgmaxmintemp_asm.o build/avgmaxmintemp.o \
+test_geotemp.elf : fahn startup build/test_geotemp.o build/avgmaxmintemp_asm.o build/data.o
+	arm-none-eabi-ld $(LDFLAGS) p_lib/startup.o build/data.o build/test_geotemp.o build/avgmaxmintemp_asm.o \
 						-Lp_lib -lfoncompus -lcelfahr -o test_geotemp.elf
 
 startup:
