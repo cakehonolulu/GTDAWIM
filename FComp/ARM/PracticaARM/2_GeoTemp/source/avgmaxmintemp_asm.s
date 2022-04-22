@@ -166,7 +166,7 @@ avgmaxmin_city:
     ldr r10, =0x15555556
 
     # R6 contains the avg /= 12 value
-    umull r5, r6, r4, r10
+    umull r11, r12, r4, r10
 
     mov r1, #MM_TMAXC
     str r6, [r3, r1]
@@ -194,7 +194,7 @@ avgmaxmin_city:
     mov r1, #MM_IDMAX
     str r9, [r3, r1]
 
-    mov r0, r6
+    mov r0, r12
 
     pop {r1 - r12, pc}
 
