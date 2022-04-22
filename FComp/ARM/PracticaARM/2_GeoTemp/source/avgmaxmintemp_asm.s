@@ -1,10 +1,18 @@
+.bss
+    .align 2
+    avg: .space 4
+    mod: .space 4
 
 .text
 		.align 2
 		.arm
 
-.global normalitzar_temperatures
+//.global normalitzar_temperatures
 .global avgmaxmin_city
+.global avgmaxmin_month
+.extern div_mod
+
+.include "Q12.i"
 
 /*
 
@@ -18,6 +26,7 @@
         char scale;			// escala utilitzada ('C': Celsius, 'F': Fahrenheit)
     } t_cityinfo;
 */
+/*
 normalitzar_temperatures:
     push {r1 - r12, lr}
     # r5: i = 0
@@ -59,6 +68,7 @@ normalitzar_temperatures:
     blo .fori
 
     pop {r1 - r12, pc}
+*/
 
 /*
 
@@ -184,5 +194,167 @@ avgmaxmin_city:
     str r9, [r3, r1]
 
     mov r0, r6
+
+    pop {r1 - r12, pc}
+
+/*
+
+    r0: Q12 ttemp[][12]
+    r1: unsigned short nrows
+    r2: unsigned short id_month
+    r3: t_maxmin *mmres
+
+    typedef struct
+    {	
+        Q12 tmin_C;				// temperatura m�nima, en graus Celsius
+        Q12 tmax_C;				// temperatura m�xima, en graus Celsius
+        Q12 tmin_F;				// temperatura m�nima, en graus Fahrenheit
+        Q12 tmax_F;				// temperatura m�xima, en graus Fahrenheit
+        unsigned short id_min;	// �ndex temperatura m�nima
+        unsigned short id_max; 	// �ndex temperatura m�xima
+    } t_maxmin; 
+
+*/
+avgmaxmin_month:
+    push {r1 - r12, lr}
+
+    /*
+        dir(i,j) = Base + (i * NC + j) * T
+    */
+
+    # r12 = sizeof(val) = int = 4 bytes
+    mov r12, #4
+
+    # j * T; save in r5
+    mul r11, r2, r12
+
+    # load the value inside ttemp[id_city][0]
+    ldr r6, =avg
+    ldr r4, [r0, r11]
+    
+    str r4, [r6]
+    /*
+        r4 = avg
+        r5 = tvar
+        r6 = max
+        r7 = min
+        r8 = idmin
+        r9 = idmax
+    */
+    mov r6, r4
+    mov r7, r4
+
+    # r11 = i = 1
+    mov r11, #1
+
+.while:
+    cmp r11, r1 
+    beq .endwhile
+
+    mov r10, #12
+    mul r5, r11, r10
+    add r5, r2, r5
+    mov r10, #4
+    mul r5, r10, r5
+
+    # tvar = ttemp[i][id_month]
+    ldr r5, [r0, r5]
+
+    # avg += tvar
+    push {r0}
+    add r4, r5, r4
+    ldr r0, =avg
+    str r4, [r0]
+    pop {r0}
+
+    cmp r5, r6
+
+    blo .ifcont
+
+    mov r6, r5
+    mov r9, r11
+
+.ifcont:
+    cmp r5, r7
+    bhi .ifcont2
+    mov r7, r5
+    mov r8, r11
+
+.ifcont2:
+
+    add r11, r11, #1
+    b .while
+
+.endwhile:
+    # avgNeg = 0
+    mov r11, #0
+
+    # tvar = avg
+    mov r5, r4
+
+    # avg < 0?
+    cmp r4, #0
+    bhi .notneg
+    # if a < 0, avgNeg = 1
+    mov r11, #1
+.notneg:
+    # avgNeg = 1?
+    cmp r11, #1
+    bne .skip
+    # Negative number -avg
+    # Load the mask val. to the register
+	ldr r12, =MASK_SIGN
+		
+	# Toggle sign bit
+	orr r5, r12, r4
+
+.skip:
+    ldr r12, =avg
+    str r5, [r12]
+    
+    push {r0, r3}
+    mov r0, r5
+
+    ldr r3, =avg
+    ldr r3, =mod
+    bl =div_mod
+
+    pop {r0, r3}
+    
+    cmp r11, #1
+    bne .skipneg
+
+    ldr r12, =MASK_SIGN
+		
+	# Toggle sign bit
+	orr r4, r12, r4
+
+.skipneg:
+
+    mov r12, #0
+    str r7, [r3, r12]
+
+    mov r12, #4
+    str r6, [r3, r12]
+
+    mov r0, r7
+    bl Celsius2Fahrenheit
+
+    mov r12, #8
+    str r0, [r3, r12]
+
+    mov r0, r6
+    bl Celsius2Fahrenheit
+
+    mov r12, #12
+    str r0, [r3, r12]
+
+    mov r12, #16
+    str r8, [r3, r12]
+
+    mov r12, #18
+    str r9, [r3, r12]
+
+    mov r0 ,r4
 
     pop {r1 - r12, pc}

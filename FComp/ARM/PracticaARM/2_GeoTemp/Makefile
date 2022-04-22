@@ -85,3 +85,10 @@ debugtest:
 	qemu-arm -L /usr/lib/arm-none-eabi/lib/ -g 1337 test_CelsiusFahrenheit.elf &
 	-@arm-none-eabi-gdb -x gdb_cmd_test
 	-@pkill -9 qemu-arm
+
+twover: clean fahn startup build/data.o build/geotemp.o build/avgmaxmintemp_asm.o build/avgmaxmintemp.o 	
+	arm-none-eabi-ld $(LDFLAGS) p_lib/startup.o build/data.o build/geotemp.o build/avgmaxmintemp.o \
+					 -Lp_lib -lfoncompus -lcelfahr -o democ.elf
+	
+	arm-none-eabi-ld $(LDFLAGS) p_lib/startup.o build/data.o build/geotemp.o build/avgmaxmintemp_asm.o \
+					 -Lp_lib -lfoncompus -lcelfahr -o demo.elf

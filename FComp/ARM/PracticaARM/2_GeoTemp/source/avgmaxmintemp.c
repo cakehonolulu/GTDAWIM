@@ -78,6 +78,7 @@ Q12 avgmaxmin_city(Q12 ttemp[][12], unsigned short nrows, unsigned short id_city
 |						resultats de temperatures m�ximes i m�nimes
 |	Resultat:	temperatura mitjana, expressada en graus Celsius, en format Q12.
 */		
+#ifndef CHECK_ASM
 Q12 avgmaxmin_month(Q12 ttemp[][12], unsigned short nrows, unsigned short id_month, t_maxmin *mmres)
 {
 	Q12 avg, max, min;
@@ -122,3 +123,4 @@ Q12 avgmaxmin_month(Q12 ttemp[][12], unsigned short nrows, unsigned short id_mon
 
 	return(avg);
 }
+#endif
