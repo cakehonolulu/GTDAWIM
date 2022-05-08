@@ -14,9 +14,8 @@ bool afegir(cjt_paraules_t *c, char p[])
     bool m_result = true, m_check = true;
     int i = 0, m_len;
 
-    if (c->n_el > 99)
+    if (ple(c))
     {
-        printf("S'ha emplenat el conjunt!\n");
         m_result = false;
     }
     else
@@ -118,7 +117,15 @@ bool pertany(cjt_paraules_t *c, char p[])
 
 bool ple(cjt_paraules_t *c)
 {
+    bool m_ple = false;
 
+    if (c->n_el > 99)
+    {
+        printf("El conjunt está ple!\n");
+        m_ple = true;
+    }
+
+    return m_ple;
 }
 
 bool buit(cjt_paraules_t *c)
