@@ -82,7 +82,6 @@ bool afegir(cjt_paraules_t *c, char p[])
         }
         else
         {
-            printf("La paraula excedeix la longitud màxima permesa...\n");
             m_result = false;
         }
     }
@@ -92,17 +91,32 @@ bool afegir(cjt_paraules_t *c, char p[])
 
 void eliminar(cjt_paraules_t *c, char p[])
 {
+    bool m_check = true;
+    int i = 0, m_elements = n_elems(c);
 
+    while (m_check == true && i < m_elements)
+    {
+        if (strcmp(p, c->paraules[i]) == 0)
+        {
+            free(c->paraules[i]);
+
+            c->paraules[i] = 0x0;
+            
+            c->n_el--;
+            m_check = false;
+        }
+
+        i++;
+    }  
 }
 
 bool pertany(cjt_paraules_t *c, char p[])
 {
-    int i = 0;
+    int i = 0, m_elements = n_elems(c);
     bool m_check = true, m_result = false;
-
-    while (m_check == true && i < c->n_el)
+    
+    while (m_check == true && i < m_elements)
     {
-
         if (strcmp(p, c->paraules[i]) == 0)
         {
             m_check = true;
@@ -119,7 +133,7 @@ bool ple(cjt_paraules_t *c)
 {
     bool m_ple = false;
 
-    if (c->n_el > 99)
+    if (n_elems(c) > 99)
     {
         printf("El conjunt está ple!\n");
         m_ple = true;
@@ -130,7 +144,7 @@ bool ple(cjt_paraules_t *c)
 
 bool buit(cjt_paraules_t *c)
 {
-    if (c->n_el == 0)
+    if (n_elems(c) == 0)
     {
         return true;
     }
@@ -142,23 +156,29 @@ bool buit(cjt_paraules_t *c)
 
 int n_elems(cjt_paraules_t *c)
 {
-
+    return c->n_el;
 }
 
 void mostrar(cjt_paraules_t *c)
 {
-    int i;
+    int i, m_elements;
 
-    if (c->n_el != 0)
+    m_elements = n_elems(c);
+
+    if (m_elements != 0)
     {
-        printf("Hi han %d paraules al conjunt!\n", c->n_el);
+        printf("Hi han %d paraules al conjunt!\n", m_elements);
         
-        for (i = 0; i < c->n_el; i++)
+        for (i = 0; i < m_elements; i++)
         {
             printf("%s, ", c->paraules[i]);
         }
 
         printf("\n");
+    }
+    else
+    {
+        printf("No hi han paraules al conjunt!\n");
     }
 }
 

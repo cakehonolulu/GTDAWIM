@@ -55,7 +55,6 @@ int main(void)
         printf("La paraula hola no pertany al conjunt\n");
     }
     
-/*
     // No ha de notificar res, si la paraula no hi es
     eliminar(&c, "casa");
 
@@ -94,17 +93,18 @@ int main(void)
 
     // La darrera prova consisteix en emplenar el conjunt amb el maxim de paraules
     // Cada paraula sera un conjunt de lletres
-    for (i = 1000; i< 1100; i++)
+    for (i = 1000; i < 1100; i++)
     {
         sprintf(p, "%d", i);    // Fa un printf sobre un la cadena 'p'
         if (!afegir(&c, p))
         {
-            printf("La paraula %s no hi cap!\n");
+            printf("La paraula %s no hi cap!\n", p);
         }
 
     }
 
     // Hem de veure que hi ha paraules que no ha afegit
-    mostrar(&c);*/
+    mostrar(&c);
+
     return 1;
 }
