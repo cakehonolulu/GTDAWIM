@@ -45,8 +45,6 @@ int main(void)
 
     mostrar(&c);
 
-
-/*
     // Ha de dir que pertany al conjunt
     if (pertany(&c, "hola"))
     {
@@ -56,7 +54,8 @@ int main(void)
     {
         printf("La paraula hola no pertany al conjunt\n");
     }
-
+    
+/*
     // No ha de notificar res, si la paraula no hi es
     eliminar(&c, "casa");
 

@@ -66,9 +66,10 @@ bool afegir(cjt_paraules_t *c, char p[])
                         else
                         {
                             printf("No hi ha memòria disponible!\n");
+                            m_result = false;
                         }
 
-                            m_check = false;
+                        m_check = false;
                     }
 
                     i++;
@@ -77,6 +78,7 @@ bool afegir(cjt_paraules_t *c, char p[])
             else
             {
                 printf("La paraula conté caràcters no permesos!\n");
+                m_result = false;
             }
         }
         else
@@ -96,7 +98,22 @@ void eliminar(cjt_paraules_t *c, char p[])
 
 bool pertany(cjt_paraules_t *c, char p[])
 {
+    int i = 0;
+    bool m_check = true, m_result = false;
 
+    while (m_check == true && i < c->n_el)
+    {
+
+        if (strcmp(p, c->paraules[i]) == 0)
+        {
+            m_check = true;
+            m_result = true;
+        }
+
+        i++;
+    }
+
+    return m_result;
 }
 
 bool ple(cjt_paraules_t *c)

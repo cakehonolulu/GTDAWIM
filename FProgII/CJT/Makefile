@@ -1,5 +1,5 @@
 CFLAGS := -Wall -Wextra -pedantic -g
-LDFLAGS:= 
+LDFLAGS :=
 
 all:
 	clang $(CFLAGS) -c main.c -o main.o
