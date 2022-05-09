@@ -22,7 +22,7 @@ bool afegir(cjt_paraules_t *c, char p[])
     {
         m_len = strlen(p);
 
-        if (m_len < 8)
+        if (m_len < 9)
         {  
             while (p[i] != '\0' && m_check == true)
             {
