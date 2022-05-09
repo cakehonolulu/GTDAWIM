@@ -117,10 +117,13 @@ bool pertany(cjt_paraules_t *c, char p[])
     
     while (m_check == true && i < m_elements)
     {
-        if (strcmp(p, c->paraules[i]) == 0)
+        if (c->paraules[i] != 0)
         {
-            m_check = true;
-            m_result = true;
+            if (strcmp(p, c->paraules[i]) == 0)
+            {
+                m_check = true;
+                m_result = true;
+            }
         }
 
         i++;
@@ -181,4 +184,3 @@ void mostrar(cjt_paraules_t *c)
         printf("No hi han paraules al conjunt!\n");
     }
 }
-
