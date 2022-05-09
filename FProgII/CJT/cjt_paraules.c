@@ -184,3 +184,33 @@ void mostrar(cjt_paraules_t *c)
         printf("No hi han paraules al conjunt!\n");
     }
 }
+
+void netejar(cjt_paraules_t *c)
+{
+    int i, m_elements;
+
+    m_elements = n_elems(c);
+
+    if (m_elements != 0)
+    {
+        printf("Netejant %d elements...\n", m_elements);
+        
+        for (i = 0; i < m_elements; i++)
+        {
+            if (c->paraules[i] != 0)
+            {
+                free(c->paraules[i]);
+                c->paraules[i] = 0x0;
+                c->n_el--;
+            }
+        }
+
+        printf("S'han netejat els elements; en queden: %d!\n", c->n_el);
+        
+        //mostrar(c);
+    }
+    else
+    {
+        printf("No hi han paraules al conjunt!\n");
+    }
+}

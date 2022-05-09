@@ -78,3 +78,5 @@ int n_elems(cjt_paraules_t *c);
  * @param c Conjunt
  */
 void mostrar(cjt_paraules_t *c);
+
+void netejar(cjt_paraules_t *c);

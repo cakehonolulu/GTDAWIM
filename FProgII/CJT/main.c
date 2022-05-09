@@ -106,5 +106,8 @@ int main(void)
     // Hem de veure que hi ha paraules que no ha afegit
     mostrar(&c);
 
+    // This is extra, I don't like letting the OS clean things for me, I'm a tidy person :)
+    netejar(&c);
+
     return 1;
 }
