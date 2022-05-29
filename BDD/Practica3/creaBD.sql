@@ -30,7 +30,7 @@ create table zones_biocontencio (
     codi int(5) not null,
     codiLab int(10) not null,
     nivell varchar(1) not null check (nivell LIKE "A" OR nivell LIKE "M" OR nivell LIKE "B"),
-    responsable varchar(9) not null,
+    responsable varchar(9),
     primary key (codi, codiLab),
     constraint foreign key (codiLab) references laboratoris (codi)
 ) engine=innodb;

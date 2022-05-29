@@ -25,5 +25,7 @@ insert into empleats(num_pass, nom) values ('001122334', 'Alice');
 insert into ordinaris(num_pass) value ('721641720');
 insert into ordinaris(num_pass) value ('89264729A');
 
---insert into qualificats(num_pass, titulacio, zona_assignada, lab) values ('9810391BD', 'Master Bioquimica', 908070600, 741);
---insert into zones_biocontencio(codi, codiLab, nivell) values (908070600, 741, 'B');
+
+insert into zones_biocontencio(codi, codiLab, nivell, responsable) values (908070600, 741, 'B', null);
+
+insert into qualificats(num_pass, titulacio, zona_assignada, lab) values ('9810391BD', 'Master Bioquimica', 908070600, 741);
