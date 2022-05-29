@@ -57,3 +57,15 @@ create table armes_biologiques (
     constraint foreign key (zona) references zones_biocontencio (codi),
     constraint foreign key (lab) references zones_biocontencio (codiLab)
 ) engine=innodb;
+
+create table assignacions (
+    data_ date not null,
+    empl_ord varchar(9) not null,
+    zona int(5) not null,
+    lab int(10) not null,
+    data_fi_ date not null,
+    primary key (data_, empl_ord),
+    constraint foreign key (empl_ord) references ordinaris (num_pass),
+    constraint foreign key (zona) references zones_biocontencio (codi),
+    constraint foreign key (lab) references zones_biocontencio (codiLab)
+) engine=innodb;
