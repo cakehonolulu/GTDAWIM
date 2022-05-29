@@ -57,7 +57,3 @@ create table armes_biologiques (
     constraint foreign key (zona) references zones_biocontencio (codi),
     constraint foreign key (lab) references zones_biocontencio (codiLab)
 ) engine=innodb;
-
-insert into paisos(nom, pot_desenv, tractat_signat) values ('Regne Unit', 1, 'S');
-
-insert into laboratoris(codi,nom, pais) values (1, 'Lab01', 'Regne Unit');
