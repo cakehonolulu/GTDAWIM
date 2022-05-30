@@ -136,4 +136,6 @@ update zones_biocontencio set responsable = 22222 where zones_biocontencio.codi 
 insert into armes_biologiques(nom, data_, potencial, zona, lab) values ('Arma1', CURDATE(), 2, 908070600, 741);
 
 -- fill assignacions table
-insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE(), '721641720', 908070600, 741, CURDATE());
+insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE(), '721641720', 129874123, 741, CURDATE());
+insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE(), '235981241', 101134241, 1337, CURDATE());
+insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE(), '124512412', 918241242, 62, CURDATE());
