@@ -62,6 +62,12 @@ insert into empleats(num_pass, nom) values ('871241241', 'Shayn');
 insert into empleats(num_pass, nom) values ('91824821S', 'Maria');
 insert into empleats(num_pass, nom) values ('61246123A', 'Angela');
 
+insert into empleats(num_pass, nom) values ('12412451A', 'Jane Doe');
+insert into empleats(num_pass, nom) values ('1241241aA', 'Paul');
+insert into empleats(num_pass, nom) values ('a51234A21', 'Zeke');
+
+insert into empleats(num_pass, nom) values ('878214871', 'Jordi Guasch');
+
 --- fill ordinaris table
 insert into ordinaris(num_pass) value ('721641720');
 insert into ordinaris(num_pass) value ('89264729A');
@@ -71,6 +77,11 @@ insert into ordinaris(num_pass) value ('982141231');
 insert into ordinaris(num_pass) value ('235981241');
 insert into ordinaris(num_pass) value ('98124214A');
 insert into ordinaris(num_pass) value ('124512412');
+
+
+insert into ordinaris(num_pass) value ('a51234A21');
+insert into ordinaris(num_pass) value ('1241241aA');
+insert into ordinaris(num_pass) value ('12412451A');
 
 --- zones_biocontencio has a circular dependency w/qualificats; set that field to null and update it later
 insert into zones_biocontencio(codi, codiLab, nivell, responsable) values (908070600, 1, 'A', null);
@@ -119,6 +130,8 @@ insert into qualificats(num_pass, titulacio, zona_assignada, lab) values ('91728
 
 insert into qualificats(num_pass, titulacio, zona_assignada, lab) values ('12512412S', 'Doctorat Fisica', 198214124, 90);
 
+insert into qualificats(num_pass, titulacio, zona_assignada, lab) values ('1241241aA', 'Grau Superior Quimica', 198214124, 90);
+
 insert into qualificats(num_pass, titulacio, zona_assignada, lab) values ('87214124A', 'Master Fisica', 987124214, 1289);
 
 insert into qualificats(num_pass, titulacio, zona_assignada, lab) values ('18924124Z', 'Grau Quimica', 712471241, 54124);
@@ -136,6 +149,7 @@ update zones_biocontencio set responsable = 22222 where zones_biocontencio.codi 
 insert into armes_biologiques(nom, data_, potencial, zona, lab) values ('Arma1', CURDATE(), 2, 908070600, 741);
 
 -- fill assignacions table
-insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE(), '721641720', 129874123, 741, CURDATE());
-insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE(), '235981241', 101134241, 1337, CURDATE());
-insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE(), '124512412', 918241242, 62, CURDATE());
+insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE() - INTERVAL 2 YEAR, '721641720', 129874123, 741, CURDATE() - INTERVAL 1 YEAR);
+insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE() - INTERVAL 3 YEAR, '235981241', 101134241, 1337, CURDATE());
+insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE() - INTERVAL 2 YEAR, '1241241aA', 198214124, 62, CURDATE() - INTERVAL 21 DAY);
+insert into assignacions(data_, empl_ord, zona, lab, data_fi_) values (CURDATE() - INTERVAL 4 YEAR, '878214871', 918241242, 90, CURDATE() - INTERVAL 4 MONTH);
